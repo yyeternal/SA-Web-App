@@ -314,7 +314,7 @@ Here are featured some of the main pages for our web app's use cases. *Created w
 ----
 # 4. Product Backlog
 
-  Here is our GitHub issues pages that outlines this project's product backlog: 
+  Here is our GitHub issues page that outlines this project's product backlog: 
   
   https://github.com/WPI-CS3733-2024B/team-stackoverflowheroes/issues
 
