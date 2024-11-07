@@ -178,9 +178,9 @@ The Customer is Worcester Polytechnic Institute and, as such, the stakeholders w
 | Name              | Add Course Sections  |
 | Participating actor  | Instructor user  |
 | Entry condition(s)   | Logged in as an instructor, clicks the “add course section” feature  |
-| Exit condition(s)    | Either hitting submit, or hitting cancel  |
+| Exit condition(s)    | New course section has been added  |
 | Flow of events |1. The user selects “add course section.”
-                  2. The system responds by requesting that the user enter the name of the class and then provides a course section and term.
+                  2. The system responds by asking the user to select a course from a list, and then requests a course section and term.
                   3. After filling in the necessary information, the user clicks “submit.”
                   4. The system redirects the user back to the homepage and displays a message saying “Course section added.”|
 | Alternative flow of events    |Upon submitting, the system realizes that the course section is already in the database.
