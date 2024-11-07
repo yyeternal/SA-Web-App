@@ -324,28 +324,3 @@ For the papers you cite give the authors, the title of the article, the journal 
 
 For the websites, give the title, author (if applicable) and the website URL.
 
-----
-----
-# Appendix: Grading Rubric
-(Please remove this part in your final submission)
-
-These is the grading rubric that we will use to evaluate your document. 
-
-| Max Points  | **Content** |
-| ----------- | ------- |
-| 4          | Do the requirements clearly state the customers’ needs? |
-| 2          | Do the requirements avoid specifying a design (note: customer-specified design elements are allowed)? |
-| | |  
-|    | **Completeness** |
-| 14 | Are user stories complete? Are all major user stories included in the document?  |
-| 5 | Are user stories written in correct form? | 
-| 14 |  Are all major use cases (except registeration and login) included in the document? |
-| 15 | Are use cases written in sufficient detail to allow for design and planning? Are the "flow of events" in use case descriptions written in the form of "user actions and system responses to those"? Are alternate flow of events provided (when applicable)? | 
-| 6 |  Are the User Interface Requirements given with some detail? Are there some sketches, mockups?  |
-| | |  
-|   | **Clarity** |
-| 5 | Is the document carefully written, without typos and grammatical errors? <br> Is each part of the document in agreement with all other parts? <br> Are all items clear and not ambiguous? |
-| | |
-|**65**|**TOTAL**|
-
-
