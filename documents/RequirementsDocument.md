@@ -1,6 +1,6 @@
 # Software Requirements and Use Cases
 
-## SA Recruitment
+## SA Recruitment Web App
 --------
 Prepared by:
 
@@ -257,6 +257,7 @@ The Customer is Worcester Polytechnic Institute and, as such, the stakeholders w
 
 ----
 # 3. User Interface
+Here are featured some of the main pages for our web app's use cases. *Created with Figma*
 
   <kbd>
       <img src="images/Frame 1.jpg"  border="2">
@@ -313,14 +314,36 @@ The Customer is Worcester Polytechnic Institute and, as such, the stakeholders w
 ----
 # 4. Product Backlog
 
-Here you should include a link to your GitHub repo issues page, i.e., your product backlog. Make sure to create an issue for each user story.  
+  Here is our GitHub issues page that outlines this project's product backlog: 
+  
+  https://github.com/WPI-CS3733-2024B/team-stackoverflowheroes/issues
 
 ----
 # 5. References
 
-Cite your references here.
+Creating an issue. (n.d.). GitHub Docs. Retrieved November 7, 2024, from https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/creating-an-issue
 
-For the papers you cite give the authors, the title of the article, the journal name, journal volume number, date of publication and inclusive page numbers. Giving only the URL for the journal is not appropriate.
 
-For the websites, give the title, author (if applicable) and the website URL.
+----
+----
+# Appendix: Grading Rubric
+
+
+| Max Points  | **Content** |
+| ----------- | ------- |
+| 4          | Do the requirements clearly state the customers’ needs? |
+| 2          | Do the requirements avoid specifying a design (note: customer-specified design elements are allowed)? |
+| | |  
+|    | **Completeness** |
+| 14 | Are user stories complete? Are all major user stories included in the document?  |
+| 5 | Are user stories written in correct form? | 
+| 14 |  Are all major use cases (except registeration and login) included in the document? |
+| 15 | Are use cases written in sufficient detail to allow for design and planning? Are the "flow of events" in use case descriptions written in the form of "user actions and system responses to those"? Are alternate flow of events provided (when applicable)? | 
+| 6 |  Are the User Interface Requirements given with some detail? Are there some sketches, mockups?  |
+| | |  
+|   | **Clarity** |
+| 5 | Is the document carefully written, without typos and grammatical errors? <br> Is each part of the document in agreement with all other parts? <br> Are all items clear and not ambiguous? |
+| | |
+|**65**|**TOTAL**|
+
 
