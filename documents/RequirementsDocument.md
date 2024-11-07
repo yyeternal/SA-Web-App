@@ -258,12 +258,56 @@ The Customer is Worcester Polytechnic Institute and, as such, the stakeholders w
 ----
 # 3. User Interface
 
-Here you should include the sketches or mockups for the main parts of the interface.
-You may use Figma to design your interface:
-
-  Example image. The image file is in the `./images` directory.
   <kbd>
-      <img src="images/figma.jpg"  border="2">
+      <img src="images/Frame 1.jpg"  border="2">
+  </kbd>
+
+  <kbd>
+      <img src="images/Frame 2.jpg"  border="2">
+  </kbd>
+
+  <kbd>
+      <img src="images/Frame 3.jpg"  border="2">
+  </kbd>
+
+  <kbd>
+      <img src="images/Frame 4.jpg"  border="2">
+  </kbd>
+  
+  <kbd>
+      <img src="images/Frame 5.jpg"  border="2">
+  </kbd>
+  
+  <kbd>
+      <img src="images/Frame 6.jpg"  border="2">
+  </kbd>
+  
+  <kbd>
+      <img src="images/Frame 7.jpg"  border="2">
+  </kbd>
+  
+  <kbd>
+      <img src="images/Frame 8.jpg"  border="2">
+  </kbd>
+  
+  <kbd>
+      <img src="images/Frame 9.jpg"  border="2">
+  </kbd>
+  
+  <kbd>
+      <img src="images/Frame 10.jpg"  border="2">
+  </kbd>
+  
+  <kbd>
+      <img src="images/Frame 11.jpg"  border="2">
+  </kbd>
+  
+  <kbd>
+      <img src="images/Frame 12.jpg"  border="2">
+  </kbd>
+  
+  <kbd>
+      <img src="images/Frame 13.jpg"  border="2">
   </kbd>
   
 ----
