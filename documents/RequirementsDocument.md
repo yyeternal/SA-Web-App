@@ -1,6 +1,6 @@
 # Software Requirements and Use Cases
 
-## Your Project Title
+## SA Recruitment Web App
 --------
 Prepared by:
 
@@ -257,6 +257,7 @@ The Customer is Worcester Polytechnic Institute and, as such, the stakeholders w
 
 ----
 # 3. User Interface
+Here are featured some of the main pages for our web app's use cases. *Created with Figma*
 
   <kbd>
       <img src="images/Frame 1.jpg"  border="2">
@@ -313,23 +314,20 @@ The Customer is Worcester Polytechnic Institute and, as such, the stakeholders w
 ----
 # 4. Product Backlog
 
-Here you should include a link to your GitHub repo issues page, i.e., your product backlog. Make sure to create an issue for each user story.  
+  Here is our GitHub issues pages that outlines this project's product backlog: 
+  
+  https://github.com/WPI-CS3733-2024B/team-stackoverflowheroes/issues
 
 ----
 # 5. References
 
-Cite your references here.
+Creating an issue. (n.d.). GitHub Docs. Retrieved November 7, 2024, from https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/creating-an-issue
 
-For the papers you cite give the authors, the title of the article, the journal name, journal volume number, date of publication and inclusive page numbers. Giving only the URL for the journal is not appropriate.
-
-For the websites, give the title, author (if applicable) and the website URL.
 
 ----
 ----
 # Appendix: Grading Rubric
-(Please remove this part in your final submission)
 
-These is the grading rubric that we will use to evaluate your document. 
 
 | Max Points  | **Content** |
 | ----------- | ------- |
