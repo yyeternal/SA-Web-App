@@ -96,6 +96,16 @@ Include a detailed description of the routes your application will implement.
 Repeat the above for other subsystems you included in your application. 
 
 ### 2.3 User Interface Design 
+1. login.html
+2. register_instructor.html
+3. register_student.html
+4. _create_position.html
+5. _create_section.html
+6. edit_profile.html
+7. _apply.html
+8. view_application.html
+9. base.html
+10. index.html
 
 Provide a list of the page templates you plan to create and supplement your description with UI sketches or screenshots. Make sure to mention which user-stories in your “Requirements and Use Cases" document will utilize these interfaces for user interaction. 
 
