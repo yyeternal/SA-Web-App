@@ -101,19 +101,47 @@ Repeat the above for other subsystems you included in your application.
 
 ### 2.3 User Interface Design 
 1. login.html
+<kbd>
+    <img src="images/Frame 1.jpg"  border="2">
+</kbd>
 2. register_instructor.html
+<kbd>
+    <img src="images/Frame 3.jpg"  border="2">
+</kbd>
 3. register_student.html
+<kbd>
+    <img src="images/Frame 2.jpg"  border="2">
+</kbd>
 4. _create_position.html
+<kbd>
+    <img src="images/Frame 5.jpg"  border="2">
+</kbd>
 5. _create_section.html
+<kbd>
+    <img src="images/Frame 4.jpg"  border="2">
+</kbd>
 6. edit_instrcutorprofile.html
-7. edit_instrcutorstudent.html
+<kbd>
+    <img src="images/Frame 10.jpg"  border="2">
+</kbd>
+7. edit_studentprofile.html
+<kbd>
+    <img src="images/Frame 9.jpg"  border="2">
+</kbd>
 8. _apply.html
+<kbd>
+    <img src="images/Frame 7.jpg"  border="2">
+</kbd>
 9. view_application.html
-10. base.html
-11. index.html
+<kbd>
+    <img src="images/Frame 8.jpg"  border="2">
+</kbd>
+10. index.html
+<kbd>
+    <img src="images/Frame 6.jpg"  border="2">
+</kbd>
 
-Provide a list of the page templates you plan to create and supplement your description with UI sketches or screenshots. Make sure to mention which user-stories in your “Requirements and Use Cases" document will utilize these interfaces for user interaction. 
-
+### Database UML Diagram
 <kbd>
     <img src="images/SARecruitmentWebApp.drawio.png"  border="2">
 </kbd>
