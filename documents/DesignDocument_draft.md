@@ -47,7 +47,13 @@ Explain the purpose of this document. If this is a revision of an earlier docume
 
 ## 2.1 Database Model
 
-Provide a list of your tables (i.e., SQL Alchemy classes) in your database model and briefly explain the role of each table. 
+1. User: abstract class that stores the common information for instructor and student.
+2. Student: stores information for each system such as GPA, experience, and graduation date.
+3. Instructor: stores information for each instructor such as the course sections they are teaching to allow for them to create SA positions
+4. Course: stores information on each course offered in the CS department such course number and name.
+5. Course section: stores information for a specific course such as when the course is offered and the section name
+6. SA Position: stores information for the position the instructor created which specifies requirements such as minimum GPA and the number of SA positons available
+7. SA Application: stores information for the application a Student submitted such as their grade in the class and year they took the class. 
 
 Provide a UML diagram of your database model showing the associations and relationships among tables. 
 
