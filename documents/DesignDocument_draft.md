@@ -71,27 +71,31 @@ Include a detailed description of the routes your application will implement.
 * You can use the following table template to list your route specifications. 
 * Organize this section according to your subsytem decomposition, i.e., include a sub-section for each subsytem and list all routes for that sub-section in a table.  
 
-#### 2.2.2.1 \<Subsystem1> Routes
 
-|   | Methods           | URL Path   | Description  |
-|:--|:------------------|:-----------|:-------------|
-|1. |                   |            |              |
-|2. |                   |            |              |
-|3. |                   |            |              |
-|4. |                   |            |              |
-|5. |                   |            |              |
-|6. |                   |            |              |
+#### 2.2.2.1 \<Auth> Routes
 
-#### 2.2.2.2 \<Subsystem2> Routes
+|   | Methods               | URL Path           | Description                                    |
+|:--|:----------------------|:-------------------|:-----------------------------------------------|
+|1. |student_registration   |/register/student   |Create a student account based on user input    |
+|2. |instructor_registration|/register/instructor|Create an instructor account based on user input|
+|3. |login                  |/login              |Handle login queries based on user input        |
+|4. |                       |                    |                                                |
+|5. |                       |                    |                                                |
+|6. |                       |                    |                                                |
 
-|   | Methods           | URL Path   | Description  |
-|:--|:------------------|:-----------|:-------------|
-|1. |                   |            |              |
-|2. |                   |            |              |
-|3. |                   |            |              |
-|4. |                   |            |              |
-|5. |                   |            |              |
-|6. |                   |            |              |
+#### 2.2.2.2 \<Main> Routes
+
+|   | Methods              | URL Path                   | Description                                                       |
+|:--|:---------------------|:---------------------------|:------------------------------------------------------------------|
+|1. |create_position       |/create_position            |Create a new SA position available for a course section            |
+|2. |create_course_section |/course/create              |Create a new course section                                        |
+|3. |view_sa_positions     |/view/positions             |Allows students see available SA positions                         |
+|4. |view_sa_applications  |/view/<section>/applications|Allows instructors to see SA applications for their course sections|
+|5. |view_sent_applications|/view/<user>/applications   |Allows students to see their own, sent applications                |
+|6. |create_application    |/application/create         |Create an application for a course section based on user input     |
+|7. |withdraw_application  |/application/withdraw       |Withdraws a sent application                                       |
+|8. |edit_student          |/edit/student               |Edit a student account based on user input                         |
+|9. |edit_instructor       |/edit/instructor            |Edit an instructor account based on user input                     |
 
 Repeat the above for other subsystems you included in your application. 
 
