@@ -114,6 +114,10 @@ Repeat the above for other subsystems you included in your application.
 
 Provide a list of the page templates you plan to create and supplement your description with UI sketches or screenshots. Make sure to mention which user-stories in your “Requirements and Use Cases" document will utilize these interfaces for user interaction. 
 
+<kbd>
+    <img src="images/SARecruitmentWebApp.drawio.png"  border="2">
+</kbd>
+
 # 3. References
 
 Cite your references here.
