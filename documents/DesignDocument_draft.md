@@ -56,6 +56,10 @@ The purpose of this document is to create a skeleton for the project so we know 
 7. SA Application: stores information for the application a Student submitted such as their grade in the class and year they took the class. 
 
 Provide a UML diagram of your database model showing the associations and relationships among tables. 
+### Database UML Diagram
+<kbd>
+    <img src="images/SARecruitmentWebApp.drawio.png"  border="2">
+</kbd>
 
 ## 2.2 Subsystems and Interfaces
 
@@ -141,10 +145,7 @@ Repeat the above for other subsystems you included in your application.
     <img src="images/Frame 6.jpg"  border="2">
 </kbd>
 
-### Database UML Diagram
-<kbd>
-    <img src="images/SARecruitmentWebApp.drawio.png"  border="2">
-</kbd>
+
 
 # 3. References
 
