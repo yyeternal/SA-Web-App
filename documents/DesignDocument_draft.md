@@ -1,6 +1,6 @@
 # Project Design Document
 
-## Your Project Title
+## SA Recruitment Web App
 --------
 Prepared by:
 
@@ -42,8 +42,7 @@ Prepared by:
 The purpose of this document is to create a skeleton for the project so we know what basic templates and database tables to have in the project. We establish all of the relations for different tables in this document so when we begin to code, we already understand how the different classes interact. This will create a more efficient system when we begin to start coding. This is what our final product plan is, so it is an example for what our final product should look like so we can work to create a similar product. 
 
 # 2. Software Design
-
-(**Note**: For all subsections of Section-2: You should describe the design for the end product (completed application) - not only your iteration1 version. You will revise this document and add more details later.)
+This section describes how our final software product will operate and how the user will interact with it.
 
 ## 2.1 Database Model
 
@@ -55,7 +54,6 @@ The purpose of this document is to create a skeleton for the project so we know 
 6. SA Position: stores information for the position the instructor created which specifies requirements such as minimum GPA and the number of SA positons available
 7. SA Application: stores information for the application a Student submitted such as their grade in the class and year they took the class. 
 
-Provide a UML diagram of your database model showing the associations and relationships among tables. 
 ### Database UML Diagram
 <kbd>
     <img src="images/SARecruitmentWebApp.drawio.png"  border="2">
@@ -66,6 +64,7 @@ Provide a UML diagram of your database model showing the associations and relati
 ### 2.2.1 Overview
 
 Describe the high-level architecture of your software:  i.e., the major subsystems and how they fit together. Provide a UML component diagram that illustrates the architecture of your software. Briefly mention the role of each subsystem in your architectural design. Please refer to the "System Level Design" lectures in Week 4. 
+Our software will be composed of three major subsystems: main, auth, and errors. The errors subsystem will only be used for handling errors in routing and requests. The auth subsystem will handle all authorization tasks such as registering a new user, logging in and out, and keeping the forms for each of those. Most everything that will not be handled by the errors and auth subsystems will be handled by the main subsystem including courses, positions, applications, etc.
 
 ### 2.2.2 Interfaces
 
@@ -78,30 +77,26 @@ Include a detailed description of the routes your application will implement.
 
 #### 2.2.2.1 \<Auth> Routes
 
-|   | Methods               | URL Path           | Description                                    |
-|:--|:----------------------|:-------------------|:-----------------------------------------------|
-|1. |student_registration   |/register/student   |Create a student account based on user input    |
-|2. |instructor_registration|/register/instructor|Create an instructor account based on user input|
-|3. |login                  |/login              |Handle login queries based on user input        |
-|4. |                       |                    |                                                |
-|5. |                       |                    |                                                |
-|6. |                       |                    |                                                |
+| Route                     | Methods  | URL Path            | Description                                     |
+|:--------------------------|:---------|:--------------------|:------------------------------------------------|
+|1. student_registration    |GET, POST |/register/student    |Create a student account based on user input     |
+|2. instructor_registration |GET, POST |/register/instructor |Create an instructor account based on user input |
+|3. login                   |GET, POST |/login               |Handle login queries based on user input         |
+|4. logout                  |GET       |/logout              |Logs the current user out of the application     |
 
 #### 2.2.2.2 \<Main> Routes
 
-|   | Methods              | URL Path                   | Description                                                       |
-|:--|:---------------------|:---------------------------|:------------------------------------------------------------------|
-|1. |create_position       |/create_position            |Create a new SA position available for a course section            |
-|2. |create_course_section |/course/create              |Create a new course section                                        |
-|3. |view_sa_positions     |/view/positions             |Allows students see available SA positions                         |
-|4. |view_sa_applications  |/view/<section>/applications|Allows instructors to see SA applications for their course sections|
-|5. |view_sent_applications|/view/<user>/applications   |Allows students to see their own, sent applications                |
-|6. |create_application    |/application/create         |Create an application for a course section based on user input     |
-|7. |withdraw_application  |/application/withdraw       |Withdraws a sent application                                       |
-|8. |edit_student          |/edit/student               |Edit a student account based on user input                         |
-|9. |edit_instructor       |/edit/instructor            |Edit an instructor account based on user input                     |
-
-Repeat the above for other subsystems you included in your application. 
+| Route                   | Methods  | URL Path                   | Description                                                       |
+|:------------------------|:---------|:---------------------------|:------------------------------------------------------------------|
+|1. create_position       |GET, POST |/create_position            |Create a new SA position available for a course section            |
+|2. create_course_section |GET, POST |/course/create              |Create a new course section                                        |
+|3. view_sa_positions     |GET       |/view/positions             |Allows students see available SA positions                         |
+|4. view_sa_applications  |GET       |/view/<section>/applications|Allows instructors to see SA applications for their course sections|
+|5. view_sent_applications|GET       |/view/<user>/applications   |Allows students to see their own, sent applications                |
+|6. create_application    |GET, POST |/application/create         |Create an application for a course section based on user input     |
+|7. withdraw_application  |POST      |/application/withdraw       |Withdraws a sent application                                       |
+|8. edit_student          |GET, POST |/edit/student               |Edit a student account based on user input                         |
+|9. edit_instructor       |GET, POST |/edit/instructor            |Edit an instructor account based on user input                     |
 
 ### 2.3 User Interface Design 
 1. login.html
@@ -148,10 +143,4 @@ Repeat the above for other subsystems you included in your application.
 
 
 # 3. References
-
-Cite your references here.
-
-For the papers you cite give the authors, the title of the article, the journal name, journal volume number, date of publication and inclusive page numbers. Giving only the URL for the journal is not appropriate.
-
-For the websites, give the title, author (if applicable) and the website URL.
 
