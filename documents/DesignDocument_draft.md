@@ -23,7 +23,7 @@ Prepared by:
     - [2.2 Subsystems and Interfaces](#22-subsystems-and-interfaces)
     - [2.2.1 Overview](#221-overview)
     - [2.2.2 Interfaces](#222-interfaces)
-    - [2.3 User Interface Design](#23-view-and-user-interface-design)
+    - [2.3 User Interface Design](#23-user-interface-design)
 - [3. References](#3-references)
 
 <a name="revision-history"> </a>
