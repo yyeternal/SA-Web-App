@@ -25,7 +25,6 @@ Prepared by:
     - [2.2.2 Interfaces](#222-interfaces)
     - [2.3 User Interface Design](#23-view-and-user-interface-design)
 - [3. References](#3-references)
-- [Appendix: Grading Rubric](#appendix-grading-rubric)
 
 <a name="revision-history"> </a>
 
@@ -143,4 +142,6 @@ Include a detailed description of the routes your application will implement.
 
 
 # 3. References
+Shamsuddeen, Z. (2020, January 6). REST API best practise for routes [Forum post]. Stack Overflow. https://stackoverflow.com/q/59608660
+
 
