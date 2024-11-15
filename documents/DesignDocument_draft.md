@@ -43,6 +43,11 @@ The purpose of this document is to create a skeleton for the project so we know 
 # 2. Software Design
 This section describes how our final software product will operate and how the user will interact with it.
 
+### UML Component Diagram
+<kbd>
+    <img src="images/SARecruitmentWebApp-UML Subsystem Component Diagram.jpg" border="2">
+</kbd>
+
 ## 2.1 Database Model
 
 1. User: abstract class that stores the common information for instructor and student.
@@ -102,39 +107,57 @@ Include a detailed description of the routes your application will implement.
 <kbd>
     <img src="images/Frame 1.jpg"  border="2">
 </kbd>
+
 2. register_instructor.html
+
 <kbd>
     <img src="images/Frame 3.jpg"  border="2">
 </kbd>
+
 3. register_student.html
+
 <kbd>
     <img src="images/Frame 2.jpg"  border="2">
 </kbd>
+
 4. _create_position.html
+
 <kbd>
     <img src="images/Frame 5.jpg"  border="2">
 </kbd>
+
 5. _create_section.html
+
 <kbd>
     <img src="images/Frame 4.jpg"  border="2">
 </kbd>
+
 6. edit_instrcutorprofile.html
+
 <kbd>
     <img src="images/Frame 10.jpg"  border="2">
 </kbd>
+
 7. edit_studentprofile.html
+
 <kbd>
     <img src="images/Frame 9.jpg"  border="2">
 </kbd>
+
 8. _apply.html
+
 <kbd>
     <img src="images/Frame 7.jpg"  border="2">
 </kbd>
+
 9. view_application.html
+
 <kbd>
     <img src="images/Frame 8.jpg"  border="2">
 </kbd>
+
 10. index.html
+
 <kbd>
     <img src="images/Frame 6.jpg"  border="2">
 </kbd>
