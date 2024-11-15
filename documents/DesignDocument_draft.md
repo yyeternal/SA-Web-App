@@ -78,8 +78,8 @@ Include a detailed description of the routes your application will implement.
 
 | Route                     | Methods  | URL Path            | Description                                     |
 |:--------------------------|:---------|:--------------------|:------------------------------------------------|
-|1. student_registration    |GET, POST |/register/student    |Create a student account based on user input     |
-|2. instructor_registration |GET, POST |/register/instructor |Create an instructor account based on user input |
+|1. student_registration    |GET, POST |/student/register    |Create a student account based on user input     |
+|2. instructor_registration |GET, POST |/instructor/register |Create an instructor account based on user input |
 |3. login                   |GET, POST |/login               |Handle login queries based on user input         |
 |4. logout                  |GET       |/logout              |Logs the current user out of the application     |
 
@@ -87,15 +87,15 @@ Include a detailed description of the routes your application will implement.
 
 | Route                   | Methods  | URL Path                    | Description                                                       |
 |:------------------------|:---------|:----------------------------|:------------------------------------------------------------------|
-|1. create_position       |GET, POST |/create_position             |Create a new SA position available for a course section            |
+|1. create_position       |GET, POST |/position/create             |Create a new SA position available for a course section            |
 |2. create_course_section |GET, POST |/course/create               |Create a new course section                                        |
 |3. view_sa_positions     |GET       |/view/positions              |Allows students see available SA positions                         |
-|4. view_sa_applications  |GET       |/view/\<section>/applications |Allows instructors to see SA applications for their course sections|
-|5. view_sent_applications|GET       |/view/\<user>/applications    |Allows students to see their own, sent applications                |
+|4. view_sa_applications  |GET       |/view/\<section>/applications|Allows instructors to see SA applications for their course sections|
+|5. view_sent_applications|GET       |/view/\<user>/applications   |Allows students to see their own, sent applications                |
 |6. create_application    |GET, POST |/application/create          |Create an application for a course section based on user input     |
 |7. withdraw_application  |POST      |/application/withdraw        |Withdraws a sent application                                       |
-|8. edit_student          |GET, POST |/edit/student                |Edit a student account based on user input                         |
-|9. edit_instructor       |GET, POST |/edit/instructor             |Edit an instructor account based on user input                     |
+|8. edit_student          |GET, POST |/student/edit                |Edit a student account based on user input                         |
+|9. edit_instructor       |GET, POST |/instructor/edit             |Edit an instructor account based on user input                     |
 
 ### 2.3 User Interface Design 
 1. login.html
