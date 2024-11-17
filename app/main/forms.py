@@ -6,4 +6,4 @@ class CourseSectionForm(FlaskForm):
     course = SelectField('Course', validators=[DataRequired()])
     section = StringField('Course Section', validators=[DataRequired()])
     term = StringField('Term', validators=[DataRequired()])
-    add = SubmitField('Add')
+    submit = SubmitField('Add')

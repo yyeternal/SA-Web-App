@@ -23,7 +23,10 @@ class Section(db.Model):
     course_id : sqlo.Mapped[Course] = sqlo.mapped_column(sqla.ForeignKey(Course.id))
 
     def __repr__(self):
-        return '<Section - {} {}>'.format(db.session.scalars(sqla.select(Course).where(Course.id == self.course_id)).first().title, self.sectionnum)
+        return '<Section - {} {}>'.format(self.get_course().title, self.sectionnum)
+    
+    def get_course(self):
+        return db.session.scalars(sqla.select(Course).where(Course.id == self.course_id)).first()
 
 class User(db.Model):
     id : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(9), primary_key=True)
