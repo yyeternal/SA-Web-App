@@ -66,7 +66,11 @@ The Customer is Worcester Polytechnic Institute and, as such, the stakeholders w
 
 9. As an instructor, I want to be able to create my instructor account using my WPI credentials in order to find SA positions for my class. 
 11. As an instructor, I want to be able to log in to my instructor account using WPI credentials or SSO to look for SA positions for my classes.
+<<<<<<< HEAD
 12. As an instructor, I want to add course sections to the available Computer Science courses that I will be teaching that may require SA’s.
+=======
+12. As an instructor, I want to add course sections that I will be teaching that may require SA’s.
+>>>>>>> 8ef44c38c8690f22f6212dca024c913b555be09e
 13. As an instructor, I want to be able to create an SA position for my course so students can apply for it. 
 14. As an instructor, I want to view all of the SA applications related to my course sections.
 15. As an instructor, I want to be able to set qualifications for the position as well as the number of openings to find the right people for the job. 
@@ -178,9 +182,15 @@ The Customer is Worcester Polytechnic Institute and, as such, the stakeholders w
 | Name              | Add Course Sections  |
 | Participating actor  | Instructor user  |
 | Entry condition(s)   | Logged in as an instructor, clicks the “add course section” feature  |
+<<<<<<< HEAD
 | Exit condition(s)    | New course section has been added  |
 | Flow of events |1. The user selects “add course section.”
                   2. The system responds by asking the user to select a course from a list, and then requests a course section and term.
+=======
+| Exit condition(s)    | Either hitting submit, or hitting cancel  |
+| Flow of events |1. The user selects “add course section.”
+                  2. The system responds by requesting that the user enter the name of the class and then provides a course section and term.
+>>>>>>> 8ef44c38c8690f22f6212dca024c913b555be09e
                   3. After filling in the necessary information, the user clicks “submit.”
                   4. The system redirects the user back to the homepage and displays a message saying “Course section added.”|
 | Alternative flow of events    |Upon submitting, the system realizes that the course section is already in the database.
@@ -323,3 +333,30 @@ Here are featured some of the main pages for our web app's use cases. *Created w
 
 Creating an issue. (n.d.). GitHub Docs. Retrieved November 7, 2024, from https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/creating-an-issue
 
+<<<<<<< HEAD
+=======
+
+----
+----
+# Appendix: Grading Rubric
+
+
+| Max Points  | **Content** |
+| ----------- | ------- |
+| 4          | Do the requirements clearly state the customers’ needs? |
+| 2          | Do the requirements avoid specifying a design (note: customer-specified design elements are allowed)? |
+| | |  
+|    | **Completeness** |
+| 14 | Are user stories complete? Are all major user stories included in the document?  |
+| 5 | Are user stories written in correct form? | 
+| 14 |  Are all major use cases (except registeration and login) included in the document? |
+| 15 | Are use cases written in sufficient detail to allow for design and planning? Are the "flow of events" in use case descriptions written in the form of "user actions and system responses to those"? Are alternate flow of events provided (when applicable)? | 
+| 6 |  Are the User Interface Requirements given with some detail? Are there some sketches, mockups?  |
+| | |  
+|   | **Clarity** |
+| 5 | Is the document carefully written, without typos and grammatical errors? <br> Is each part of the document in agreement with all other parts? <br> Are all items clear and not ambiguous? |
+| | |
+|**65**|**TOTAL**|
+
+
+>>>>>>> 8ef44c38c8690f22f6212dca024c913b555be09e
