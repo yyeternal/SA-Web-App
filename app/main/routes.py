@@ -1,5 +1,5 @@
 from app import db
-from app.main import main_bluprint as bp_main
+from app.main import main_blueprint as bp_main
 from flask import render_template, flash, redirect, url_for
 from app.main.forms import CourseSectionForm
 from app.main.models import Section
