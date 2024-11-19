@@ -38,8 +38,8 @@ def student_register():
                           firstname = sform.firstname.data,
                           lastname = sform.lastname.data,
                           email = sform.email.data, 
-                          WPI_id = sform.WPI_id.data,
-                          userType = 'Student',
+                          id = sform.WPI_id.data,
+                          user_type = 'Student',
                           phone_number = sform.phonenumber.data,
                           major = sform.major.data, 
                           gpa  = sform.gpa.data,
@@ -61,8 +61,8 @@ def instructor_register():
                           firstname = iform.firstname.data,
                           lastname = iform.lastname.data,
                           email = iform.email.data, 
-                          WPI_id = iform.WPI_id.data,
-                          userType = 'Instructor',
+                          id = iform.WPI_id.data,
+                          user_type = 'Instructor',
                           phone_number = iform.phonenumber.data)   
         user.set_password(iform.password.data)
         db.session.add(user)
