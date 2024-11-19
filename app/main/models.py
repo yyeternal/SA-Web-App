@@ -63,7 +63,7 @@ class Student(User):
     major : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
     GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.float(5))
     Grad_Year : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer)
-    Grad_Month : sqlo.Mapped[int] = solo.mapped_column(sqla.Integer)
+    Grad_Month : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer)
 
     #Relationships
     
