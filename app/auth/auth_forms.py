@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, BooleanField
 from wtforms.validators import  ValidationError, DataRequired, EqualTo, Email
 
-from app.main.models import User, Instructor, Student
+from app.main.models import User, Instructor
 from app import db
 import sqlalchemy as sqla
 
@@ -28,26 +28,26 @@ class StudentRegistrationForm(FlaskForm):
     submit = SubmitField('Register')
 
    
-    def validate_username(self, username):
-        query = sqla.select(Student).where(Student.username == username.data)
-        user = db.session.scalars(query).first()
-        if user is not None:
-            raise ValidationError('Username already exists! Try another one')
+    # def validate_username(self, username):
+    #     query = sqla.select(Student).where(Student.username == username.data)
+    #     user = db.session.scalars(query).first()
+    #     if user is not None:
+    #         raise ValidationError('Username already exists! Try another one')
 
-    def validate_email(self, email):
-        query = sqla.select(Student).where(Student.email == email.data)
-        user = db.session.scalars(query).first()
-        if user is not None:
-            raise ValidationError('Email already exists! Try another one')
+    # def validate_email(self, email):
+    #     query = sqla.select(Student).where(Student.email == email.data)
+    #     user = db.session.scalars(query).first()
+    #     if user is not None:
+    #         raise ValidationError('Email already exists! Try another one')
     
-    def validate_WPIid(self, WPI_id):
-        query = sqla.select(Stduent).where(Student.WPI_id == WPI_id.data)
-        user = db.session.scalars(query).first()
-        if user is not None:
-            raise ValidationError('WPI ID already exists! Try another one')
+    # def validate_WPIid(self, WPI_id):
+    #     query = sqla.select(Stduent).where(Student.WPI_id == WPI_id.data)
+    #     user = db.session.scalars(query).first()
+    #     if user is not None:
+    #         raise ValidationError('WPI ID already exists! Try another one')
         
-    validate_username(username)
-    validate_email(email)
+    # validate_username(username)
+    # validate_email(email)
 
 class InstructorRegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired('Error, must enter a value')])
@@ -80,5 +80,5 @@ class InstructorRegistrationForm(FlaskForm):
         if user is not None:
             raise ValidationError('WPI ID already exists! Try another one')
         
-    validate_username(username)
-    validate_email(email)
+    # validate_username(username)
+    # validate_email(email)

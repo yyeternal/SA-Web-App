@@ -21,6 +21,7 @@ class Course(db.Model):
         return self.title
 
 class User(UserMixin, db.Model):
+    __tablename__ = 'user'
     id : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(9), primary_key=True)
     username : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
     password_hash : sqlo.Mapped[Optional[str]] = sqlo.mapped_column(sqla.String(256))
@@ -29,10 +30,10 @@ class User(UserMixin, db.Model):
     user_type : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
     phone_number : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(15))
 
-    # __mapper_args__ = {
-    #     'polymorphic_identity': 'User',
-    #     'polymorphic_on': user_type
-    # }
+    __mapper_args__ = {
+        'polymorphic_identity': 'User',
+        'polymorphic_on': user_type
+    }
 
     def __repr__(self):
         return '<User {} - {} - {} {}>'.format(self.id, self.username, self.firstname, self.lastname)
@@ -44,6 +45,10 @@ class User(UserMixin, db.Model):
         return check_password_hash(pwhash=self.password_hash, password=password)
 
 class Instructor(User):
+    __tablename__ = 'instructor'
+    id : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(9), sqla.ForeignKey(User.id), primary_key=True)
+    title : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
+
     __mapper_args__ = {
         'polymorphic_identity': 'Instructor',
     }
