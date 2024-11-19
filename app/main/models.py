@@ -59,21 +59,28 @@ class Instructor(User):
         return '<Instructor {} - {} - {} {}>'.format(self.id, self.username, self.firstname, self.lastname)
 
 class Student(User):
-    __tablename__='Student'
+    __tablename__='student'
     major : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
     GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float(5))
-    Grad_Year : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer)
-    Grad_Month : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer)
+    graduation_date : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(10))
 
     #Relationships
     
     __mapper_args__ = {
-        'polymorphic_identity': 'Student'
+        'polymorphic_identity': 'student'
     }
 
     def __repr__(self):
         return '<Student {} - {} - {} {}>'.format(self.id, self.username, self.firstname, self.lastname)
 
+class SA_Position(db.Model):
+    section_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Section.id))
+    open_postions : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, default = 0)
+    min_GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.float(5))
+    min_Grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1))
+
+    #Relationship
+    section : sqlo.Mapped[Section] = sqlo.relationship(back_populates = 'SA_Positions')
 
 class Section(db.Model):
     id : sqlo.Mapped[int] = sqlo.mapped_column(primary_key=True)
@@ -82,6 +89,9 @@ class Section(db.Model):
 
     instructor_id: sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey('user.id'))
     instructor : sqlo.Mapped[Instructor] = sqlo.relationship(back_populates = 'sections')
+
+    #Relationship
+    # SA_Positions : sqlo.WriteOnlyMapped[SA_Position] = sqlo.relationship(back_populates = 'section')
 
     def __repr__(self):
         return '<Section - {} {}>'.format(self.get_course().title, self.sectionnum)
@@ -94,7 +104,7 @@ class SA_Position(db.Model):
     open_postions : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, default = 0)
     min_GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float(5))
     min_Grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1))
-    
+
 @login.user_loader
 def load_user(id):
     return db.session.get(User, id)
