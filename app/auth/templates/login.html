@@ -10,5 +10,7 @@
         remember me? {{form.remember_me}}<br>
         submit: {{form.submit}}
     </form>
+    New Student? <a href = "{{url_for('auth.student_register')}}"> Click to Register!</a>
+    New Instructor? <a href = "{{url_for('auth.instructor_register')}}"> Click to Register!</a>
 {% endblock %}
 
