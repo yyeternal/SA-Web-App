@@ -1,3 +1,4 @@
+from typing import Optional
 from app import db
 import sqlalchemy as sqla
 import sqlalchemy.orm as sqlo
@@ -31,7 +32,7 @@ class Section(db.Model):
 class User(db.Model):
     id : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(9), primary_key=True)
     username : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
-    password_hash : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(256), nullable=True)
+    password_hash : sqlo.Mapped[Optional[str]] = sqlo.mapped_column(sqla.String(256))
     firstname : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
     lastname : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
     user_type : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
