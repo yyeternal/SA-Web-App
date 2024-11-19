@@ -61,7 +61,7 @@ class Instructor(User):
 class Student(User):
     __tablename__='Student'
     major : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
-    GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.float(5))
+    GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float(5))
     Grad_Year : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer)
     Grad_Month : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer)
 
@@ -74,11 +74,6 @@ class Student(User):
     def __repr__(self):
         return '<Student {} - {} - {} {}>'.format(self.id, self.username, self.firstname, self.lastname)
 
-class SA_Position(db.Model):
-    section_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Section.id))
-    open_postions : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, default = 0)
-    min_GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.float(5))
-    min_Grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1))
 
 class Section(db.Model):
     id : sqlo.Mapped[int] = sqlo.mapped_column(primary_key=True)
@@ -94,6 +89,12 @@ class Section(db.Model):
     def get_course(self):
         return db.session.scalars(sqla.select(Course).where(Course.id == self.course_id)).first()
     
+class SA_Position(db.Model):
+    section_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Section.id), primary_key=True)
+    open_postions : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, default = 0)
+    min_GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float(5))
+    min_Grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1))
+    
 @login.user_loader
 def load_user(id):
-    return db.session.get(User, int(id))
+    return db.session.get(User, id)

@@ -5,7 +5,7 @@ from app import db
 from app.auth import auth_blueprint as bp_auth 
 import sqlalchemy as sqla
 
-from app.main.models import User, Instructor
+from app.main.models import User, Instructor, Student
 from app.auth.auth_forms import LoginForm, InstructorRegistrationForm, StudentRegistrationForm
 
 from flask_login import login_user, current_user, logout_user, login_required
