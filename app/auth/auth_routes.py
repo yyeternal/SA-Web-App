@@ -5,7 +5,7 @@ from app import db
 from app.auth import auth_blueprint as bp_auth 
 import sqlalchemy as sqla
 
-from app.main.models import User, Instructor
+from app.main.models import User, Instructor, Student
 from app.auth.auth_forms import LoginForm, InstructorRegistrationForm, StudentRegistrationForm
 
 from flask_login import login_user, current_user, logout_user, login_required
@@ -37,12 +37,11 @@ def student_register():
         user = Student( username = sform.username.data,
                           firstname = sform.firstname.data,
                           lastname = sform.lastname.data,
-                          email = sform.email.data, 
                           id = sform.WPI_id.data,
                           user_type = 'Student',
                           phone_number = sform.phonenumber.data,
                           major = sform.major.data, 
-                          gpa  = sform.gpa.data,
+                          GPA  = sform.gpa.data,
                           graduation_date = sform.graduation_date.data)    # need to finish this when we have a student model
         user.set_password(sform.password.data)
         db.session.add(user)
@@ -60,7 +59,6 @@ def instructor_register():
         user = Instructor(username = iform.username.data,
                           firstname = iform.firstname.data,
                           lastname = iform.lastname.data,
-                          email = iform.email.data, 
                           id = iform.WPI_id.data,
                           user_type = 'Instructor',
                           phone_number = iform.phonenumber.data)   
