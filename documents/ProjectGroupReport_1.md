@@ -33,12 +33,13 @@ List team members and their GitHub usernames
 
 ----
 ## 4. Product Backlog refinement
-
- * Have you made any changes to your `product backlog` after `Iteration-1`? If so, please explain the changes here. 
+No, we have not yet encountered a situation in which we believe are missing a product that we should implement in the future.
 
 ----
 ## 5. Iteration 2 - Sprint Backlog
-
-Include a draft of your `Iteration-2 spring backlog`. 
- * List the user stories you plan to complete in `Iteration-2`. Make sure to break down the larger user stories into smaller size stories. Mention the team member(s) who will work on each user story. 
- * Make sure to update the "issues" on your GitHub repo accordingly.  
+As a student, I want to be able to view all open SA positions to see what would appeal most to me.
+As a student, I want to be able to view all of the important information about the position to see if I am available and willing to SA this class. 
+As a student, I want to be able to apply for multiple SA positions with my academic information in order to potentially get the role. 
+As an instructor, I want to view all of the SA applications related to my course sections. 
+As an instructor, I want to be able to view the students who have applied to the position to see how many have applied for this course. 
+As an instructor, I want to be able to view if a student has already been assigned to a different course to determine if they would have enough time to SA my course. 
