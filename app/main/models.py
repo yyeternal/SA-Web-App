@@ -107,7 +107,7 @@ class Enrollment(db.Model):
     course_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Course.id), primary_key=True)
     grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1), nullable=True)
     wasSA : sqlo.Mapped[bool] = sqlo.mapped_column(sqla.Boolean())
-    term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(6))
+    term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(6), nullable=True)
 
     # relationships
     student : sqlo.Mapped[Student] = sqlo.relationship(back_populates='enrollments')

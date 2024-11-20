@@ -5,7 +5,7 @@ from app import db
 from app.auth import auth_blueprint as bp_auth 
 import sqlalchemy as sqla
 
-from app.main.models import User, Instructor, Student
+from app.main.models import User, Instructor, Student, Enrollment
 from app.auth.auth_forms import LoginForm, InstructorRegistrationForm, StudentRegistrationForm
 
 from flask_login import login_user, current_user, logout_user, login_required
@@ -50,6 +50,10 @@ def student_register():
                           graduation_date = sform.graduation_date.data)    # need to finish this when we have a student model
         user.set_password(sform.password.data)
         db.session.add(user)
+        db.session.commit()
+        for course in sform.courses.data:
+            exp = Enrollment(student_id=user.id, course_id=course.id, wasSA=True)
+            db.session.add(exp)
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('auth.login')) 

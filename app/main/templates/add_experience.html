@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+<!-- For iteration2 -->
+{% block content %}
+
+<h1>Add Experience</h1>
+
+    {% if form %}
+        <form action="" method="POST">
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.course.label }}
+                {{ form.course() }}
+            </p>
+            <p>
+                {{ form.grade.label }}
+                {{ form.grade() }}
+            </p>
+            <p>
+                {{ form.term.label }}
+                {{ form.term() }}
+            </p>
+            <p>
+                {{ form.wasSA.label }}
+                {{ form.wasSA() }}
+            </p>
+            <p>
+                {{ form.submit() }}
+            </p>
+        </form>
+    {% endif %}
+
+{% endblock %}
