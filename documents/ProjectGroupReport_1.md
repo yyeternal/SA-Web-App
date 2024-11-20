@@ -1,13 +1,11 @@
 # Project Group Report - 1
 
-## Team: `<Your Team Name>`
+## Team: `StackOverflowHeroes`
 
-List team members and their GitHub usernames
-
-* `<member1>`,`<username1>`
-* `<member2>`,`<username2>`
-* `<member3>`,`<username3>`
-* `<member4>`,`<username4>`
+* `Jonathan Tinti`,`yyeternal`
+* `Chris Smith`,`ChristopherSmith121`
+* `Oliver Reera`,`oreera2020`
+* `Alan Wang`,`awang27`
 
 ---
 **Course** : CS 3733 - Software Engineering
@@ -17,15 +15,19 @@ List team members and their GitHub usernames
 ----
 ## 1. Schedule
 
- * What is your team's weekly schedule of meetings outside of regular class times? 
-
+ We meet every Wednesday at 2:15-5 and if we have no accomplished what we had wanted, we have a backup meeting planned for Thursday from 2:15-5. 
 ----
 ## 2. Iteration 1 - Summary
 
- * Include as summary of your `Iteration-1` accomplishments. 
- * List the user stories completed in `Iteration-1`. Mention who worked on those user stories. 
+ We were able to accomplish registration for both instructor and student as well as login for both instructor and student. Additionally, there is a logout option for when a user is logged in. Instructors are now able to create course sections for courses they want SAs for as well as create SA positions for the course sections they have created. We also created the basis for our database going forward. 
 
-----
+ List of User Stories (and who worked on them)
+ As an SA, I want to log in to my student account using WPI credentials in order to access the app. (Alan)
+ As an SA, I want to make an account to search for SA positions. (Jonathan)
+ As an instructor, I want to be able to create an SA position for my course so students can apply for it. (Chris)
+ As an instructor, I want to add course sections to the available Computer Science courses that I will be teaching that may require SA’s. (Oliver)
+ As an instructor, I want to be able to log in to my instructor account using WPI credentials to look for SA positions for my classes. (Alan)
+ As an instructor, I want to be able to create my instructor account using my WPI credentials in order to find SA positions for my class. (Jonathan)
 ## 3. Iteration 1 - Sprint Retrospective
 
  * Include the outcome of your `Iteration-1 Scrum retrospective meetings`. 
