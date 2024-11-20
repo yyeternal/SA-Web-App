@@ -31,7 +31,7 @@ class User(UserMixin, db.Model):
     phone_number : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(15))
 
     __mapper_args__ = {
-        'polymorphic_identity': 'User',
+        'polymorphic_identity': 'user',
         'polymorphic_on': user_type
     }
 
@@ -50,7 +50,7 @@ class Instructor(User):
     title : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
 
     __mapper_args__ = {
-        'polymorphic_identity': 'Instructor',
+        'polymorphic_identity': 'instructor',
     }
 
     sections : sqlo.WriteOnlyMapped['Section'] = sqlo.relationship(back_populates = 'instructor')
@@ -72,15 +72,6 @@ class Student(User):
 
     def __repr__(self):
         return '<Student {} - {} - {} {}>'.format(self.id, self.username, self.firstname, self.lastname)
-
-class SA_Position(db.Model):
-    section_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Section.id))
-    open_postions : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, default = 0)
-    min_GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.float(5))
-    min_Grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1))
-
-    #Relationship
-    section : sqlo.Mapped[Section] = sqlo.relationship(back_populates = 'SA_Positions')
 
 class Section(db.Model):
     id : sqlo.Mapped[int] = sqlo.mapped_column(primary_key=True)
@@ -104,6 +95,9 @@ class SA_Position(db.Model):
     open_postions : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, default = 0)
     min_GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float(5))
     min_Grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1))
+
+    #Relationship
+    # section : sqlo.Mapped[Section] = sqlo.relationship(back_populates = 'SA_Positions')
 
 @login.user_loader
 def load_user(id):
