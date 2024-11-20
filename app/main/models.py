@@ -8,7 +8,7 @@ from flask_login import UserMixin
 
 class Course(db.Model):
     id : sqlo.Mapped[int] = sqlo.mapped_column(primary_key=True)
-    coursenum : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(4), index=True)
+    coursenum : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(7), index=True)
     title : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(150))
 
     def __repr__(self):

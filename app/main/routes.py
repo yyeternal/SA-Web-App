@@ -9,12 +9,9 @@ from flask_login import login_required
 @bp_main.route('/', methods=['GET'])
 @bp_main.route('/index', methods=['GET'])
 @login_required
-@login_required
 def index():
     return render_template('index.html', title='SA Recruitment Web App')
 
-@bp_main.route('/course/create', methods=['GET'])
-@login_required
 @bp_main.route('/course/create', methods=['GET', 'POST'])
 @login_required
 def create_course_section():

@@ -1,8 +1,10 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, BooleanField, FloatField
+from wtforms import StringField, SubmitField, PasswordField, BooleanField, FloatField 
+from wtforms_sqlalchemy.fields import QuerySelectMultipleField
 from wtforms.validators import  ValidationError, DataRequired, EqualTo, Email
+from wtforms.widgets import ListWidget, CheckboxInput
 
-from app.main.models import User, Instructor
+from app.main.models import User, Instructor, Course
 from app import db
 import sqlalchemy as sqla
 
@@ -17,6 +19,11 @@ class StudentRegistrationForm(FlaskForm):
     firstname = StringField('First Name', validators=[DataRequired('Error, must enter a value')])
     lastname = StringField('Last Name', validators=[DataRequired('Error, must enter a value')])
     WPI_id = StringField('WPI ID', validators=[DataRequired()])
+    courses  = QuerySelectMultipleField('Courses Taken', 
+                                        query_factory = lambda : db.session.scalars(sqla.select(Course)),
+                                        get_label = lambda theCourse : theCourse.title,
+                                        widget=ListWidget(prefix_label=False),
+                                        option_widget = CheckboxInput())
     phonenumber = StringField('Phone Number', validators=[DataRequired()])
     major = StringField('Major', validators=[DataRequired()])
     gpa = FloatField('GPA', validators=[DataRequired()])
