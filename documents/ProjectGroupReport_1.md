@@ -41,6 +41,8 @@ No, we have not yet encountered a situation in which we believe are missing a pr
  * As a student, I want to be able to view all open SA positions to see what would appeal most to me.
  * As a student, I want to be able to view all of the important information about the position to see if I am available and willing to SA this class. 
  * As a student, I want to be able to apply for multiple SA positions with my academic information in order to potentially get the role. 
+ * As a student, I want to be able to edit my profile in case any of my information changes. 
  * As an instructor, I want to view all of the SA applications related to my course sections. 
  * As an instructor, I want to be able to view the students who have applied to the position to see how many have applied for this course. 
  * As an instructor, I want to be able to view if a student has already been assigned to a different course to determine if they would have enough time to SA my course. 
+ * As an instructor, I want to be able to edit my profile in case any of my information changes. 
