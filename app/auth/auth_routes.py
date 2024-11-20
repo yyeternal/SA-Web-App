@@ -17,7 +17,7 @@ def login():
     
     lform = LoginForm()
     if lform.validate_on_submit():
-        query = sqla.select(User).where(User.username == lform.username.data)
+        query = sqla.select(User).where(User.username == lform.email.data)
         user = db.session.scalars(query).first()
         if (user is None) or (user.check_password(lform.password.data) == False):
             flash('Login wrong')
@@ -26,6 +26,12 @@ def login():
         flash('The user {} has succesfully logged in! '.format(current_user.username))
         return redirect(url_for('main.index'))
     return render_template('login.html', form = lform)
+
+@bp_auth.route('/user/logout', methods=['GET'])
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('auth.login'))
 
 
 @bp_auth.route('/student/register', methods=['GET', 'POST'])

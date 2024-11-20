@@ -50,7 +50,7 @@ class Instructor(User):
     title : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
 
     __mapper_args__ = {
-        'polymorphic_identity': 'instructor',
+        'polymorphic_identity': 'Instructor',
     }
 
     sections : sqlo.WriteOnlyMapped['Section'] = sqlo.relationship(back_populates = 'instructor')
@@ -60,6 +60,7 @@ class Instructor(User):
 
 class Student(User):
     __tablename__='student'
+    id : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(9), sqla.ForeignKey(User.id), primary_key=True)
     major : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
     GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float(5))
     graduation_date : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(10))
@@ -67,7 +68,7 @@ class Student(User):
     #Relationships
     
     __mapper_args__ = {
-        'polymorphic_identity': 'student'
+        'polymorphic_identity': 'Student'
     }
 
     def __repr__(self):
@@ -98,6 +99,13 @@ class SA_Position(db.Model):
 
     #Relationship
     # section : sqlo.Mapped[Section] = sqlo.relationship(back_populates = 'SA_Positions')
+
+class Enrollments(db.Model):
+    student_id : sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(Student.id), primary_key=True)
+    course_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Course.id), primary_key=True)
+    grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1), nullable=True)
+    wasSA : sqlo.Mapped[bool] = sqlo.mapped_column(sqla.Boolean())
+    term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(6))
 
 @login.user_loader
 def load_user(id):

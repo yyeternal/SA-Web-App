@@ -3,13 +3,16 @@ from app.main import main_blueprint as bp_main
 from flask import render_template, flash, redirect, url_for
 from app.main.forms import CourseSectionForm
 from app.main.models import Section
+from flask_login import login_required
 
 @bp_main.route('/', methods=['GET'])
 @bp_main.route('/index', methods=['GET'])
+@login_required
 def index():
     return render_template('index.html', title='SA Recruitment Web App')
 
 @bp_main.route('/course/create', methods=['GET'])
+@login_required
 def create_course_section():
     cform = CourseSectionForm()
     if cform.validate_on_submit():
