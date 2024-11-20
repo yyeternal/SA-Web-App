@@ -1,5 +1,32 @@
 {% extends "base.html" %}
 
 {% block content %}
-    
+
+    <h1>Create New Student Assistant Position</h1>
+
+    {% if form %}
+        <form action="" method="POST">
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.section.label }}
+                {{ form.section() }}
+            </p>
+            <p>
+                {{ form.open_positions.label }}
+                {{ form.open_positions() }}
+            </p>
+            <p>
+                {{ form.min_GPA.label }}
+                {{ form.min_GPA() }}
+            </p>
+            <p>
+                {{ form.min_grade.label }}
+                {{ form.min_grade() }}
+            </p>
+            <p>
+                {{ form.submit() }}
+            </p>
+        </form>
+    {% endif %}
+
 {% endblock %}
