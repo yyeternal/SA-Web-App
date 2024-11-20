@@ -67,6 +67,8 @@ class Student(User):
 
     #Relationships
     
+    enrollments : sqlo.WriteOnlyMapped['Enrollment'] = sqlo.relationship(back_populates='student')
+
     __mapper_args__ = {
         'polymorphic_identity': 'Student'
     }
@@ -100,12 +102,15 @@ class SA_Position(db.Model):
     #Relationship
     # section : sqlo.Mapped[Section] = sqlo.relationship(back_populates = 'SA_Positions')
 
-class Enrollments(db.Model):
+class Enrollment(db.Model):
     student_id : sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(Student.id), primary_key=True)
     course_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Course.id), primary_key=True)
     grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1), nullable=True)
     wasSA : sqlo.Mapped[bool] = sqlo.mapped_column(sqla.Boolean())
     term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(6))
+
+    # relationships
+    student : sqlo.Mapped[Student] = sqlo.relationship(back_populates='enrollments')
 
 @login.user_loader
 def load_user(id):
