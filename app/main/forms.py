@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_login import current_user
 from app import db
 import sqlalchemy as sqla
 
@@ -18,8 +19,8 @@ class CourseSectionForm(FlaskForm):
 
 class CreatePositionForm(FlaskForm):
     section_id = QuerySelectField('Section',
-                                 query_factory = ,
-                                 get_label = )
+                                 query_factory = lambda : db.session.scalars(sqla.select(Section).where(Section.instructor_id == current_user.id)),
+                                 get_label = lambda s : 'CS {} {}'.format(db.session.scalars(sqla.select(Course).where(Course.id == s.id)).first().coursenum), s.sectionnum)
     open_positions = IntegerField('Number of Positions')
     min_GPA = FloatField('Minimum GPA of Student Assistant')
     min_grade = StringField('Minimum Grade of Student Assistant', validators=[Length(min = 0, max = 1)])
