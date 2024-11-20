@@ -39,7 +39,7 @@ def create_sa_position():
         return redirect(url_for('main.index'))
     pform = CreatePositionForm()
     if pform.validate_on_submit():
-        new_SA_position = SA_Position(section_id = ,
+        new_SA_position = SA_Position(section_id = pform.section_id.data,
                                       open_positions = pform.open_positions.data,
                                       min_GPA = pform.min_GPA.data,
                                       min_Grade = pform.min_grade.data)
