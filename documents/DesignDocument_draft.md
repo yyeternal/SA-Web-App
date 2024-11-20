@@ -161,7 +161,7 @@ Our software will be composed of three major subsystems: main, auth, and errors.
     <img src="images/Frame 11.jpg"  border="2">
 </kbd>
 
-12. 
+12. instructor_positions.html
 <kbd>
     <img src="images/Frame 12.jpg"  border="2">
 </kbd>
