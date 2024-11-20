@@ -5,7 +5,7 @@ from app import db
 from app.auth import auth_blueprint as bp_auth 
 import sqlalchemy as sqla
 
-from app.main.models import User, Instructor
+from app.main.models import User, Instructor, Student
 from app.auth.auth_forms import LoginForm, InstructorRegistrationForm, StudentRegistrationForm
 
 from flask_login import login_user, current_user, logout_user, login_required
@@ -17,7 +17,7 @@ def login():
     
     lform = LoginForm()
     if lform.validate_on_submit():
-        query = sqla.select(User).where(User.username == lform.username.data)
+        query = sqla.select(User).where(User.username == lform.email.data)
         user = db.session.scalars(query).first()
         if (user is None) or (user.check_password(lform.password.data) == False):
             flash('Login wrong')
@@ -27,6 +27,11 @@ def login():
         return redirect(url_for('main.index'))
     return render_template('login.html', form = lform)
 
+@bp_auth.route('/user/logout', methods=['GET'])
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('auth.logout'))
 
 @bp_auth.route('/student/register', methods=['GET', 'POST'])
 def student_register():
@@ -37,18 +42,17 @@ def student_register():
         user = Student( username = sform.username.data,
                           firstname = sform.firstname.data,
                           lastname = sform.lastname.data,
-                          email = sform.email.data, 
                           id = sform.WPI_id.data,
                           user_type = 'Student',
                           phone_number = sform.phonenumber.data,
                           major = sform.major.data, 
-                          gpa  = sform.gpa.data,
+                          GPA  = sform.gpa.data,
                           graduation_date = sform.graduation_date.data)    # need to finish this when we have a student model
         user.set_password(sform.password.data)
         db.session.add(user)
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
-        return redirect(url_for('main.index')) 
+        return redirect(url_for('auth.login')) 
     return render_template('student_register.html', form = sform)    
 
 @bp_auth.route('/instructor/register', methods=['GET', 'POST'])
@@ -60,13 +64,13 @@ def instructor_register():
         user = Instructor(username = iform.username.data,
                           firstname = iform.firstname.data,
                           lastname = iform.lastname.data,
-                          email = iform.email.data, 
                           id = iform.WPI_id.data,
                           user_type = 'Instructor',
-                          phone_number = iform.phonenumber.data)   
+                          phone_number = iform.phonenumber.data,
+                          title = iform.title.data)   
         user.set_password(iform.password.data)
         db.session.add(user)
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
-        return redirect(url_for('main.index'))
+        return redirect(url_for('auth.login'))
     return render_template('instructor_register.html', form = iform)   

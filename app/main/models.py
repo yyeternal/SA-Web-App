@@ -1,3 +1,4 @@
+from typing import Optional
 from app import db
 import sqlalchemy as sqla
 import sqlalchemy.orm as sqlo
@@ -7,7 +8,7 @@ from flask_login import UserMixin
 
 class Course(db.Model):
     id : sqlo.Mapped[int] = sqlo.mapped_column(primary_key=True)
-    coursenum : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(4), index=True)
+    coursenum : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(7), index=True)
     title : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(150))
 
     def __repr__(self):
@@ -20,18 +21,19 @@ class Course(db.Model):
         return self.title
 
 class User(UserMixin, db.Model):
+    __tablename__ = 'user'
     id : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(9), primary_key=True)
     username : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
-    password_hash : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(256), nullable=True)
+    password_hash : sqlo.Mapped[Optional[str]] = sqlo.mapped_column(sqla.String(256))
     firstname : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
     lastname : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
     user_type : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
     phone_number : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(15))
 
-    # __mapper_args__ = {
-    #     'polymorphic_identity': 'User',
-    #     'polymorphic_on': user_type
-    # }
+    __mapper_args__ = {
+        'polymorphic_identity': 'user',
+        'polymorphic_on': user_type
+    }
 
     def __repr__(self):
         return '<User {} - {} - {} {}>'.format(self.id, self.username, self.firstname, self.lastname)
@@ -43,6 +45,10 @@ class User(UserMixin, db.Model):
         return check_password_hash(pwhash=self.password_hash, password=password)
 
 class Instructor(User):
+    __tablename__ = 'instructor'
+    id : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(9), sqla.ForeignKey(User.id), primary_key=True)
+    title : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
+
     __mapper_args__ = {
         'polymorphic_identity': 'Instructor',
     }
@@ -53,28 +59,22 @@ class Instructor(User):
         return '<Instructor {} - {} - {} {}>'.format(self.id, self.username, self.firstname, self.lastname)
 
 class Student(User):
-    __tablename__='Student'
-    id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(User.id),
-                                                                primary_key = True)
+    __tablename__='student'
+    id : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(9), sqla.ForeignKey(User.id), primary_key=True)
     major : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
-    GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.float(5))
-    Grad_Year : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer)
-    Grad_Month : sqlo.Mapped[int] = solo.mapped_column(sqla.Integer)
+    GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float(5))
+    graduation_date : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(10))
 
     #Relationships
     
+    enrollments : sqlo.WriteOnlyMapped['Enrollment'] = sqlo.relationship(back_populates='student')
+
     __mapper_args__ = {
         'polymorphic_identity': 'Student'
     }
 
     def __repr__(self):
         return '<Student {} - {} - {} {}>'.format(self.id, self.username, self.firstname, self.lastname)
-
-class SA_Position(db.Model):
-    section_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Section.id))
-    open_postions : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, default = 0)
-    min_GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.float(5))
-    min_Grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1))
 
 class Section(db.Model):
     id : sqlo.Mapped[int] = sqlo.mapped_column(primary_key=True)
@@ -84,12 +84,34 @@ class Section(db.Model):
     instructor_id: sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey('user.id'))
     instructor : sqlo.Mapped[Instructor] = sqlo.relationship(back_populates = 'sections')
 
+    #Relationship
+    # SA_Positions : sqlo.WriteOnlyMapped[SA_Position] = sqlo.relationship(back_populates = 'section')
+
     def __repr__(self):
         return '<Section - {} {}>'.format(self.get_course().title, self.sectionnum)
     
     def get_course(self):
         return db.session.scalars(sqla.select(Course).where(Course.id == self.course_id)).first()
     
+class SA_Position(db.Model):
+    section_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Section.id), primary_key=True)
+    open_postions : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, default = 0)
+    min_GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float(5))
+    min_Grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1))
+
+    #Relationship
+    # section : sqlo.Mapped[Section] = sqlo.relationship(back_populates = 'SA_Positions')
+
+class Enrollment(db.Model):
+    student_id : sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(Student.id), primary_key=True)
+    course_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Course.id), primary_key=True)
+    grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1), nullable=True)
+    wasSA : sqlo.Mapped[bool] = sqlo.mapped_column(sqla.Boolean())
+    term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(6))
+
+    # relationships
+    student : sqlo.Mapped[Student] = sqlo.relationship(back_populates='enrollments')
+
 @login.user_loader
 def load_user(id):
-    return db.session.get(User, int(id))
+    return db.session.get(User, id)

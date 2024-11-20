@@ -160,5 +160,6 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-# database file
-student.db
+# untracked files
+.env
+CS 3733 - Term Project.pdf
