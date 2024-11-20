@@ -60,7 +60,7 @@ This section describes how our final software product will operate and how the u
 
 ### Database UML Diagram
 <kbd>
-    <img src="images/SARecruitmentWebApp.drawio.png"  border="2">
+    <img src="images/SARecruitmentWebApp-DB UML Diagram.png"  border="2">
 </kbd>
 
 ## 2.2 Subsystems and Interfaces
