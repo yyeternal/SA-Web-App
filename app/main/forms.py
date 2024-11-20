@@ -18,7 +18,7 @@ class CourseSectionForm(FlaskForm):
 
 class CreatePositionForm(FlaskForm):
     section_id = QuerySelectField('Section',
-                                 query_factory = 
+                                 query_factory = ,
                                  get_label = )
     open_positions = IntegerField('Number of Positions')
     min_GPA = FloatField('Minimum GPA of Student Assistant')
