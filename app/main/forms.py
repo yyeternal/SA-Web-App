@@ -11,9 +11,7 @@ from wtforms.widgets import ListWidget, CheckboxInput
 class CourseSectionForm(FlaskForm):
     course = QuerySelectField('Course',
                          query_factory= lambda : db.session.scalars(sqla.select(Course)),
-                         get_label= lambda c : 'CS{} - {}'.format(c.coursenum, c.title),
-                         widget=ListWidget(prefix_label=False),
-                         option_widget=CheckboxInput())
+                         get_label= lambda c : 'CS{} - {}'.format(c.coursenum, c.title))
     section = StringField('Course Section', validators=[DataRequired()])
     term = StringField('Term', validators=[DataRequired()])
     submit = SubmitField('Add')
