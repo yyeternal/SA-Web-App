@@ -149,7 +149,7 @@ Our software will be composed of three major subsystems: main, auth, and errors.
     <img src="images/Frame 8.jpg"  border="2">
 </kbd>
 
-10. index.html
+10. view_positions.html
 
 <kbd>
     <img src="images/Frame 6.jpg"  border="2">
