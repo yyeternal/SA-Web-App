@@ -161,6 +161,5 @@ cython_debug/
 #.idea/
 
 # untracked files
-student.db
 .env
 CS 3733 - Term Project.pdf

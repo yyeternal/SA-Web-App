@@ -33,7 +33,6 @@ def logout():
     logout_user()
     return redirect(url_for('auth.login'))
 
-
 @bp_auth.route('/student/register', methods=['GET', 'POST'])
 def student_register():
     if current_user.is_authenticated:
@@ -53,7 +52,7 @@ def student_register():
         db.session.add(user)
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
-        return redirect(url_for('main.index')) 
+        return redirect(url_for('auth.login')) 
     return render_template('student_register.html', form = sform)    
 
 @bp_auth.route('/instructor/register', methods=['GET', 'POST'])
@@ -67,10 +66,11 @@ def instructor_register():
                           lastname = iform.lastname.data,
                           id = iform.WPI_id.data,
                           user_type = 'Instructor',
-                          phone_number = iform.phonenumber.data)   
+                          phone_number = iform.phonenumber.data,
+                          title = iform.title.data)   
         user.set_password(iform.password.data)
         db.session.add(user)
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
-        return redirect(url_for('main.index'))
+        return redirect(url_for('auth.login'))
     return render_template('instructor_register.html', form = iform)   
