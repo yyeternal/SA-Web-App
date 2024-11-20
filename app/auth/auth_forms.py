@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, BooleanField
+from wtforms import StringField, SubmitField, PasswordField, BooleanField, FloatField
 from wtforms.validators import  ValidationError, DataRequired, EqualTo, Email
 
 from app.main.models import User, Instructor
@@ -19,7 +19,7 @@ class StudentRegistrationForm(FlaskForm):
     WPI_id = StringField('WPI ID', validators=[DataRequired()])
     phonenumber = StringField('Phone Number', validators=[DataRequired()])
     major = StringField('Major', validators=[DataRequired()])
-    gpa = StringField('GPA', validators=[DataRequired()])
+    gpa = FloatField('GPA', validators=[DataRequired()])
     graduation_date = StringField('Graduation Date', validators=[DataRequired()])
 
     password = PasswordField('Password', validators=[DataRequired()])
@@ -53,6 +53,7 @@ class InstructorRegistrationForm(FlaskForm):
     firstname = StringField('First Name', validators=[DataRequired('Error, must enter a value')])
     lastname = StringField('Last Name', validators=[DataRequired('Error, must enter a value')])
     WPI_id = StringField('WPI ID', validators=[DataRequired()])
+    title = StringField('Title', validators=[DataRequired()])
     phonenumber = StringField('Phone Number', validators=[DataRequired()])
     
     password = PasswordField('Password', validators=[DataRequired()])

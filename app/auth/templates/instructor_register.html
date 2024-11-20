@@ -1,6 +1,6 @@
 {% block content %}
     <h1>Register</h1>
-    <form action = "{{url_for('auth.student_register')}}" method = "POST">
+    <form action = "{{url_for('auth.instructor_register')}}" method = "POST">
         {{ form.hidden_tag()}}
         <p>
             {{form.username.label}}<br>
@@ -37,6 +37,13 @@
                 <span style = "color: red;">[{{ error}}]</span>
             {% endfor %}
         </p>
+        <p>
+            {{form.title.label}}<br>
+            {{form.title(class = 'forminput')}}<br>
+            {% for error in form.title.errors %}
+                <span style = "color: red;">[{{ error}}]</span>
+            {% endfor %}
+        </p>
         
         <p>
             {{form.password.label}}<br>
@@ -54,3 +61,4 @@
         </p>
         <p>{{form.submit(class="registerbutton")}}</p>
     </form>
+{% endblock %}

@@ -50,7 +50,7 @@ class Instructor(User):
     title : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
 
     __mapper_args__ = {
-        'polymorphic_identity': 'instructor',
+        'polymorphic_identity': 'Instructor',
     }
 
     sections : sqlo.WriteOnlyMapped['Section'] = sqlo.relationship(back_populates = 'instructor')
@@ -60,14 +60,14 @@ class Instructor(User):
 
 class Student(User):
     __tablename__='student'
-    major : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
-    GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float(5))
-    graduation_date : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(10))
+    major : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50), nullable=True)
+    GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float(5), nullable=True)
+    graduation_date : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(10), nullable=True)
 
     #Relationships
     
     __mapper_args__ = {
-        'polymorphic_identity': 'student'
+        'polymorphic_identity': 'Student'
     }
 
     def __repr__(self):
