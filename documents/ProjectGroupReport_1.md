@@ -30,8 +30,7 @@
  As an instructor, I want to be able to create my instructor account using my WPI credentials in order to find SA positions for my class. (Jonathan)
 ## 3. Iteration 1 - Sprint Retrospective
 
- * Include the outcome of your `Iteration-1 Scrum retrospective meetings`. 
- * Mention the changes the team will be doing to improve itself as a result of the Scrum reflections.
+ Iteration 1 went well, we should have started working on it earlier though. We also learned that certain team members start earlier than others, so we should assign the foundational tasks, the ones that others rely on, to the team members who work on it earlier. For the next iteration, we will do more testing to ensure we have no bugs. 
 
 ----
 ## 4. Product Backlog refinement
