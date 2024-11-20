@@ -67,17 +67,10 @@ This section describes how our final software product will operate and how the u
 
 ### 2.2.1 Overview
 
-Describe the high-level architecture of your software:  i.e., the major subsystems and how they fit together. Provide a UML component diagram that illustrates the architecture of your software. Briefly mention the role of each subsystem in your architectural design. Please refer to the "System Level Design" lectures in Week 4. 
+4. 
 Our software will be composed of three major subsystems: main, auth, and errors. The errors subsystem will only be used for handling errors in routing and requests. The auth subsystem will handle all authorization tasks such as registering a new user, logging in and out, and keeping the forms for each of those. Most everything that will not be handled by the errors and auth subsystems will be handled by the main subsystem including courses, positions, applications, etc.
 
 ### 2.2.2 Interfaces
-
-Include a detailed description of the routes your application will implement. 
-* Brainstorm with your team members and identify all routes you need to implement for the **completed** application.
-* For each route specify its “methods”, “URL path”, and “a description of the operation it implements”.  
-* You can use the following table template to list your route specifications. 
-* Organize this section according to your subsytem decomposition, i.e., include a sub-section for each subsytem and list all routes for that sub-section in a table.  
-
 
 #### 2.2.2.1 \<Auth> Routes
 
