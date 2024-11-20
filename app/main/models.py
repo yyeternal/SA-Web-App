@@ -78,9 +78,9 @@ class Student(User):
 
 class Section(db.Model):
     id : sqlo.Mapped[int] = sqlo.mapped_column(primary_key=True)
-    sectionnum : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(5))
-    course_id : sqlo.Mapped[Course] = sqlo.mapped_column(sqla.ForeignKey(Course.id))
-
+    sectionnum : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(5), primary_key=True)
+    course_id : sqlo.Mapped[Course] = sqlo.mapped_column(sqla.ForeignKey(Course.id), primary_key=True)
+    term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(6), primary_key=True)
     instructor_id: sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey('user.id'))
     instructor : sqlo.Mapped[Instructor] = sqlo.relationship(back_populates = 'sections')
 
@@ -95,9 +95,9 @@ class Section(db.Model):
     
 class SA_Position(db.Model):
     section_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Section.id), primary_key=True)
-    open_postions : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, default = 1)
+    open_positions : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, default = 1)
     min_GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float(5))
-    min_Grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1))
+    min_Grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1), nullable=True)
 
     #Relationship
     # section : sqlo.Mapped[Section] = sqlo.relationship(back_populates = 'SA_Positions')
