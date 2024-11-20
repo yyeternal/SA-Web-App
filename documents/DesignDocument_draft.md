@@ -149,7 +149,7 @@ Our software will be composed of three major subsystems: main, auth, and errors.
     <img src="images/Frame 8.jpg"  border="2">
 </kbd>
 
-10. view_positions.html
+10. index.html (for students)
 
 <kbd>
     <img src="images/Frame 6.jpg"  border="2">
@@ -161,7 +161,7 @@ Our software will be composed of three major subsystems: main, auth, and errors.
     <img src="images/Frame 11.jpg"  border="2">
 </kbd>
 
-12. instructor_positions.html
+12. index.html (for instructors)
 <kbd>
     <img src="images/Frame 12.jpg"  border="2">
 </kbd>
