@@ -45,7 +45,7 @@ This section describes how our final software product will operate and how the u
 
 ### UML Component Diagram
 <kbd>
-    <img src="images/SARecruitmentWebApp-UML Subsystem Component Diagram.drawio.png" border="2">
+    <img src="images/SARecruitmentWebApp-UML Subsystem Component Diagram.jpg" border="2">
 </kbd>
 
 ## 2.1 Database Model
