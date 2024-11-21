@@ -64,10 +64,15 @@ class Student(User):
     major : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
     GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float(5))
     graduation_date : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(10))
+    isSA : sqlo.Mapped[bool] = sqlo.mapped_column(sqla.Boolean())
 
     #Relationships
-    
     enrollments : sqlo.WriteOnlyMapped['Enrollment'] = sqlo.relationship(back_populates='student')
+    positionid: sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey('SA_Position.section_id'))
+    position : sqlo.WriteOnlyMapped['SA_Position'] = sqlo.relationship(back_populates = 'students')
+
+    #Relationships
+    applications : sqlo.WriteOnlyMapped['Application'] = sqlo.relationship(back_populates = 'appStudent')
 
     __mapper_args__ = {
         'polymorphic_identity': 'Student'
@@ -82,10 +87,10 @@ class Section(db.Model):
     course_id : sqlo.Mapped[Course] = sqlo.mapped_column(sqla.ForeignKey(Course.id), primary_key=True)
     term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(6), primary_key=True)
     instructor_id: sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey('user.id'))
-    instructor : sqlo.Mapped[Instructor] = sqlo.relationship(back_populates = 'sections')
 
     #Relationship
-    # SA_Positions : sqlo.WriteOnlyMapped[SA_Position] = sqlo.relationship(back_populates = 'section')
+    instructor : sqlo.Mapped[Instructor] = sqlo.relationship(back_populates = 'sections')
+    SA_Positions : sqlo.WriteOnlyMapped['SA_Position'] = sqlo.relationship(back_populates = 'section')
 
     def __repr__(self):
         return '<Section - {} {}>'.format(self.get_course().title, self.sectionnum)
@@ -99,8 +104,10 @@ class SA_Position(db.Model):
     min_GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float(5))
     min_Grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1), nullable=True)
 
+    students : sqlo.WriteOnlyMapped['Student'] = sqlo.relationship(back_populates = 'position')
+
     #Relationship
-    # section : sqlo.Mapped[Section] = sqlo.relationship(back_populates = 'SA_Positions')
+    section : sqlo.Mapped[Section] = sqlo.relationship(back_populates = 'SA_Positions')
 
 class Enrollment(db.Model):
     student_id : sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(Student.id), primary_key=True)
@@ -111,6 +118,14 @@ class Enrollment(db.Model):
 
     # relationships
     student : sqlo.Mapped[Student] = sqlo.relationship(back_populates='enrollments')
+
+class Application(db.Model):
+    position_id : sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(SA_Position.id), primary_key=True)
+    grade_recieved : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1))
+    when_course_taken : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
+    student_id: sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey('user.id'))
+    # relationships
+    appStudent : sqlo.Mapped[Student] = sqlo.relationship(back_populates = 'applications')
 
 @login.user_loader
 def load_user(id):
