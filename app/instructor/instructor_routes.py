@@ -1,6 +1,6 @@
 from app import db
 from app.instructor import instructor_blueprint as bp_instructor
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_required, current_user
 from app.instructor.instructor_forms import CourseSectionForm, CreatePositionForm, EditInstructorProfileForm
 from app.main.models import Section, SA_Position
@@ -52,17 +52,24 @@ def create_sa_position():
 @bp_instructor.route('/instructor/edit', methods=['GET', 'POST'])
 @login_required
 def edit_instructor_profile():
-    if current_user.user_type == 'Student':
+    if not current_user.user_type == 'Instructor':
         flash('You do not have access to this page')
         return redirect(url_for('main.index'))
     iform = EditInstructorProfileForm()
-    if iform.validate_on_submit():
-        current_user.firstname = iform.firstname.data
-        current_user.lastname = iform.lastname.data
-        current_user.phone_number = iform.phonenumber.data
-        current_user.title = iform.title.data
-        current_user.set_password(iform.password.data)
-        db.session.commit()
-        flash('Updated profile')
-        return redirect(url_for('main.index'))
+    if request.method == 'POST':
+        if iform.validate_on_submit():
+            current_user.firstname = iform.firstname.data
+            current_user.lastname = iform.lastname.data
+            current_user.phone_number = iform.phonenumber.data
+            current_user.title = iform.title.data
+            current_user.set_password(iform.password.data)
+            db.session.commit()
+            flash('Updated profile')
+            return redirect(url_for('main.index'))
+    elif request.method == 'GET':
+        # populate form data from the DB
+        iform.firstname.data = current_user.firstname
+        iform.lastname.data = current_user.lastname
+        iform.phonenumber.data = current_user.phone_number
+        iform.title.data = current_user.title
     return render_template('instructor_edit_profile.html', form = iform)
