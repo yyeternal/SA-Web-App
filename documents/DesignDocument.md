@@ -19,7 +19,7 @@ Prepared by:
 ## Table of Contents
 - [1. Introduction](#1-introduction)
 - [2. Software Design](#2-software-design)
-    - [2.1 Database Model](#21-model)
+    - [2.1 Database Model](#21-database-model)
     - [2.2 Subsystems and Interfaces](#22-subsystems-and-interfaces)
     - [2.2.1 Overview](#221-overview)
     - [2.2.2 Interfaces](#222-interfaces)
@@ -81,7 +81,12 @@ Our software will be composed of three major subsystems: main, auth, and errors.
 |3. login                   |GET, POST |/login               |Handle login queries based on user input         |
 |4. logout                  |GET       |/logout              |Logs the current user out of the application     |
 
-#### 2.2.2.2 \<Instructor> Routes
+#### 2.2.2.2 \<Main> Routes
+| Route                     | Methods  | URL Path            | Description                                                                   |
+|:--------------------------|:---------|:--------------------|:------------------------------------------------------------------------------|
+|1. index                   |GET       |/index               |Displays open positions for students and own created positions for instructors |
+
+#### 2.2.2.3 \<Instructor> Routes
 
 | Route                   | Methods  | URL Path                    | Description                                                       |
 |:------------------------|:---------|:----------------------------|:------------------------------------------------------------------|
@@ -90,15 +95,14 @@ Our software will be composed of three major subsystems: main, auth, and errors.
 |3. view_sa_applications  |GET       |/view/\<section>/applications|Allows instructors to see SA applications for their course sections|
 |4. edit_instructor       |GET, POST |/instructor/edit             |Edit an instructor account based on user input                     |
 
-#### 2.2.2.3 \<Student> Routes
+#### 2.2.2.4 \<Student> Routes
 
 | Route                   | Methods  | URL Path                    | Description                                                       |
 |:------------------------|:---------|:----------------------------|:------------------------------------------------------------------|
-|1. view_sa_positions     |GET       |/view/positions              |Allows students see available SA positions                         |
-|2. view_sent_applications|GET       |/view/\<user>/applications   |Allows students to see their own, sent applications                |
-|3. create_application    |GET, POST |/application/create          |Create an application for a course section based on user input     |
-|4. withdraw_application  |POST      |/application/withdraw        |Withdraws a sent application                                       |
-|5. edit_student          |GET, POST |/student/edit                |Edit a student account based on user input                         |
+|1. view_sent_applications|GET       |/view/\<user>/applications   |Allows students to see their own, sent applications                |
+|2. create_application    |GET, POST |/application/create          |Create an application for a course section based on user input     |
+|3. withdraw_application  |POST      |/application/withdraw        |Withdraws a sent application                                       |
+|4. edit_student          |GET, POST |/student/edit                |Edit a student account based on user input                         |
 
 ### 2.3 User Interface Design 
 1. login.html
