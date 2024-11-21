@@ -3,11 +3,27 @@ from wtforms import StringField, SubmitField, PasswordField, BooleanField, Float
 from wtforms_sqlalchemy.fields import QuerySelectMultipleField
 from wtforms.validators import  ValidationError, DataRequired, EqualTo, Email
 from wtforms.widgets import ListWidget, CheckboxInput
-
+from flask import redirect
 from app.main.models import User, Instructor, Course
 from app import db
 import sqlalchemy as sqla
 
+def is_unique(field_name):
+    if field_name == 'username':
+        def _is_unique_username(form, field):
+            user = db.session.scalars(sqla.select(User).where(User.username == field.data)).first()
+            if user is not None:
+                # return redirect('auth.login')
+                raise ValidationError(message="There is already an account with that username")
+        return _is_unique_username
+    elif field_name == 'id':
+        def _is_unique_id(form, field):
+            user = db.session.scalars(sqla.select(User).where(User.id == field.data)).first()
+            if user is not None:
+                # return redirect('auth.login')
+                raise ValidationError(message="There is already an account with that ID")
+        return _is_unique_id
+    
 class LoginForm(FlaskForm):
     email = StringField('Username', validators = [DataRequired()])
     password = PasswordField('Password', validators = [DataRequired()])
@@ -15,10 +31,10 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Sign In')
 
 class StudentRegistrationForm(FlaskForm):
-    username = StringField('Email', validators=[DataRequired('Error, must enter a value'), Email()])
+    username = StringField('Email', validators=[DataRequired('Error, must enter a value'), Email(), is_unique('username')])
     firstname = StringField('First Name', validators=[DataRequired('Error, must enter a value')])
     lastname = StringField('Last Name', validators=[DataRequired('Error, must enter a value')])
-    WPI_id = StringField('WPI ID', validators=[DataRequired()])
+    WPI_id = StringField('WPI ID', validators=[DataRequired('Error, must enter a value'), is_unique('id')])
     courses  = QuerySelectMultipleField('Courses Taken', 
                                         query_factory = lambda : db.session.scalars(sqla.select(Course)),
                                         get_label = lambda theCourse : theCourse.title,
@@ -33,58 +49,14 @@ class StudentRegistrationForm(FlaskForm):
     password2 = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')
 
-   
-    # def validate_username(self, username):
-    #     query = sqla.select(Student).where(Student.username == username.data)
-    #     user = db.session.scalars(query).first()
-    #     if user is not None:
-    #         raise ValidationError('Username already exists! Try another one')
-
-    # def validate_email(self, email):
-    #     query = sqla.select(Student).where(Student.email == email.data)
-    #     user = db.session.scalars(query).first()
-    #     if user is not None:
-    #         raise ValidationError('Email already exists! Try another one')
-    
-    # def validate_WPIid(self, WPI_id):
-    #     query = sqla.select(Stduent).where(Student.WPI_id == WPI_id.data)
-    #     user = db.session.scalars(query).first()
-    #     if user is not None:
-    #         raise ValidationError('WPI ID already exists! Try another one')
-        
-    # validate_username(username)
-    # validate_email(email)
-
 class InstructorRegistrationForm(FlaskForm):
-    username = StringField('Email', validators=[DataRequired('Error, must enter a value'), Email()])
+    username = StringField('Email', validators=[DataRequired('Error, must enter a value'), Email(), is_unique('username')])
     firstname = StringField('First Name', validators=[DataRequired('Error, must enter a value')])
     lastname = StringField('Last Name', validators=[DataRequired('Error, must enter a value')])
-    WPI_id = StringField('WPI ID', validators=[DataRequired()])
+    WPI_id = StringField('WPI ID', validators=[DataRequired(), is_unique('id')])
     title = StringField('Title', validators=[DataRequired()])
     phonenumber = StringField('Phone Number', validators=[DataRequired()])
     
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')
-
-   
-    # def validate_username(self, username):
-    #     query = sqla.select(Instructor).where(Instructor.username == username.data)
-    #     user = db.session.scalars(query).first()
-    #     if user is not None:
-    #         raise ValidationError('Username already exists! Try another one')
-
-    # def validate_email(self, email):
-    #     query = sqla.select(Instructor).where(Instructor.username == email.data)
-    #     user = db.session.scalars(query).first()
-    #     if user is not None:
-    #         raise ValidationError('Email already exists! Try another one')
-    
-    # def validate_WPIid(self, WPI_id):
-    #     query = sqla.select(Instructor).where(Instructor.WPI_id == WPI_id.data)
-    #     user = db.session.scalars(query).first()
-    #     if user is not None:
-    #         raise ValidationError('WPI ID already exists! Try another one')
-        
-    # validate_username(username)
-    # validate_email(email)
