@@ -88,21 +88,22 @@ Our software will be composed of three major subsystems: main, auth, and errors.
 
 #### 2.2.2.3 \<Instructor> Routes
 
-| Route                   | Methods  | URL Path                    | Description                                                       |
-|:------------------------|:---------|:----------------------------|:------------------------------------------------------------------|
-|1. create_position       |GET, POST |/position/create             |Create a new SA position available for a course section            |
-|2. create_course_section |GET, POST |/course/create               |Create a new course section                                        |
-|3. view_sa_applications  |GET       |/view/\<section>/applications|Allows instructors to see SA applications for their course sections|
-|4. edit_instructor       |GET, POST |/instructor/edit             |Edit an instructor account based on user input                     |
+| Route                   | Methods  | URL Path                          | Description                                                       |
+|:------------------------|:---------|:----------------------------------|:------------------------------------------------------------------|
+|1. create_position       |GET, POST |/position/create                   |Create a new SA position available for a course section            |
+|2. create_course_section |GET, POST |/course/create                     |Create a new course section                                        |
+|3. view_sa_applications  |GET       |/section/\<section_id>/applications|Allows instructors to see SA applications for their course sections|
+|4. edit_instructor       |GET, POST |/instructor/edit                   |Edit an instructor account based on user input                     |
 
 #### 2.2.2.4 \<Student> Routes
 
-| Route                   | Methods  | URL Path                    | Description                                                       |
-|:------------------------|:---------|:----------------------------|:------------------------------------------------------------------|
-|1. view_sent_applications|GET       |/view/\<user>/applications   |Allows students to see their own, sent applications                |
-|2. create_application    |GET, POST |/application/create          |Create an application for a course section based on user input     |
-|3. withdraw_application  |POST      |/application/withdraw        |Withdraws a sent application                                       |
-|4. edit_student          |GET, POST |/student/edit                |Edit a student account based on user input                         |
+| Route                       | Methods  | URL Path                       | Description                                                       |
+|:----------------------------|:---------|:-------------------------------|:------------------------------------------------------------------|
+|1. view_sent_applications    |GET       |/applications/view              |Allows students to see a list of their own, sent applications      |
+|2. create_application        |GET, POST |/application/create             |Create an application for a course section based on user input     |
+|3. withdraw_application      |POST      |/application/withdraw           |Withdraws a sent application                                       |
+|4. edit_student              |GET, POST |/student/edit                   |Edit a student account based on user input                         |
+|5. view_recommended_positions|GET       |/positions/recommended          |Displays a list of positions recommended for student               |
 
 ### 2.3 User Interface Design 
 1. login.html
