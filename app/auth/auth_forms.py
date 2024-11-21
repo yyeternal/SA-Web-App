@@ -30,7 +30,7 @@ class StudentRegistrationForm(FlaskForm):
     graduation_date = StringField('Graduation Date', validators=[DataRequired()])
 
     password = PasswordField('Password', validators=[DataRequired()])
-    password2 = PasswordField('Password', validators=[DataRequired(), EqualTo('password')])
+    password2 = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')
 
    
@@ -64,7 +64,7 @@ class InstructorRegistrationForm(FlaskForm):
     phonenumber = StringField('Phone Number', validators=[DataRequired()])
     
     password = PasswordField('Password', validators=[DataRequired()])
-    password2 = PasswordField('Password', validators=[DataRequired(), EqualTo('password')])
+    password2 = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')
 
    

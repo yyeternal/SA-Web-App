@@ -13,12 +13,6 @@ class Course(db.Model):
 
     def __repr__(self):
         return '<Course {} - {} {}>'.format(self.id, self.coursenum, self.title)
-    
-    def get_coursenum(self):
-        return self.coursenum
-    
-    def get_title(self):
-        return self.title
 
 class User(UserMixin, db.Model):
     __tablename__ = 'user'
@@ -57,6 +51,9 @@ class Instructor(User):
 
     def __repr__(self):
         return '<Instructor {} - {} - {} {}>'.format(self.id, self.username, self.firstname, self.lastname)
+    
+    def get_sections(self):
+        return db.session.scalars(self.sections.select()).all()
 
 class Student(User):
     __tablename__='student'
@@ -75,6 +72,9 @@ class Student(User):
 
     def __repr__(self):
         return '<Student {} - {} - {} {}>'.format(self.id, self.username, self.firstname, self.lastname)
+    
+    def get_enrollments(self):
+        return db.session.scalars(self.enrollments.select()).all()
 
 class Section(db.Model):
     id : sqlo.Mapped[int] = sqlo.mapped_column(primary_key=True)
@@ -85,7 +85,7 @@ class Section(db.Model):
     instructor : sqlo.Mapped[Instructor] = sqlo.relationship(back_populates = 'sections')
 
     #Relationship
-    # SA_Positions : sqlo.WriteOnlyMapped[SA_Position] = sqlo.relationship(back_populates = 'section')
+    position : sqlo.Mapped['SA_Position'] = sqlo.relationship(back_populates = 'section')
 
     def __repr__(self):
         return '<Section - {} {}>'.format(self.get_course().title, self.sectionnum)
@@ -100,7 +100,7 @@ class SA_Position(db.Model):
     min_Grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1), nullable=True)
 
     #Relationship
-    # section : sqlo.Mapped[Section] = sqlo.relationship(back_populates = 'SA_Positions')
+    section : sqlo.Mapped[Section] = sqlo.relationship(back_populates = 'position')
 
 class Enrollment(db.Model):
     student_id : sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(Student.id), primary_key=True)

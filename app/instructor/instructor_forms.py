@@ -25,3 +25,12 @@ class CreatePositionForm(FlaskForm):
     min_GPA = FloatField('Minimum GPA of Student Assistant')
     min_grade = StringField('Minimum Grade of Student Assistant', validators=[Length(min = 0, max = 1)])
     submit = SubmitField('Create')
+
+class EditInstructorProfileForm(FlaskForm):
+    firstname = StringField('First Name', validators=[DataRequired('Error, must enter a value')])
+    lastname = StringField('Last Name', validators=[DataRequired('Error, must enter a value')])
+    title = StringField('Title', validators=[DataRequired()])
+    phonenumber = StringField('Phone Number', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    password2 = PasswordField('Password', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Register')
