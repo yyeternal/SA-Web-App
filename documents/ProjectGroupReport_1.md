@@ -15,7 +15,7 @@
 ----
 ## 1. Schedule
 
- We meet every Wednesday at 2:15-5 and if we have no accomplished what we had wanted, we have a backup meeting planned for Thursday from 2:15-5. 
+ We meet every Wednesday at 2:15-5 and if we have not accomplished what we had wanted, we have a backup meeting planned for Thursday from 2:15-5. 
 ----
 ## 2. Iteration 1 - Summary
 
