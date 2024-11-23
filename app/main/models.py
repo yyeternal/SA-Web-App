@@ -6,20 +6,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from app import login
 from flask_login import UserMixin
 
-class Course(db.Model):
-    id : sqlo.Mapped[int] = sqlo.mapped_column(primary_key=True)
-    coursenum : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(7), index=True)
-    title : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(150))
-
-    def __repr__(self):
-        return '<Course {} - {} {}>'.format(self.id, self.coursenum, self.title)
-    
-    def get_coursenum(self):
-        return self.coursenum
-    
-    def get_title(self):
-        return self.title
-
 class User(UserMixin, db.Model):
     __tablename__ = 'user'
     id : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(9), primary_key=True)
@@ -44,6 +30,51 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(pwhash=self.password_hash, password=password)
 
+class Course(db.Model):
+    id : sqlo.Mapped[int] = sqlo.mapped_column(primary_key=True)
+    coursenum : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(7), index=True)
+    title : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(150))
+
+    def __repr__(self):
+        return '<Course {} - {} {}>'.format(self.id, self.coursenum, self.title)
+    
+    def get_coursenum(self):
+        return self.coursenum
+    
+    def get_title(self):
+        return self.title
+
+class Section(db.Model):
+    id : sqlo.Mapped[int] = sqlo.mapped_column(primary_key=True)
+    sectionnum : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(5), primary_key=True)
+    course_id : sqlo.Mapped['Course'] = sqlo.mapped_column(sqla.ForeignKey(Course.id), primary_key=True)
+    term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(6), primary_key=True)
+    instructor_id: sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(User.id))
+
+    # relationships
+    instructor : sqlo.Mapped['Instructor'] = sqlo.relationship(back_populates = 'sections')
+    SA_Position : sqlo.WriteOnlyMapped['SA_Position'] = sqlo.relationship(back_populates = 'section')
+
+    def __repr__(self):
+        return '<Section - {} {}>'.format(self.get_course().title, self.sectionnum)
+    
+    def get_course(self):
+        return db.session.scalars(sqla.select(Course).where(Course.id == self.course_id)).first()
+    
+class SA_Position(db.Model):
+    id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer(), primary_key=True)
+    section_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Section.id))
+    open_positions : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, default = 1)
+    min_GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float(5))
+    min_Grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1), nullable=True)
+
+    # relationships
+    section : sqlo.Mapped['Section'] = sqlo.relationship(back_populates = 'SA_Position')
+    students : sqlo.WriteOnlyMapped['Student'] = sqlo.relationship(back_populates = 'position')
+
+    def get_SAs(self):
+        return db.session.scalars(sqla.select(self.students.select())).all()
+
 class Instructor(User):
     __tablename__ = 'instructor'
     id : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(9), sqla.ForeignKey(User.id), primary_key=True)
@@ -57,6 +88,9 @@ class Instructor(User):
 
     def __repr__(self):
         return '<Instructor {} - {} - {} {}>'.format(self.id, self.username, self.firstname, self.lastname)
+    
+    def get_sections(self):
+        return db.session.scalars(self.sections.select()).all()
 
 class Student(User):
     __tablename__='student'
@@ -65,13 +99,11 @@ class Student(User):
     GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float(5))
     graduation_date : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(10))
     isSA : sqlo.Mapped[bool] = sqlo.mapped_column(sqla.Boolean())
+    position_id: sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(SA_Position.id), nullable=True)
 
-    #Relationships
+    # relationships
     enrollments : sqlo.WriteOnlyMapped['Enrollment'] = sqlo.relationship(back_populates='student')
-    positionid: sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey('SA_Position.section_id'))
     position : sqlo.WriteOnlyMapped['SA_Position'] = sqlo.relationship(back_populates = 'students')
-
-    #Relationships
     applications : sqlo.WriteOnlyMapped['Application'] = sqlo.relationship(back_populates = 'appStudent')
 
     __mapper_args__ = {
@@ -80,34 +112,12 @@ class Student(User):
 
     def __repr__(self):
         return '<Student {} - {} - {} {}>'.format(self.id, self.username, self.firstname, self.lastname)
-
-class Section(db.Model):
-    id : sqlo.Mapped[int] = sqlo.mapped_column(primary_key=True)
-    sectionnum : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(5), primary_key=True)
-    course_id : sqlo.Mapped[Course] = sqlo.mapped_column(sqla.ForeignKey(Course.id), primary_key=True)
-    term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(6), primary_key=True)
-    instructor_id: sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey('user.id'))
-
-    #Relationship
-    instructor : sqlo.Mapped[Instructor] = sqlo.relationship(back_populates = 'sections')
-    SA_Positions : sqlo.WriteOnlyMapped['SA_Position'] = sqlo.relationship(back_populates = 'section')
-
-    def __repr__(self):
-        return '<Section - {} {}>'.format(self.get_course().title, self.sectionnum)
     
-    def get_course(self):
-        return db.session.scalars(sqla.select(Course).where(Course.id == self.course_id)).first()
+    def get_enrollments(self):
+        return db.session.scalars(sqla.select(Enrollment).where(Enrollment.student_id == self.id)).all()
     
-class SA_Position(db.Model):
-    section_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Section.id), primary_key=True)
-    open_positions : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, default = 1)
-    min_GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float(5))
-    min_Grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1), nullable=True)
-
-    students : sqlo.WriteOnlyMapped['Student'] = sqlo.relationship(back_populates = 'position')
-
-    #Relationship
-    section : sqlo.Mapped[Section] = sqlo.relationship(back_populates = 'SA_Positions')
+    def get_applications(self):
+        return db.session.scalars(sqla.select(Application).where(Application.student_id == self.id)).all()
 
 class Enrollment(db.Model):
     student_id : sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(Student.id), primary_key=True)
@@ -119,11 +129,15 @@ class Enrollment(db.Model):
     # relationships
     student : sqlo.Mapped[Student] = sqlo.relationship(back_populates='enrollments')
 
+    def get_course(self):
+        return db.session.scalars(sqla.select(Course).where(Course.id == self.course_id)).first()
+
 class Application(db.Model):
     position_id : sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(SA_Position.id), primary_key=True)
     grade_recieved : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1))
     when_course_taken : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
-    student_id: sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey('user.id'))
+    student_id: sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(User.id))
+
     # relationships
     appStudent : sqlo.Mapped[Student] = sqlo.relationship(back_populates = 'applications')
     
