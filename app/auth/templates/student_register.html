@@ -44,13 +44,6 @@
             {% endfor %}
         </p>
         <p>
-            {{form.courses.label}} <br>
-            {{form.courses()}} <br>
-            {% for error in form.courses.errors %}
-                <span style = "color: red;">[{{ error}}]</span>
-            {% endfor %}
-        </p>
-        <p>
             {{form.password.label}}<br>
             {{form.password(class = 'forminput')}}<br>
             {% for error in form.password.errors %}

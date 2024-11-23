@@ -52,10 +52,6 @@ def student_register():
         user.set_password(sform.password.data)
         db.session.add(user)
         db.session.commit()
-        for course in sform.courses.data:
-            exp = Enrollment(student_id=user.id, course_id=course.id, wasSA=True)
-            db.session.add(exp)
-        db.session.commit()
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('auth.login')) 
     return render_template('student_register.html', form = sform)    

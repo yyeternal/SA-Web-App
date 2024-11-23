@@ -2,8 +2,8 @@ from app import db
 from app.student import student_blueprint as bp_student
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_required, current_user
-from app.main.models import Section, SA_Position
-from app.student.student_forms import EditStudentProfileForm
+from app.main.models import Section, SA_Position, Enrollment
+from app.student.student_forms import EditStudentProfileForm, AddCourseForm
 from flask_login import login_required
 import sqlalchemy as sqla
 
@@ -40,3 +40,21 @@ def edit_student_profile():
         sform.gpa.data = current_user.GPA
         sform.graduation_date.data = current_user.graduation_date
     return render_template('student_edit_profile.html', form = sform)
+
+@bp_student.route('/student/course/add', methods=['GET', 'POST'])
+@login_required
+def student_add_course():
+    if not current_user.user_type == 'Student':
+        flash('You do not have access to this page')
+        return redirect(url_for('main.index'))
+    aform = AddCourseForm()
+    if aform.validate_on_submit():
+        e = db.session.scalars(sqla.select(Enrollment).where(Enrollment.student_id == current_user.id).where(Enrollment.course_id == aform.course.data.id)).first()
+        if e is None:
+            new_enrollment = Enrollment(student_id=current_user.id, course_id=aform.course.data.id, grade=aform.grade.data, wasSA=aform.wasSA.data, term=aform.term.data)
+            db.session.add(new_enrollment)
+            db.session.commit()
+            flash('Course experience added')
+            return redirect(url_for('main.index'))
+        flash('Enrollment already exists')
+    return render_template('add_experience.html', form=aform)
