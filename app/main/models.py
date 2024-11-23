@@ -98,12 +98,12 @@ class Student(User):
     major : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
     GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float(5))
     graduation_date : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(10))
-    isSA : sqlo.Mapped[bool] = sqlo.mapped_column(sqla.Boolean())
+    isSA : sqlo.Mapped[bool] = sqlo.mapped_column(sqla.Boolean(), default=False)
     position_id: sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(SA_Position.id), nullable=True)
 
     # relationships
     enrollments : sqlo.WriteOnlyMapped['Enrollment'] = sqlo.relationship(back_populates='student')
-    position : sqlo.WriteOnlyMapped['SA_Position'] = sqlo.relationship(back_populates = 'students')
+    position : sqlo.Mapped['SA_Position'] = sqlo.relationship(back_populates = 'students')
     applications : sqlo.WriteOnlyMapped['Application'] = sqlo.relationship(back_populates = 'appStudent')
 
     __mapper_args__ = {
@@ -134,7 +134,7 @@ class Enrollment(db.Model):
 
 class Application(db.Model):
     position_id : sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(SA_Position.id), primary_key=True)
-    grade_recieved : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1))
+    grade_received : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1))
     when_course_taken : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
     student_id: sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(User.id))
 
