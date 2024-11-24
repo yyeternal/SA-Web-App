@@ -29,3 +29,9 @@ class AddCourseForm(FlaskForm):
     grade = StringField('Grade recieved')
     term = StringField('What term and year did you take this course?', validators=[DataRequired()])
     submit = SubmitField('Add')
+
+class applyForm(FlaskForm):
+    grade = StringField('What grade did you get in this class?', validators=[DataRequired('Error, must enter a value')])
+    when_taken = StringField('When did you take this class?', validators=[DataRequired('Error, must enter a value')])
+    why = StringField('Why do you want to SA this class?', validators=[DataRequired('Error, must enter a value')])
+    submit = SubmitField('Apply')

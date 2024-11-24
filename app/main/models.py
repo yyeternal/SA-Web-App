@@ -133,7 +133,7 @@ class Enrollment(db.Model):
     term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(6), nullable=True)
 
     # relationships
-    student : sqlo.Mapped[Student] = sqlo.relationship(back_populates='enrollments')
+    student : sqlo.Mapped['Student'] = sqlo.relationship(back_populates='enrollments')
 
     def get_course(self):
         return db.session.scalars(sqla.select(Course).where(Course.id == self.course_id)).first()
@@ -144,9 +144,10 @@ class Application(db.Model):
     grade_received : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1))
     when_course_taken : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
     student_id: sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(User.id))
+    reasoning: sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(300))
 
     # relationships
-    appStudent : sqlo.Mapped[Student] = sqlo.relationship(back_populates = 'applications')
+    appStudent : sqlo.Mapped['Student'] = sqlo.relationship(back_populates = 'applications')
     position : sqlo.Mapped['SA_Position'] = sqlo.relationship(back_populates = 'applications')
     
 

@@ -50,8 +50,8 @@ def student_register():
                           GPA  = sform.gpa.data,
                           graduation_date = sform.graduation_date.data)    # need to finish this when we have a student model
         user.set_password(sform.password.data)
-        for c in sform.courses.data:
-            current_user.enrollments.add(c)
+        #for c in sform.courses.data:
+        #    current_user.enrollments.add(c)
         db.session.add(user)
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
