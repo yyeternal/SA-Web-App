@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Apply</h1>
+    <form action="{{url_for('student.student_apply_position', position_id=position_id)}}" method="POST">
+        {{ form.hidden_tag() }}
+        <p>
+            {{form.grade.label}}<br>
+            {{form.grade(class = 'forminput')}}<br>
+            {% for error in form.grade.errors %}
+                <span style = "color: red;">[{{ error}}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{form.when_taken.label}}<br>
+            {{form.when_taken(class = 'forminput')}}<br>
+            {% for error in form.when_taken.errors %}
+                <span style = "color: red;">[{{ error}}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{form.why.label}}<br>
+            {{form.why(class = 'forminput')}}<br>
+            {% for error in form.why.errors %}
+                <span style = "color: red;">[{{ error}}]</span>
+            {% endfor %}
+        </p>
+        <p>{{form.submit(class="registerbutton")}}</p>
+    </form>
+
+{%endblock%}

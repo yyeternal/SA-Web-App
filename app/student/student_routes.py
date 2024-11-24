@@ -2,8 +2,8 @@ from app import db
 from app.student import student_blueprint as bp_student
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_required, current_user
-from app.main.models import Section, SA_Position, Enrollment
-from app.student.student_forms import EditStudentProfileForm, AddCourseForm
+from app.main.models import Section, SA_Position, Enrollment, Application
+from app.student.student_forms import EditStudentProfileForm, AddCourseForm, ApplyForm
 from flask_login import login_required
 import sqlalchemy as sqla
 
@@ -58,3 +58,25 @@ def student_add_course():
             return redirect(url_for('main.index'))
         flash('Enrollment already exists')
     return render_template('add_experience.html', form=aform)
+
+@bp_student.route('/student/<position_id>/apply', methods=['GET', 'POST'])
+@login_required
+def student_apply_position(position_id):
+    if not current_user.user_type == 'Student':
+        flash('You do not have access to this page')
+        return redirect(url_for('main.index'))
+    already_applied = db.session.scalars(sqla.Select(Application).where(Application.student_id == current_user.id).where(Application.position_id == current_user.position_id)).first()
+    if already_applied is not None:
+        flash('You already applied for this position!')
+        return redirect(url_for('main.index'))
+    apform = ApplyForm()
+    if apform.validate_on_submit():
+        application = Application(position_id = position_id,
+                                  grade_received = apform.grade.data,
+                                  when_course_taken = apform.when_taken.data)
+        db.session.add(application)
+        db.session.commit()
+        flash('Application completed!')
+        return redirect(url_for('main.index'))
+    return render_template('apply.html', form=apform, position_id=position_id)
+    
