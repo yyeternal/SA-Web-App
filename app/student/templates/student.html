@@ -2,4 +2,10 @@
 
 {% block content %}
 
+    <h1>Student Assistant Positions</h1>
+
+    {%for position in current_user.get_all_positions()%}
+        {%include '_saPositions.html'%}
+    {% endfor %}
+
 {% endblock %}
