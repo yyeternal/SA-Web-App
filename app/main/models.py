@@ -81,6 +81,12 @@ class SA_Position(db.Model):
     def get_SAs(self):
         return db.session.scalars(sqla.select(self.students.select())).all()
 
+    def get_section(self):
+        return db.session.scalars(sqla.select(Section).where(Section.id == self.section_id)).first()
+
+    def get_instructor(self):
+        return db.session.scalars(sqla.select(Instructor).where(self.get_section().instructor_id == Instructor.id)).first()
+
 class Instructor(User):
     __tablename__ = 'instructor'
     id : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(9), sqla.ForeignKey(User.id), primary_key=True)
@@ -124,6 +130,9 @@ class Student(User):
     
     def get_applications(self):
         return db.session.scalars(sqla.select(Application).where(Application.student_id == self.id)).all()
+
+    def get_all_positions(self):
+        return db.session.scalars(sqla.select(SA_Position)).all()
 
 class Enrollment(db.Model):
     student_id : sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(Student.id), primary_key=True)
