@@ -1,0 +1,20 @@
+.forminput {
+    padding: 2px;
+	font-family: 'Segoe UI', Tahoma, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+	font-size: 18px;
+	width: 50%;
+}
+.registerbutton {
+    width : 85px;
+    padding : 3px;    
+    font-size: 16px;
+    margin : 5px;
+    padding : 5px;
+    border: 1px solid lightgray;
+}
+.registerbutton:hover {
+    background-color: 157dd3;
+    color: white;
+    cursor:pointer;
+}
+

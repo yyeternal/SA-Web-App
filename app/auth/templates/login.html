@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Sign In</h1>
+    <form action = "{{url_for('auth.login')}}" method = "POST">
+        {{form.hidden_tag()}}
+        <p>
+            {{form.email.label}}<br>
+            {{form.email(class = 'forminput')}}<br>
+            {% for error in form.email.errors %}
+            <span style = "color: red;">[{{ error}}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{form.password.label}}<br>
+            {{form.password(class = 'forminput')}}<br>
+            {% for error in form.password.errors %}
+            <span style = "color: red;">[{{ error}}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{form.remember_me()}} {{form.remember_me.label}}
+        </p>
+        <p>{{form.submit(class="registerbutton")}}</p>
+    </form>
+    New Student? <a href = "{{url_for('auth.student_register')}}"> Click to Register!</a>
+    <p>New Instructor? <a href = "{{url_for('auth.instructor_register')}}"> Click to Register!</a></p>
+    
+{% endblock %}
+

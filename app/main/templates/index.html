@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if current_user.user_type == 'Student' %}
+
+        <h1>Student Page</h1>
+
+    {% elif current_user.user_type == 'Instructor' %}
+        
+        <h1>Instructor Page</h1>
+        
+    {% endif %}
+{% endblock %}
