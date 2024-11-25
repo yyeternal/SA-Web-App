@@ -7,6 +7,11 @@ from app.main.models import Section, SA_Position, Application, Instructor
 from flask_login import login_required
 import sqlalchemy as sqla
 
+@bp_instructor.route('/view_positions/view', methods=['GET'])
+@login_required
+def view_positions():
+    return render_template('instructor.html')
+
 @bp_instructor.route('/course/create', methods=['GET', 'POST'])
 @login_required
 def create_course_section():
