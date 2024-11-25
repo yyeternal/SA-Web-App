@@ -10,7 +10,7 @@ import sqlalchemy as sqla
 @bp_instructor.route('/view_positions/view', methods=['GET'])
 @login_required
 def view_positions():
-    if current_user.user_type == 'Student':
+    if not current_user.user_type == 'Instructor':
         flash('You do not have access to this page')
         return redirect(url_for('main.index'))
     return render_template('instructor.html')
