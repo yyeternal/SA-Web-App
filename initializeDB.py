@@ -72,13 +72,13 @@ db.session.add(e2)
 
 db.session.commit()
 
-a1 = Application(position_id=p1.id, grade_received='A', when_course_taken='A 2024', student_id=u1.id)
+a1 = Application(position_id=p1.id, grade_received='A', when_course_taken='A 2024', student_id=u1.id, reasoning="I want to be an SA really badly")
 db.session.add(a1)
 
-a2 = Application(position_id=p2.id, grade_received='A', when_course_taken='D 2024', student_id=u3.id)
+a2 = Application(position_id=p2.id, grade_received='A', when_course_taken='D 2024', student_id=u3.id, reasoning="I want to be an SA really badly")
 db.session.add(a2)
 
-a3 = Application(position_id=p3.id, grade_received='B', when_course_taken='C 2024', student_id=u1.id)
+a3 = Application(position_id=p3.id, grade_received='B', when_course_taken='C 2024', student_id=u1.id, reasoning="I want to be an SA really badly")
 db.session.add(a3)
 
 db.session.commit()

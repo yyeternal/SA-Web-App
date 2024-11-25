@@ -149,7 +149,8 @@ class Enrollment(db.Model):
 
 class Application(db.Model):
     __tablename__ = 'application'
-    position_id : sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey('sa_position.id'), primary_key=True)
+    id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer(), primary_key=True)
+    position_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey('sa_position.id'))
     grade_received : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1))
     when_course_taken : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
     student_id: sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(User.id))
