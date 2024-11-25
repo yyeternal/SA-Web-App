@@ -1,8 +1,9 @@
 <table class = "SA Position">
 	<tr>
         {% set position = section.SA_Position %}
-		<td width = "44%" class="positioninfo">{{section.get_course().get_coursenum()}}-{{section.sectionnum}} {{section.get_course().title}}</td>
-		<td width = "44%" class="positioninfo">Term: {{section.term}}</td>
-		<td><a class = "registerbutton" href = "{{url_for('instructor.view_applications')}}">View Applications</a></td>
+		<td width = "38%" class="positioninfo">{{section.get_course().get_coursenum()}}-{{section.sectionnum}} {{section.get_course().title}}</td>
+		<td width = "38%" class="positioninfo">Term: {{section.term}}</td>
+		<td width = 10% class ="positioninfo">Posted at: {{ position.timestamp }}</td>
+		<td><a class = "button" href = "{{url_for('instructor.view_applications')}}">View Applications</a></td>
 	</tr>
 </table>
