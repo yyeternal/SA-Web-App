@@ -18,3 +18,31 @@
     cursor:pointer;
 }
 
+.applicationtable { 
+    width : 100%;
+    margin: 0px;
+}
+
+.applicationtitle {
+    text-align: center;    
+    font-size: 18px;
+    font-weight: bold;
+    font-style: normal;
+    margin : 2px 2px 2px 2px; 
+    padding: auto;
+}
+
+.applicationmessage {
+    font-style: normal;
+    font-size: 12px;
+    padding: 30px 0px 10px 15px;
+}
+
+.application-box {
+    display: flex;
+    vertical-align: middle;
+    background-color: rgb(233, 228, 228);
+    width: 29%; 
+    margin: 2px 2px 2px 2px;
+    padding: 25px;
+}

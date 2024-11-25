@@ -73,7 +73,9 @@ def student_apply_position(position_id):
     if apform.validate_on_submit():
         application = Application(position_id = position_id,
                                   grade_received = apform.grade.data,
-                                  when_course_taken = apform.when_taken.data)
+                                  when_course_taken = apform.when_taken.data,
+                                  reasoning = apform.why.data, 
+                                  student_id = current_user.id)
         db.session.add(application)
         db.session.commit()
         flash('Application completed!')

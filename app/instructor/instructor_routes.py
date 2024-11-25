@@ -3,7 +3,7 @@ from app.instructor import instructor_blueprint as bp_instructor
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_required, current_user
 from app.instructor.instructor_forms import CourseSectionForm, CreatePositionForm, EditInstructorProfileForm
-from app.main.models import Section, SA_Position
+from app.main.models import Section, SA_Position, Application
 from flask_login import login_required
 import sqlalchemy as sqla
 
@@ -73,3 +73,10 @@ def edit_instructor_profile():
         iform.phonenumber.data = current_user.phone_number
         iform.title.data = current_user.title
     return render_template('instructor_edit_profile.html', form = iform)
+
+@bp_instructor.route('/instructor/view_application', methods=['GET', 'POST'])
+@login_required
+def view_applications():
+    applications = db.session.scalars(sqla.select(Application).order_by(Application.position_id.desc()))
+    all_applications  = applications.all()
+    return render_template('view_applications.html', title="Applications", applications=all_applications, )
