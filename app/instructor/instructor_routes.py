@@ -77,6 +77,9 @@ def edit_instructor_profile():
 @bp_instructor.route('/instructor/view_application', methods=['GET', 'POST'])
 @login_required
 def view_applications():
+    if not current_user.user_type == 'Instructor':
+        flash('You do not have access to this page')
+        return redirect(url_for('main.index'))
     applications = db.session.scalars(sqla.select(Application).order_by(Application.position_id.desc()))
     all_applications  = applications.all()
     return render_template('view_applications.html', title="Applications", applications=all_applications, )
