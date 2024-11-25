@@ -1,13 +1,13 @@
 # Project Group Report - 2
 
-## Team: `<Your Team Name>`
+## Team: `Stack OverflowHeroes`
 
 List team members and their GitHub usernames
 
-* `<member1>`,`<username1>`
-* `<member2>`,`<username2>`
-* `<member3>`,`<username3>`
-* `<member4>`,`<username4>`
+* `Jonathan Tinti`,`yyeternal`
+* `Chris Smith`,`ChristopherSmith121`
+* `Alan Wang`,`awang27`
+* `Oliver Reera`,`oreera2020`
 
 ---
 **Course** : CS 3733 - Software Engineering
@@ -17,8 +17,14 @@ List team members and their GitHub usernames
 ----
 ## 1. Iteration 2 - Summary
 
- * Include a summary of your `Iteration-2` accomplishments. 
- * List the user stories completed in `Iteration-2`. Mention who worked on those user stories. 
+ For iteration 2, we were able to create the view positions from the student side as well as view SA positions from the instructor side. Additionally, we added custom validators so there are no errors on registration from the student and instructor side. We also added edit profile for student and instructors. Lastly, we added the ability for a student to apply for an SA position as well as for instructors to view what students applied for each SA position. 
+
+List of User Stories
+ As an instructor, I want to be able to view the students who have applied to the position to see how many have applied for this course. (Jonathan)
+ As a student, I want to be able to view all open SA positions to see what would appeal most to me. (Chris)
+ As an instructor, I want to view all of the SA positions related to my course sections. (Chris)
+ As a student, I want to be able to apply for multiple SA positions with my academic information in order to potentially get the role. (Jonathan)
+ As a student I want to be able to edit my profile in case any of my information changes. (Oliver)
 
 ----
 ## 2. Iteration 2 - Sprint Retrospective
@@ -29,7 +35,7 @@ List team members and their GitHub usernames
 ----
 ## 3. Product Backlog refinement
 
- * Have you made any changes to your `product backlog` after `Iteration-2`? If so, please explain the changes here. 
+ We slightly changed the relationships for application, enrollments, Sa position, and students. 
 
 ----
 ## 4. Iteration 3 - Sprint Backlog
