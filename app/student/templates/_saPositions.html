@@ -1,6 +1,9 @@
 <table class = 'SA Position'>
     <tr>
-        <td width = "45%">{{position.get_section().get_course().coursenum}}-{{position.get_section().sectionnum}} {{position.get_section().get_course().title}}</td>
-        <td width = "45%">Instructor: {{position.get_instructor().firstname}}  {{position.get_instructor().lastname}}</td>
+        <td width = "45%" class="positioninfo"><b>{{position.get_section().get_course().coursenum}}-{{position.get_section().sectionnum}} {{position.get_section().get_course().title}}</b></td>
+        <td width = "45%" class="positioninfo">Instructor: {{position.get_instructor().firstname}}  {{position.get_instructor().lastname}}</td>
+        <td>
+            <a class = "registerbutton" href = "{{url_for('student.student_apply_position', position_id = position.id)}}">Apply</a>
+        </td>
     </tr>
 </table>

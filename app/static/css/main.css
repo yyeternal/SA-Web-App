@@ -13,8 +13,8 @@
     border: 1px solid lightgray;
 }
 .registerbutton:hover {
-    background-color: 157dd3;
-    color: white;
+    background-color: rgb(138, 211, 236);
+    color: rgb(255, 255, 255);
     cursor:pointer;
 }
 
@@ -45,4 +45,12 @@
     width: 29%; 
     margin: 2px 2px 2px 2px;
     padding: 25px;
+}
+
+.positioninfo {
+    font-style: normal;
+    font-size: 18px;
+    padding: 10px 15px 10px 15px;
+    margin: 30px; 
+    border: 1px solid lightgray;
 }
