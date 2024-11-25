@@ -5,6 +5,7 @@ import sqlalchemy.orm as sqlo
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import login
 from flask_login import UserMixin
+from datetime import datetime, timezone
 
 class User(UserMixin, db.Model):
     __tablename__ = 'user'
@@ -57,7 +58,7 @@ class Section(db.Model):
 
     # relationships
     instructor : sqlo.Mapped['Instructor'] = sqlo.relationship(back_populates = 'sections')
-    SA_Position : sqlo.WriteOnlyMapped['SA_Position'] = sqlo.relationship(back_populates = 'section')
+    SA_Position : sqlo.Mapped['SA_Position'] = sqlo.relationship(back_populates = 'section')
 
     def __repr__(self):
         return '<Section - {} {}>'.format(self.get_course().title, self.sectionnum)
@@ -72,6 +73,7 @@ class SA_Position(db.Model):
     open_positions : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, default = 1)
     min_GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float(5))
     min_Grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1), nullable=True)
+    timestamp : sqlo.Mapped[Optional[datetime]] = sqlo.mapped_column(default = lambda : datetime.now(timezone.utc)) 
 
     # relationships
     section : sqlo.Mapped['Section'] = sqlo.relationship(back_populates = 'SA_Position')
@@ -157,8 +159,10 @@ class Application(db.Model):
     position_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey('sa_position.id'))
     grade_received : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1))
     when_course_taken : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
+    when_SA : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(10))
     student_id: sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(9), sqla.ForeignKey(Student.id))
     reasoning: sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(300))
+    status: sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(20), default='Pending')
     instructor_id: sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(9), sqla.ForeignKey(Instructor.id))
 
     # relationships

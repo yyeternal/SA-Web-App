@@ -90,3 +90,16 @@ def view_applications():
         return redirect(url_for('main.index'))
     applications = current_user.get_applications()
     return render_template('view_applications.html', title="Applications", applications=applications)
+
+@bp_instructor.route('/instructor/approve_application/<position_id>', methods=['GET', 'POST'])
+@login_required
+def approve_applications(position_id):
+    if not current_user.user_type == 'Instructor':
+        flash('You do not have access to this page')
+        return redirect(url_for('main.index'))
+    current_user.position_id = position_id
+    application = Application.query.get(position_id)
+    application.status = 'Approved'
+    db.session.commit()
+    flash("Accepted students application!")
+    return redirect(url_for('main.index'))

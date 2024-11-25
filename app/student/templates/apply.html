@@ -19,6 +19,13 @@
             {% endfor %}
         </p>
         <p>
+            {{form.when_SA.label}}<br>
+            {{form.when_SA(class = 'forminput')}}<br>
+            {% for error in form.when_SA.errors %}
+                <span style = "color: red;">[{{ error}}]</span>
+            {% endfor %}
+        </p>
+        <p>
             {{form.why.label}}<br>
             {{form.why(class = 'forminput')}}<br>
             {% for error in form.why.errors %}
