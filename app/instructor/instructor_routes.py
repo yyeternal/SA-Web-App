@@ -3,7 +3,7 @@ from app.instructor import instructor_blueprint as bp_instructor
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_required, current_user
 from app.instructor.instructor_forms import CourseSectionForm, CreatePositionForm, EditInstructorProfileForm
-from app.main.models import Section, SA_Position, Application
+from app.main.models import Section, SA_Position, Application, Instructor
 from flask_login import login_required
 import sqlalchemy as sqla
 
@@ -88,6 +88,6 @@ def view_applications():
     if not current_user.user_type == 'Instructor':
         flash('You do not have access to this page')
         return redirect(url_for('main.index'))
-    applications = db.session.scalars(sqla.select(Application).order_by(Application.position_id.desc()))
+    applications = db.session.scalars(sqla.select(Application).where(Instructor.id==current_user.id).order_by(Application.position_id.desc()))
     all_applications  = applications.all()
-    return render_template('view_applications.html', title="Applications", applications=all_applications, )
+    return render_template('view_applications.html', title="Applications", applications=all_applications)

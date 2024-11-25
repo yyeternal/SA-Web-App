@@ -97,6 +97,7 @@ class Instructor(User):
     }
 
     sections : sqlo.WriteOnlyMapped['Section'] = sqlo.relationship(back_populates = 'instructor')
+    applications : sqlo.WriteOnlyMapped['Application'] = sqlo.relationship(back_populates='instructor')
 
     def __repr__(self):
         return '<Instructor {} - {} - {} {}>'.format(self.id, self.username, self.firstname, self.lastname)
@@ -159,7 +160,7 @@ class Application(db.Model):
     # relationships
     appStudent : sqlo.Mapped['Student'] = sqlo.relationship(back_populates = 'applications')
     position : sqlo.Mapped['SA_Position'] = sqlo.relationship(back_populates = 'applications')
-    
+    instructor : sqlo.Mapped['Instructor'] = sqlo.relationship(back_populates = 'applications')
 
 @login.user_loader
 def load_user(id):
