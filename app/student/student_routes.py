@@ -74,6 +74,7 @@ def student_apply_position(position_id):
         application = Application(position_id = position_id,
                                   grade_received = apform.grade.data,
                                   when_course_taken = apform.when_taken.data,
+                                  when_SA = apform.when_SA.data,
                                   reasoning = apform.why.data, 
                                   student_id = current_user.id)
         db.session.add(application)

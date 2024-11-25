@@ -154,6 +154,7 @@ class Application(db.Model):
     position_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey('sa_position.id'))
     grade_received : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1))
     when_course_taken : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
+    when_SA : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(10))
     student_id: sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(User.id))
     reasoning: sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(300))
 

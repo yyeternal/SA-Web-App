@@ -33,5 +33,6 @@ class AddCourseForm(FlaskForm):
 class ApplyForm(FlaskForm):
     grade = StringField('What grade did you get in this class?', validators=[DataRequired('Error, must enter a value')])
     when_taken = StringField('When did you take this class?', validators=[DataRequired('Error, must enter a value')])
+    when_SA = StringField('When are you trying to SA this class?', validators=[DataRequired('Error, must enter a value')])
     why = StringField('Why do you want to SA this class?', validators=[DataRequired('Error, must enter a value')])
     submit = SubmitField('Apply')
