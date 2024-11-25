@@ -29,8 +29,7 @@ List of User Stories
 ----
 ## 2. Iteration 2 - Sprint Retrospective
 
- * Include the outcome of your `Iteration-2 Scrum retrospective meetings`. 
- * Mention the changes the team will be doing to improve itself as a result of the Scrum reflections.
+Iteration went alright, we had some issues with the instructor side of the app, but it was resolved through group effort. Iteration did not have a ton of work so it was difficult to assign equal amounts of work. For the next iteration, we will start working on it over Thanksgiving break. 
 
 ----
 ## 3. Product Backlog refinement
