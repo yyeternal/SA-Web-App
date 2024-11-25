@@ -65,7 +65,7 @@ def student_apply_position(position_id):
     if not current_user.user_type == 'Student':
         flash('You do not have access to this page')
         return redirect(url_for('main.index'))
-    already_applied = db.session.scalars(sqla.Select(Application).where(Application.student_id == current_user.id).where(Application.appStudent == current_user)).first()
+    already_applied = db.session.scalars(sqla.Select(Application).where(Application.student_id == current_user.id, Application.position_id==int(position_id))).first()
     if already_applied is not None:
         flash('You already applied for this position!')
         return redirect(url_for('main.index'))
