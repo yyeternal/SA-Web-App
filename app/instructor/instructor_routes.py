@@ -88,9 +88,8 @@ def view_applications():
     if not current_user.user_type == 'Instructor':
         flash('You do not have access to this page')
         return redirect(url_for('main.index'))
-    applications = db.session.scalars(sqla.select(Application).join(SA_Position).join(Section).where(Section.instructor_id == current_user.id,).order_by(Application.position_id.desc()))
-    all_applications  = applications.all()
-    return render_template('view_applications.html', title="Applications", applications=all_applications)
+    applications = current_user.get_applications()
+    return render_template('view_applications.html', title="Applications", applications=applications)
 
 @bp_instructor.route('/instructor/approve_application/<position_id>', methods=['GET', 'POST'])
 @login_required
