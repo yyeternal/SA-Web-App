@@ -104,6 +104,9 @@ class Instructor(User):
     
     def get_sections(self):
         return db.session.scalars(self.sections.select()).all()
+    
+    def get_applications(self):
+        return db.session.scalars(self.applications.select()).all()
 
 class Student(User):
     __tablename__='student'
@@ -154,8 +157,9 @@ class Application(db.Model):
     position_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey('sa_position.id'))
     grade_received : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1))
     when_course_taken : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(50))
-    student_id: sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(User.id))
+    student_id: sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(9), sqla.ForeignKey(Student.id))
     reasoning: sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(300))
+    instructor_id: sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(9), sqla.ForeignKey(Instructor.id))
 
     # relationships
     appStudent : sqlo.Mapped['Student'] = sqlo.relationship(back_populates = 'applications')

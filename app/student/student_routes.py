@@ -71,11 +71,14 @@ def student_apply_position(position_id):
         return redirect(url_for('main.index'))
     apform = ApplyForm()
     if apform.validate_on_submit():
+        position = db.session.scalars(sqla.select(SA_Position).where(SA_Position.id == position_id))
+        instructor_id = position.section.instructor_id
         application = Application(position_id = position_id,
                                   grade_received = apform.grade.data,
                                   when_course_taken = apform.when_taken.data,
                                   reasoning = apform.why.data, 
-                                  student_id = current_user.id)
+                                  student_id = current_user.id,
+                                  instructor_id = instructor_id)
         db.session.add(application)
         db.session.commit()
         flash('Application completed!')
