@@ -13,6 +13,10 @@
                 <br> 
                 <p>{{application.reasoning}}</p>   
                 <br> 
+                {% if application.status == 'Pending' %}
+                    <p><a class = "registerbutton" href = "{{url_for('instructor.approve_applications', position_id = application.position.id)}}">Approve</a></p>   
+                    <br> 
+                {% endif %}
             </td> 
         </tr>
     </table>

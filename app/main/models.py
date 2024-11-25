@@ -157,6 +157,7 @@ class Application(db.Model):
     when_SA : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(10))
     student_id: sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(User.id))
     reasoning: sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(300))
+    status: sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(20), default='Pending')
 
     # relationships
     appStudent : sqlo.Mapped['Student'] = sqlo.relationship(back_populates = 'applications')
