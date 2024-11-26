@@ -30,6 +30,12 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(pwhash=self.password_hash, password=password)
+    
+    def get_phone_number(self):
+        return self.phone_number
+    
+    def get_username(self):
+        return self.username
 
 class Course(db.Model):
     id : sqlo.Mapped[int] = sqlo.mapped_column(primary_key=True)
@@ -137,9 +143,15 @@ class Student(User):
     def get_applications(self):
         return db.session.scalars(sqla.select(Application).where(Application.student_id == self.id)).all()
 
-    def get_all_positions(self):
-        return db.session.scalars(sqla.select(SA_Position)).all()
-
+    def get_major(self):
+        return self.major
+    
+    def get_GPA(self):
+        return self.major
+    
+    def get_graduation_date(self):
+        return self.major
+    
 class Enrollment(db.Model):
     student_id : sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(Student.id), primary_key=True)
     course_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Course.id), primary_key=True)

@@ -2,8 +2,8 @@ from app import db
 from app.student import student_blueprint as bp_student
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_required, current_user
-from app.main.models import Section, SA_Position, Enrollment, Application
-from app.student.student_forms import EditStudentProfileForm, AddCourseForm, ApplyForm
+from app.main.models import Section, SA_Position, Enrollment, Application, Student
+from app.student.student_forms import EditStudentProfileForm, AddCourseForm, ApplyForm, EmptyForm
 from flask_login import login_required
 import sqlalchemy as sqla
 
@@ -86,3 +86,8 @@ def student_apply_position(position_id):
         return redirect(url_for('main.index'))
     return render_template('apply.html', form=apform, position_id=position_id)
     
+@bp_student.route('/<student_id>/profile', methods=['GET'])
+@login_required
+def display_profile(student_id):
+    empty_form = EmptyForm()
+    return render_template('display_profile.html', title = 'Display Profile', student = db.session.scalars(sqla.Select(Student).where(Student.id == student_id)), form = empty_form)

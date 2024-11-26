@@ -36,3 +36,6 @@ class ApplyForm(FlaskForm):
     when_SA = StringField('When are you trying to SA this class?', validators=[DataRequired('Error, must enter a value')])
     why = StringField('Why do you want to SA this class?', validators=[DataRequired('Error, must enter a value')])
     submit = SubmitField('Apply')
+
+class EmptyForm(FlaskForm):
+    submit = SubmitField('Submit')
