@@ -10,7 +10,8 @@ import sqlalchemy as sqla
 @bp_student.route('/positions/view', methods=['GET'])
 @login_required
 def view_positions():
-    return render_template('student.html')
+    positions = db.session.scalars(sqla.select(SA_Position)).all()
+    return render_template('student.html', positions=positions)
 
 @bp_student.route('/student/edit', methods=['GET', 'POST'])
 @login_required
@@ -71,7 +72,7 @@ def student_apply_position(position_id):
         return redirect(url_for('main.index'))
     apform = ApplyForm()
     if apform.validate_on_submit():
-        position = db.session.scalars(sqla.select(SA_Position).where(SA_Position.id == position_id))
+        position = db.session.scalars(sqla.select(SA_Position).where(SA_Position.id == int(position_id))).first()
         instructor_id = position.section.instructor_id
         application = Application(position_id = position_id,
                                   grade_received = apform.grade.data,

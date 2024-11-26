@@ -3,7 +3,7 @@ from app.instructor import instructor_blueprint as bp_instructor
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_required, current_user
 from app.instructor.instructor_forms import CourseSectionForm, CreatePositionForm, EditInstructorProfileForm
-from app.main.models import Section, SA_Position, Application, Instructor
+from app.main.models import Section, SA_Position, Application, Instructor, Student
 from flask_login import login_required
 import sqlalchemy as sqla
 
@@ -103,3 +103,12 @@ def approve_applications(position_id):
     db.session.commit()
     flash("Accepted students application!")
     return redirect(url_for('main.index'))
+
+@bp_instructor.route('/instructor/view_student/<student_id>', methods=['GET', 'POST'])
+@login_required
+def view_student(student_id):
+    if not current_user.user_type == 'Instructor':
+        flash('You do not have access to this page')
+        return redirect(url_for('main.index'))
+    student = Student.query.get(student_id)
+    return render_template('display_profile.html', student=student)

@@ -19,6 +19,7 @@
                     <p><a class = "button" href = "{{url_for('instructor.approve_applications', position_id = application.position.id)}}">Approve</a></p>   
                     <br> 
                 {% endif %}
+                <p><a class="button" href = "{{url_for('instructor.view_student', student_id=application.appStudent.id)}}">View Student</a></p>
             </td> 
         </tr>
     </table>

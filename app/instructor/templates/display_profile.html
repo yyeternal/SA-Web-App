@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Display Student Profile</h1>
+    <div class = "border rounded-3 bg-light p-3">
+        <h2> Student username: {{student.username}}</h2>
+        <p> <b>Name:</b>  {{student.firstname}} {{student.lastname}} </p> <br>
+        <p> <b>Email:</b> {{student.email}}</p> <br>
+        <p> <b>phone number:</b> {{student.phone_number}}</p> <br>
+        <p> <b>Major:</b> {{student.major}}</p> <br>
+        <p> <b>GPA:</b> {{student.GPA}}</p> <br>
+        <p> <b>Graduation Date:</b> {{student.graduation_date}}</p> <br>
+        <p> <b><a class="button" href="{{url_for('main.index')}}">Home</a></b></p>
+        <hr>
+    <hr>
+
+{% endblock %}
+

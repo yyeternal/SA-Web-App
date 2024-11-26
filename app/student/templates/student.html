@@ -4,7 +4,7 @@
 
     <h1>Student Assistant Positions</h1>
 
-    {%for position in current_user.get_all_positions()%}
+    {%for position in positions%}
         {%include '_saPositions.html'%}
     {% endfor %}
 
