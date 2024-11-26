@@ -10,6 +10,9 @@ import sqlalchemy as sqla
 @bp_student.route('/positions/view', methods=['GET'])
 @login_required
 def view_positions():
+    if not current_user.user_type == 'Student':
+        flash('You do not have access to this page')
+        return redirect(url_for('main.index'))
     positions = db.session.scalars(sqla.select(SA_Position)).all()
     return render_template('student.html', positions=positions)
 
@@ -19,7 +22,7 @@ def view_selected_position(position_id):
     if not current_user.user_type == 'Student':
         flash('You do not have access to this page')
         return redirect(url_for('main.index'))
-    sa_position = db.session.scalars(sqla.select(SA_Position).where(SA_Position.id == position_id)).first()
+    sa_position = db.session.scalars(sqla.select(SA_Position).where(SA_Position.id == int(position_id))).first()
     term = sa_position.section.term
     min_GPA = sa_position.min_GPA
     min_Grade = sa_position.min_Grade

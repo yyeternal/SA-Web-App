@@ -15,7 +15,7 @@
         <p>Term: {{term}}</p>
         <p>Minimum GPA: {{min_GPA}}</p>
         <p>Minimum Grade: {{min_Grade}}</p>
-        <a class = "registerbutton" href = "{{url_for('student.student_apply_position', position_id = sa_position.id)}}">Apply</a>
+        <a class = "button" href = "{{url_for('student.student_apply_position', position_id = sa_position.id)}}">Apply</a>
     {%endif%}
     </p>
 {% endblock %}
