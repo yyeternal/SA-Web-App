@@ -1,11 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
-
     <h1>Student Assistant Positions</h1>
 
     {%for position in positions%}
         {%include '_saPositions.html'%}
     {% endfor %}
-
+    </p>
+    <p>
+    {%if sa_position%}
+        <p>{{sa_position.get_section().get_course().coursenum}}-{{sa_position.get_section().sectionnum}} {{sa_position.get_section().get_course().title}}</p>
+        <p>Instructor: {{sa_position.get_section().instructor.firstname}} {{sa_position.get_section().instructor.lastname}}</p>
+        <p>{{sa_position.get_section().instructor.username}}</p>
+        <p>Term: {{term}}</p>
+        <p>Minimum GPA: {{min_GPA}}</p>
+        <p>Minimum Grade: {{min_Grade}}</p>
+        <a class = "registerbutton" href = "{{url_for('student.student_apply_position', position_id = sa_position.id)}}">Apply</a>
+    {%endif%}
+    </p>
 {% endblock %}

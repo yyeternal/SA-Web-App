@@ -4,7 +4,7 @@
         <td width = "38%" class="positioninfo">Instructor: {{position.get_instructor().firstname}}  {{position.get_instructor().lastname}}</td>
         <td width = 10% class ="positioninfo">Posted at: {{ position.timestamp }}</td>
         <td>
-            <a class = "button" href = "{{url_for('student.student_apply_position', position_id = position.id)}}">Apply</a>
+            <a class = "positioninfo" href = "{{url_for('student.view_selected_position', position_id = position.id)}}">View</a>
         </td>
     </tr>
 </table>

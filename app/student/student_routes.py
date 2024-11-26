@@ -13,6 +13,18 @@ def view_positions():
     positions = db.session.scalars(sqla.select(SA_Position)).all()
     return render_template('student.html', positions=positions)
 
+@bp_student.route('/positions/<position_id>/view', methods=['GET'])
+@login_required
+def view_selected_position(position_id):
+    if not current_user.user_type == 'Student':
+        flash('You do not have access to this page')
+        return redirect(url_for('main.index'))
+    sa_position = db.session.scalars(sqla.select(SA_Position).where(SA_Position.id == position_id)).first()
+    term = sa_position.section.term
+    min_GPA = sa_position.min_GPA
+    min_Grade = sa_position.min_Grade
+    return render_template('student.html', sa_position = sa_position, term = term, min_GPA = min_GPA, min_Grade = min_Grade)
+
 @bp_student.route('/student/edit', methods=['GET', 'POST'])
 @login_required
 def edit_student_profile():
