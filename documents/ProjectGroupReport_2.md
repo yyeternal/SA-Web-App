@@ -29,18 +29,19 @@ List of User Stories
 ----
 ## 2. Iteration 2 - Sprint Retrospective
 
-Iteration went alright, we had some issues with the instructor side of the app, but it was resolved through group effort. Iteration did not have a ton of work so it was difficult to assign equal amounts of work. For the next iteration, we will start working on it over Thanksgiving break. 
+Iteration went alright, we had some issues with the instructor side of the app, but it was resolved through group effort. Iteration did not have a ton of work so it was difficult to assign equal amounts of work. For the next iteration, we will start working on it over Thanksgiving break. Additionally, we need to work more om validators and error messages. 
 
 ----
 ## 3. Product Backlog refinement
 
- We slightly changed the relationships for application, enrollments, Sa position, and students. 
+ We slightly changed the relationships for application, enrollments, Sa position, and students. Additionally, we are going to combine our create_section and our create_position for the instructor side. 
 
 ----
 ## 4. Iteration 3 - Sprint Backlog
 
-As a student, I want to be able to view my recommended SA positions in a ranked list to give me a better understanding of what positions I should be applying to.
-As a student, I want to be able to withdraw my application if I no longer want to be an SA for that class.
-As an instructor, I want to be able to view each student’s qualifications to see who meets the requirements for the position.
-As an instructor, I would like the option to add an SA applicant to an SA position. It is worth noting that an SA can only SA in one class.
-As a student, I want to view all of my Applications and my application status.
+As a student, I want to be able to view my recommended SA positions in a ranked list to give me a better understanding of what positions I should be applying to. (Oliver)
+As a student, I want to be able to withdraw my application if I no longer want to be an SA for that class. (Alan)
+As an instructor, I would like the option to add an SA applicant to an SA position. It is worth noting that an SA can only SA in one class. (Jonathan)
+As a student, I want to view all of my Applications and my application status (Chris)
+As a instructor, I want to be able to login with SSO (Jonathan)
+As a instructor, I want to be able to login with SSO (Jonathan)
