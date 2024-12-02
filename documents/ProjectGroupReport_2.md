@@ -40,8 +40,7 @@ Iteration went alright, we had some issues with the instructor side of the app, 
 ## 4. Iteration 3 - Sprint Backlog
 
 As a student, I want to be able to view my recommended SA positions in a ranked list to give me a better understanding of what positions I should be applying to.
-As a student, I want to be able to view my application status so I can know if I have been accepted.
 As a student, I want to be able to withdraw my application if I no longer want to be an SA for that class.
 As an instructor, I want to be able to view each student’s qualifications to see who meets the requirements for the position.
 As an instructor, I would like the option to add an SA applicant to an SA position. It is worth noting that an SA can only SA in one class.
-As a student, I want to view all of my Applications.
+As a student, I want to view all of my Applications and my application status.
