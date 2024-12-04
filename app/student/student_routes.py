@@ -98,33 +98,22 @@ def student_apply_position(position_id):
     student = db.session.scalars(sqla.select(Student).where(Student.id==current_user.id)).first()
     class_taken = db.session.scalars(sqla.select(Enrollment).where(Enrollment.student_id == student.id, Enrollment.course_id == position.course_id)).first()
     apform = ApplyForm()
+    if class_taken is not None:
+        apform.grade.data = class_taken.grade
+        apform.when_taken.data = class_taken.term
     if apform.validate_on_submit():
-        if class_taken is not None:
-            instructor_id = position.instructor_id
-            application = Application(position_id = position_id,
-                                        grade_received = class_taken.grade,
-                                        when_course_taken = class_taken.term,
-                                        when_SA = apform.when_SA.data,
-                                        reasoning = apform.why.data, 
-                                        student_id = current_user.id,
-                                        instructor_id = instructor_id)
-            db.session.add(application)
-            db.session.commit()
-            flash('Application completed!')
-            return redirect(url_for('main.index'))
-        else:
-            instructor_id = position.instructor_id
-            application = Application(position_id = position_id,
-                                        grade_received = apform.grade.data,
-                                        when_course_taken = apform.when_taken.data,
-                                        when_SA = apform.when_SA.data,
-                                        reasoning = apform.why.data, 
-                                        student_id = current_user.id,
-                                        instructor_id = instructor_id)
-            db.session.add(application)
-            db.session.commit()
-            flash('Application completed!')
-            return redirect(url_for('main.index'))
+        instructor_id = position.instructor_id
+        application = Application(position_id = position_id,
+                                    grade_received = apform.grade.data,
+                                    when_course_taken = apform.when_taken.data,
+                                    when_SA = apform.when_SA.data,
+                                    reasoning = apform.why.data, 
+                                    student_id = current_user.id,
+                                    instructor_id = instructor_id)
+        db.session.add(application)
+        db.session.commit()
+        flash('Application completed!')
+        return redirect(url_for('main.index'))
     return render_template('apply.html', form=apform, position_id=position_id, class_taken=class_taken)
     
 @bp_student.route('/student/<application_id>/withdraw', methods=['POST'])
