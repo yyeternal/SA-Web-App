@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, BooleanField, FloatField 
+from wtforms import StringField, SubmitField, PasswordField, BooleanField, FloatField, DecimalField
 from wtforms_sqlalchemy.fields import QuerySelectMultipleField
 from wtforms.validators import  ValidationError, DataRequired, EqualTo, Email, Length
 from wtforms.widgets import ListWidget, CheckboxInput
@@ -42,7 +42,7 @@ class StudentRegistrationForm(FlaskForm):
                                         option_widget = CheckboxInput())
     phonenumber = StringField('Phone Number', validators=[DataRequired()])
     major = StringField('Major', validators=[DataRequired()])
-    gpa = FloatField('GPA', validators=[DataRequired()])
+    gpa = DecimalField('GPA', validators=[DataRequired()])
     graduation_date = StringField('Graduation Date', validators=[DataRequired()])
 
     password = PasswordField('Password', validators=[DataRequired()])
