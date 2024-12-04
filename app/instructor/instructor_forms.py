@@ -4,7 +4,7 @@ from app import db
 import sqlalchemy as sqla
 
 from app.main.models import User, Instructor, Course
-from wtforms import StringField, SubmitField, PasswordField, IntegerField, FloatField
+from wtforms import StringField, SubmitField, PasswordField, IntegerField, FloatField, DecimalField
 from wtforms_sqlalchemy.fields import QuerySelectField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError, Length, NumberRange
 from wtforms.widgets import ListWidget, CheckboxInput
@@ -16,7 +16,7 @@ class CreatePositionForm(FlaskForm):
     sectionnum = StringField('Section Number', validators=[DataRequired(), Length(min=1, max=10)])
     term = StringField('Term', validators=[DataRequired(), Length(min=1, max=6)])
     open_positions = IntegerField('Number of Positions', validators=[DataRequired(), NumberRange(min=1)])
-    min_GPA = FloatField('Minimum GPA of Student Assistant', validators=[DataRequired(), NumberRange(min=0.01)])
+    min_GPA = DecimalField('Minimum GPA of Student Assistant', validators=[DataRequired(), NumberRange(min=0,max=4.0)])
     min_grade = StringField('Minimum Grade of Student Assistant', validators=[DataRequired(), Length(min = 1, max = 1)])
     submit = SubmitField('Create')
 

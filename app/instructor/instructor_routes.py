@@ -61,13 +61,13 @@ def edit_instructor_profile():
         iform.title.data = current_user.title
     return render_template('instructor_edit_profile.html', form = iform)
 
-@bp_instructor.route('/instructor/view_application', methods=['GET', 'POST'])
+@bp_instructor.route('/instructor/view_application/<position_id>', methods=['GET', 'POST'])
 @login_required
-def view_applications():
+def view_applications(position_id):
     if not current_user.user_type == 'Instructor':
         flash('You do not have access to this page')
         return redirect(url_for('main.index'))
-    applications = current_user.get_applications()
+    applications = Application.query.filter_by(position_id=int(position_id)).all()
     return render_template('view_applications.html', title="Applications", applications=applications)
 
 @bp_instructor.route('/instructor/approve_application/<position_id>', methods=['GET', 'POST'])
@@ -76,8 +76,13 @@ def approve_applications(position_id):
     if not current_user.user_type == 'Instructor':
         flash('You do not have access to this page')
         return redirect(url_for('main.index'))
+    position = SA_Position.query.get(position_id)
     current_user.position_id = position_id
-    application = Application.query.get(position_id)
+    application = Application.query.filter_by(position_id=int(position_id), status='Pending').first()
+    if (position.open_positions - 1) < 0:
+        flash("Cannot approve, already accepted applicants for all available open positions")
+        return redirect(url_for('main.index'))
+    position.open_positions -= 1
     application.status = 'Approved'
     db.session.commit()
     flash("Accepted students application!")

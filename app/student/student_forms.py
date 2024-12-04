@@ -4,7 +4,7 @@ from app import db
 import sqlalchemy as sqla
 
 from app.main.models import User, Instructor, Course
-from wtforms import StringField, SubmitField, PasswordField, IntegerField, FloatField, BooleanField
+from wtforms import StringField, SubmitField, PasswordField, IntegerField, FloatField, BooleanField, DecimalField
 from wtforms_sqlalchemy.fields import QuerySelectField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError, Length
 from wtforms.widgets import ListWidget, CheckboxInput
@@ -14,7 +14,7 @@ class EditStudentProfileForm(FlaskForm):
     lastname = StringField('Last Name', validators=[DataRequired('Error, must enter a value')])
     phonenumber = StringField('Phone Number', validators=[DataRequired()])
     major = StringField('Major', validators=[DataRequired()])
-    gpa = FloatField('GPA', validators=[DataRequired()])
+    gpa = DecimalField('GPA', validators=[DataRequired()])
     graduation_date = StringField('Graduation Date', validators=[DataRequired()])
 
     password = PasswordField('Password', validators=[DataRequired()])
