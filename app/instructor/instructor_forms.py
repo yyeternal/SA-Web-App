@@ -12,7 +12,7 @@ from wtforms.widgets import ListWidget, CheckboxInput
 class CourseSectionForm(FlaskForm):
     course = QuerySelectField('Course',
                          query_factory= lambda : db.session.scalars(sqla.select(Course)),
-                         get_label= lambda c : 'CS{} - {}'.format(c.coursenum, c.title))
+                         get_label= lambda c : '{} - {}'.format(c.coursenum, c.title))
     section = StringField('Course Section', validators=[DataRequired()])
     term = StringField('Term', validators=[DataRequired()])
     submit = SubmitField('Add')
@@ -21,7 +21,7 @@ class CourseSectionForm(FlaskForm):
 class CreatePositionForm(FlaskForm):
     section = QuerySelectField('Section',
                                  query_factory = lambda : db.session.scalars(sqla.select(Section).where(Section.instructor_id == current_user.id)),
-                                 get_label = lambda s : 'CS {} {}'.format(db.session.scalars(sqla.select(Course).where(Course.id == s.course_id)).first().coursenum, s.sectionnum))
+                                 get_label = lambda s : '{} {}'.format(db.session.scalars(sqla.select(Course).where(Course.id == s.course_id)).first().coursenum, s.sectionnum))
     open_positions = IntegerField('Number of Positions', validators=[DataRequired(), NumberRange(min=1)])
     min_GPA = FloatField('Minimum GPA of Student Assistant', validators=[DataRequired(), NumberRange(min=0.01)])
     min_grade = StringField('Minimum Grade of Student Assistant', validators=[DataRequired(), Length(min = 1, max = 1)])
