@@ -1,6 +1,6 @@
 from app import db, create_app
 from config import Config
-from app.main.models import Course, Section, User, Student, SA_Position, Enrollment, Application
+from app.main.models import Course, User, Student, SA_Position, Enrollment, Application
 import sqlalchemy as sqla
 import sqlalchemy.orm as sqlo
 
@@ -10,7 +10,7 @@ app = create_app(Config)
 
 @app.shell_context_processor
 def make_shell_context():
-    return {'sqla': sqla, 'sqlo': sqlo, 'db': db, 'Course': Course, 'Section': Section, 'User': User, 'Instructor': Instructor, 'Student': Student, 'SA_Position' : SA_Position, 'Enrollment' : Enrollment, 'Application' : Application}
+    return {'sqla': sqla, 'sqlo': sqlo, 'db': db, 'Course': Course, 'User': User, 'Instructor': Instructor, 'Student': Student, 'SA_Position' : SA_Position, 'Enrollment' : Enrollment, 'Application' : Application}
 
 def add_courses(*args, **kwargs):
     query = sqla.select(Course)

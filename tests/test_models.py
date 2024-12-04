@@ -3,7 +3,7 @@ warnings.filterwarnings("ignore")
 
 import unittest
 from app import create_app, db
-from app.main.models import User, Student, Instructor, SA_Position, Section, Course
+from app.main.models import User, Student, Instructor, SA_Position, Course
 from config import Config
 
 
@@ -35,41 +35,41 @@ class TestModels(unittest.TestCase):
         self.assertFalse(u.check_password('flu'))
         self.assertTrue(u.check_password('covid'))
 
-    def test_section_1(self):
+    def test_position_1(self):
         u1 = Instructor(username='john.prof@wpi.edu', firstname = 'john', lastname = 'instructor', user_type = 'Instructor', phone_number = '1231231234', title = 'prof')
         db.session.add(u1)
         db.session.commit()
-        self.assertEqual(len(u1.get_sections()), 0)
+        self.assertEqual(len(u1.get_positions()), 0)
         c1 = Course(coursenum = 3733, title = 'Software Engineering')
         db.session.add(c1)
         db.session.commit()
-        s1 = Section(sectionnum='4', term='B', course_id=c1.id, instructor_id = u1.id)
-        db.session.add(s1)
+        p1 = SA_Position(sectionnum='4', open_positions=1, min_GPA=3.5, min_Grade='A', term='B', course_id=c1.id, instructor_id = u1.id)
+        db.session.add(p1)
         db.session.commit()
-        self.assertEqual(len(u1.get_sections()), 1)
-        self.assertEqual(u1.get_sections()[0].sectionnum, '4')
-        self.assertEqual(u1.get_sections()[0].term, 'B')
+        self.assertEqual(len(u1.get_positions()), 1)
+        self.assertEqual(u1.get_positions()[0].sectionnum, '4')
+        self.assertEqual(u1.get_positions()[0].term, 'B')
 
-    def test_samecourse_differentsections(self):
+    def test_samecourse_differentpositions(self):
         u1 = Instructor(username='john.prof@wpi.edu', firstname = 'john', lastname = 'instructor', user_type = 'Instructor', phone_number = '1231231234', title = 'prof')
         db.session.add(u1)
         db.session.commit()
-        self.assertEqual(len(u1.get_sections()), 0)
+        self.assertEqual(len(u1.get_positions()), 0)
         c1 = Course(coursenum = 3733, title = 'Software Engineering')
         db.session.add(c1)
-        s1 = Section(sectionnum='4', term='B', course_id=c1.id, instructor_id = u1.id)
-        db.session.add(s1)
-        s2 = Section(sectionnum='5', term='A', course_id=c1.id, instructor_id = u1.id)
-        db.session.add(s2)
+        p1 = SA_Position(sectionnum='4', open_positions=1, min_GPA=3.5, min_Grade='A', term='B', course_id=c1.id, instructor_id = u1.id)
+        db.session.add(p1)
+        p2 = SA_Position(sectionnum='5', open_positions=1, min_GPA=3.5, min_Grade='A', term='A', course_id=c1.id, instructor_id = u1.id)
+        db.session.add(p2)
         db.session.commit()
-        # test the first section
-        self.assertEqual(len(u1.get_sections()), 2)
-        self.assertEqual(u1.get_sections()[0].sectionnum, '4')
-        self.assertEqual(u1.get_sections()[0].term, 'B')
-        # test the second section
+        # test the first position
+        self.assertEqual(len(u1.get_positions()), 2)
+        self.assertEqual(u1.get_positions()[0].sectionnum, '4')
+        self.assertEqual(u1.get_positions()[0].term, 'B')
+        # test the second position
         self.assertEqual(len(u1.get_user_posts()), 1)
-        self.assertEqual(u1.get_sections()[0].sectionnum, '5')
-        self.assertEqual(u1.get_sections()[0].term, 'A')
+        self.assertEqual(u1.get_positions()[0].sectionnum, '5')
+        self.assertEqual(u1.get_positions()[0].term, 'A')
 
 
 

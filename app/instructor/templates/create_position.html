@@ -8,8 +8,16 @@
         <form action="" method="POST">
             {{ form.hidden_tag() }}
             <p>
-                {{ form.section.label }}
-                {{ form.section() }}
+                {{ form.course.label }}
+                {{ form.course() }}
+            </p>
+            <p>
+                {{ form.sectionnum.label }}
+                {{ form.sectionnum() }}
+            </p>
+            <p>
+                {{ form.term.label }}
+                {{ form.term() }}
             </p>
             <p>
                 {{ form.open_positions.label }}

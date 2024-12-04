@@ -1,6 +1,6 @@
 from app import db
 from SAApp import app
-from app.main.models import Course, User, Section, Student, Instructor, SA_Position, Enrollment, Application
+from app.main.models import Course, User, Student, Instructor, SA_Position, Enrollment, Application
 from config import Config
 
 import sqlalchemy as sqla
@@ -34,30 +34,13 @@ db.session.add(u4)
 db.session.commit()
 
 
-s1 = Section(sectionnum='02', course_id=c1.id, instructor_id=u2.id, term='B 2024')
-db.session.add(s1)
-
-s2 = Section(sectionnum='01', course_id=c2.id, instructor_id=u4.id, term='C 2025')
-db.session.add(s2)
-
-s3 = Section(sectionnum='03', course_id=c3.id, instructor_id=u2.id, term='D 2025')
-db.session.add(s3)
-
-db.session.commit()
-
-
-s1 = db.session.scalars(sqla.select(Section).where(Section.sectionnum=='02').where(Section.course_id==c1.id).where(Section.instructor_id==u2.id).where(Section.term=='B 2024')).first()
-s2 = db.session.scalars(sqla.select(Section).where(Section.sectionnum=='01').where(Section.course_id==c2.id).where(Section.instructor_id==u4.id).where(Section.term=='C 2025')).first()
-s3 = db.session.scalars(sqla.select(Section).where(Section.sectionnum=='03').where(Section.course_id==c3.id).where(Section.instructor_id==u2.id).where(Section.term=='D 2025')).first()
-
-
-p1 = SA_Position(section_id=s1.id, min_GPA=3.0, min_Grade='B', open_positions=4)
+p1 = SA_Position(sectionnum='02', min_GPA=3.0, min_Grade='B', open_positions=4, instructor_id=u2.id, course_id=c1.id, term='B 2024')
 db.session.add(p1)
 
-p2 = SA_Position(section_id=s2.id, min_GPA=2.8, min_Grade='C', open_positions=3)
+p2 = SA_Position(sectionnum='01', min_GPA=2.8, min_Grade='C', open_positions=3, course_id=c2.id, instructor_id=u4.id, term='C 2025')
 db.session.add(p2)
 
-p3 = SA_Position(section_id=s3.id, min_GPA=3.4, min_Grade='A', open_positions=5)
+p3 = SA_Position(sectionnum='03', min_GPA=3.4, min_Grade='A', open_positions=5, course_id=c3.id, instructor_id=u2.id, term='D 2025')
 db.session.add(p3)
 
 

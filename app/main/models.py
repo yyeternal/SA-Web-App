@@ -42,6 +42,9 @@ class Course(db.Model):
     coursenum : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(7), index=True)
     title : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(150))
 
+    # relationships
+    position : sqlo.Mapped['SA_Position'] = sqlo.relationship(back_populates= 'course')
+
     def __repr__(self):
         return '<Course {} - {} {}>'.format(self.id, self.coursenum, self.title)
     
@@ -50,50 +53,6 @@ class Course(db.Model):
     
     def get_title(self):
         return self.title
-
-class Section(db.Model):
-    id : sqlo.Mapped[int] = sqlo.mapped_column(primary_key=True)
-    sectionnum : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(5))
-    course_id : sqlo.Mapped['Course'] = sqlo.mapped_column(sqla.ForeignKey(Course.id))
-    term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(6))
-    instructor_id: sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(User.id))
-
-    __table_args__ = (
-        sqla.UniqueConstraint('sectionnum', 'course_id', 'term', name='unique_section'),
-    )
-
-    # relationships
-    instructor : sqlo.Mapped['Instructor'] = sqlo.relationship(back_populates = 'sections')
-    SA_Position : sqlo.Mapped['SA_Position'] = sqlo.relationship(back_populates = 'section')
-
-    def __repr__(self):
-        return '<Section - {} {}>'.format(self.get_course().title, self.sectionnum)
-    
-    def get_course(self):
-        return db.session.scalars(sqla.select(Course).where(Course.id == self.course_id)).first()
-    
-class SA_Position(db.Model):
-    __tablename__ = 'sa_position'
-    id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer(), primary_key=True)
-    section_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Section.id))
-    open_positions : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, default = 1)
-    min_GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float(5))
-    min_Grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1), nullable=True)
-    timestamp : sqlo.Mapped[Optional[datetime]] = sqlo.mapped_column(default = lambda : datetime.now(timezone.utc)) 
-
-    # relationships
-    section : sqlo.Mapped['Section'] = sqlo.relationship(back_populates = 'SA_Position')
-    students : sqlo.WriteOnlyMapped['Student'] = sqlo.relationship(back_populates = 'position')
-    applications : sqlo.WriteOnlyMapped['Application'] = sqlo.relationship(back_populates = 'position') 
-
-    def get_SAs(self):
-        return db.session.scalars(sqla.select(self.students.select())).all()
-
-    def get_section(self):
-        return db.session.scalars(sqla.select(Section).where(Section.id == self.section_id)).first()
-
-    def get_instructor(self):
-        return db.session.scalars(sqla.select(Instructor).where(self.get_section().instructor_id == Instructor.id)).first()
 
 class Instructor(User):
     __tablename__ = 'instructor'
@@ -104,17 +63,45 @@ class Instructor(User):
         'polymorphic_identity': 'Instructor',
     }
 
-    sections : sqlo.WriteOnlyMapped['Section'] = sqlo.relationship(back_populates = 'instructor')
+    positions : sqlo.WriteOnlyMapped['SA_Position'] = sqlo.relationship(back_populates = 'instructor')
     applications : sqlo.WriteOnlyMapped['Application'] = sqlo.relationship(back_populates='instructor')
 
     def __repr__(self):
         return '<Instructor {} - {} - {} {}>'.format(self.id, self.username, self.firstname, self.lastname)
     
-    def get_sections(self):
-        return db.session.scalars(self.sections.select()).all()
+    def get_positions(self):
+        return db.session.scalars(self.positions.select()).all()
     
     def get_applications(self):
         return db.session.scalars(self.applications.select()).all()
+    
+class SA_Position(db.Model):
+    __tablename__ = 'sa_position'
+    id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer(), primary_key=True)
+    sectionnum : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(10))
+    open_positions : sqlo.Mapped[int] = sqlo.mapped_column(sqla.Integer, default = 1)
+    min_GPA : sqlo.Mapped[float] = sqlo.mapped_column(sqla.Float(5))
+    min_Grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1), nullable=True)
+    timestamp : sqlo.Mapped[Optional[datetime]] = sqlo.mapped_column(default = lambda : datetime.now(timezone.utc))
+    instructor_id : sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(Instructor.id))
+    course_id : sqlo.Mapped['Course'] = sqlo.mapped_column(sqla.ForeignKey(Course.id))
+    term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(6))
+
+    __table_args__ = (
+        sqla.UniqueConstraint('sectionnum', 'course_id', 'term', name='unique_section'),
+    )
+
+    # relationships
+    instructor : sqlo.Mapped['Instructor'] = sqlo.relationship(back_populates = 'positions')
+    students : sqlo.WriteOnlyMapped['Student'] = sqlo.relationship(back_populates = 'position')
+    applications : sqlo.WriteOnlyMapped['Application'] = sqlo.relationship(back_populates = 'position')
+    course : sqlo.Mapped['Course'] = sqlo.relationship(back_populates = 'position')
+
+    def __repr__(self):
+        return "".format()
+    
+    def get_SAs(self):
+        return db.session.scalars(sqla.select(self.students.select())).all()
 
 class Student(User):
     __tablename__='student'

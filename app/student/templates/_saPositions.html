@@ -1,7 +1,7 @@
 <table class = 'SA Position'>
     <tr>
-        <td width = "38%" class="positioninfo"><b>{{position.get_section().get_course().coursenum}}-{{position.get_section().sectionnum}} {{position.get_section().get_course().title}}</b></td>
-        <td width = "38%" class="positioninfo">Instructor: {{position.get_instructor().firstname}}  {{position.get_instructor().lastname}}</td>
+        <td width = "38%" class="positioninfo"><b>{{position.course.coursenum}}-{{position.sectionnum}} {{position.course.title}}</b></td>
+        <td width = "38%" class="positioninfo">Instructor: {{position.instructor.firstname}}  {{position.instructor.lastname}}</td>
         <td width = 10% class ="positioninfo">Posted at: {{ position.timestamp }}</td>
         <td>
             <a class = "positioninfo" href = "{{url_for('student.view_selected_position', position_id = position.id)}}">View</a>

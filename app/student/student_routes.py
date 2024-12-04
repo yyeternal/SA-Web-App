@@ -2,7 +2,7 @@ from app import db
 from app.student import student_blueprint as bp_student
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_required, current_user
-from app.main.models import Section, SA_Position, Enrollment, Application, Student
+from app.main.models import SA_Position, Enrollment, Application, Student
 from app.student.student_forms import EditStudentProfileForm, AddCourseForm, ApplyForm, EmptyForm
 from flask_login import login_required
 import sqlalchemy as sqla
@@ -23,7 +23,7 @@ def view_selected_position(position_id):
         flash('You do not have access to this page')
         return redirect(url_for('main.index'))
     sa_position = db.session.scalars(sqla.select(SA_Position).where(SA_Position.id == int(position_id))).first()
-    term = sa_position.section.term
+    term = sa_position.term
     min_GPA = sa_position.min_GPA
     min_Grade = sa_position.min_Grade
     return render_template('student.html', sa_position = sa_position, term = term, min_GPA = min_GPA, min_Grade = min_Grade)
@@ -87,11 +87,11 @@ def student_apply_position(position_id):
         return redirect(url_for('main.index'))
     position = db.session.scalars(sqla.select(SA_Position).where(SA_Position.id == int(position_id))).first()
     student = db.session.scalars(sqla.select(Student).where(Student.id==current_user.id)).first()
-    class_taken = db.session.scalars(sqla.select(Enrollment).where(Enrollment.student_id == student.id, Enrollment.course_id == position.get_section().course_id)).first()
+    class_taken = db.session.scalars(sqla.select(Enrollment).where(Enrollment.student_id == student.id, Enrollment.course_id == position.course_id)).first()
     apform = ApplyForm()
     if apform.validate_on_submit():
         if class_taken is not None:
-            instructor_id = position.section.instructor_id
+            instructor_id = position.instructor_id
             application = Application(position_id = position_id,
                                         grade_received = class_taken.grade,
                                         when_course_taken = class_taken.term,
@@ -104,7 +104,7 @@ def student_apply_position(position_id):
             flash('Application completed!')
             return redirect(url_for('main.index'))
         else:
-            instructor_id = position.section.instructor_id
+            instructor_id = position.instructor_id
             application = Application(position_id = position_id,
                                         grade_received = apform.grade.data,
                                         when_course_taken = apform.when_taken.data,
