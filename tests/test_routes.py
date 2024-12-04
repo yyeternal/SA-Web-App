@@ -69,7 +69,7 @@ def init_database():
     #init_tags()
     #add a user    
     user1 = Instructor(username='profjohn@wpu.edu', firstname='john', lastname='instructor', user_type='Instructor', phone_number='1231231234', title = 'prof')
-    user2 = Student(username='studjohn@wpu.edu', firstname='john', lastname='student', user_type='Instructor', phone_number='1231231234', major='CS', GPA=3.4, graduation_date='may2027', isSA=False)
+    user2 = Student(username='studjohn@wpu.edu', firstname='john', lastname='student', user_type='Student', phone_number='1231231234', major='CS', GPA=3.4, graduation_date='may2027', isSA=False)
     # Insert user data
     db.session.add(user1)
     db.session.add(user2)
@@ -109,8 +109,8 @@ def test_instructor_register(test_client,init_database):
     THEN check that the response is valid and the database is updated correctly
     """
     # Create a test client using the Flask application configured for testing
-    response = test_client.post('/user/register', 
-                          data=dict(username='profjohn@wpu.edu', firstname='john', lastname='instructor', user_type='Instructor', phone_number='1231231234', title = 'prof',password="bad-bad-password",password2="bad-bad-password"),
+    response = test_client.post('/instructor/register', 
+                          data=dict(username='profjohn@wpu.edu', firstname='john', lastname='instructor', WPI_id = '222222222',title = 'prof', phone_number='1231231234',password="bad-bad-password",password2="bad-bad-password"),
                           follow_redirects = True)
     assert response.status_code == 200
     
@@ -129,8 +129,8 @@ def test_student_register(test_client,init_database):
     THEN check that the response is valid and the database is updated correctly
     """
     # Create a test client using the Flask application configured for testing
-    response = test_client.post('/user/register', 
-                          data=dict(username='studjohn@wpi.edu',  firstname='john', lastname='student', user_type='Instructor', phone_number='1231231234', major='CS', GPA=3.4, graduation_date='may2027', isSA=False,password="bad-bad-password",password2="bad-bad-password"),
+    response = test_client.post('/student/register', 
+                          data=dict(username='studjohn@wpi.edu',  firstname='john', lastname='student', WPI_id='333333333', phone_number='1231231234', major='CS', GPA=3.4, graduation_date='may2027', isSA=False,password="bad-bad-password",password2="bad-bad-password"),
                           follow_redirects = True)
     assert response.status_code == 200
     
