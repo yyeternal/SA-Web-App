@@ -99,14 +99,15 @@ def approve_applications(position_id):
         return redirect(url_for('main.index'))
     position = SA_Position.query.get(position_id)
     current_user.position_id = position_id
-    application = Application.query.get(position_id)
-    if (position.open_positions - 1) == -1:
+    application = Application.query.filter_by(position_id=int(position_id), status='Pending').first()
+    if (position.open_positions - 1) < 0:
         flash("Cannot approve, already accepted applicants for all available open positions")
-    else:
-        application.status = 'Approved'
-        db.session.commit()
-        flash("Accepted students application!")
         return redirect(url_for('main.index'))
+    position.open_positions -= 1
+    application.status = 'Approved'
+    db.session.commit()
+    flash("Accepted students application!")
+    return redirect(url_for('main.index'))
 
 @bp_instructor.route('/instructor/view_student/<student_id>', methods=['GET', 'POST'])
 @login_required
