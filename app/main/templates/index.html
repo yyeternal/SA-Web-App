@@ -6,6 +6,7 @@
         <h1>Student Page</h1>
 
         <a class = "button" href = "{{url_for('student.view_positions')}}">View Available SA Positions</a>
+        <a class = "button" href = "{{url_for('student.view_applications')}}">View Your Applications</a>
 
     {% elif current_user.user_type == 'Instructor' %}
         

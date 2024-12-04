@@ -16,6 +16,15 @@ def view_positions():
     positions = db.session.scalars(sqla.select(SA_Position)).all()
     return render_template('student.html', positions=positions)
 
+@bp_student.route('/applications/view', methods=['GET'])
+@login_required
+def view_applications():
+    if not current_user.user_type == 'Student':
+        flash('You do not have access to this page')
+        return redirect(url_for('main.index'))
+    applications = db.session.scalars(sqla.select(Application).where(Application.student_id == current_user.id)).all()
+    return render_template('student_applications.html', applications = applications)
+
 @bp_student.route('/positions/<position_id>/view', methods=['GET'])
 @login_required
 def view_selected_position(position_id):
