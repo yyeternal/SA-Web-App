@@ -85,23 +85,52 @@ def student_apply_position(position_id):
     if already_applied is not None:
         flash('You already applied for this position!')
         return redirect(url_for('main.index'))
+    position = db.session.scalars(sqla.select(SA_Position).where(SA_Position.id == int(position_id))).first()
+    student = db.session.scalars(sqla.select(Student).where(Student.id==current_user.id)).first()
+    class_taken = db.session.scalars(sqla.select(Enrollment).where(Enrollment.student_id == student.id, Enrollment.course_id == position.get_section().course_id)).first()
     apform = ApplyForm()
     if apform.validate_on_submit():
-        position = db.session.scalars(sqla.select(SA_Position).where(SA_Position.id == int(position_id))).first()
-        instructor_id = position.section.instructor_id
-        application = Application(position_id = position_id,
-                                  grade_received = apform.grade.data,
-                                  when_course_taken = apform.when_taken.data,
-                                  when_SA = apform.when_SA.data,
-                                  reasoning = apform.why.data, 
-                                  student_id = current_user.id,
-                                  instructor_id = instructor_id)
-        db.session.add(application)
-        db.session.commit()
-        flash('Application completed!')
-        return redirect(url_for('main.index'))
-    return render_template('apply.html', form=apform, position_id=position_id)
+        if class_taken is not None:
+            instructor_id = position.section.instructor_id
+            application = Application(position_id = position_id,
+                                        grade_received = class_taken.grade,
+                                        when_course_taken = class_taken.term,
+                                        when_SA = apform.when_SA.data,
+                                        reasoning = apform.why.data, 
+                                        student_id = current_user.id,
+                                        instructor_id = instructor_id)
+            db.session.add(application)
+            db.session.commit()
+            flash('Application completed!')
+            return redirect(url_for('main.index'))
+        else:
+            instructor_id = position.section.instructor_id
+            application = Application(position_id = position_id,
+                                        grade_received = apform.grade.data,
+                                        when_course_taken = apform.when_taken.data,
+                                        when_SA = apform.when_SA.data,
+                                        reasoning = apform.why.data, 
+                                        student_id = current_user.id,
+                                        instructor_id = instructor_id)
+            db.session.add(application)
+            db.session.commit()
+            flash('Application completed!')
+            return redirect(url_for('main.index'))
+    return render_template('apply.html', form=apform, position_id=position_id, class_taken=class_taken)
     
+@bp_student.route('/student/<application_id>/withdraw', methods=['POST'])
+@login_required
+def withdraw(application_id):
+    theapplication = db.session.query(Application).filter_by(id=application_id).first()
+    if theapplication is not None and theapplication.user_id == current_user.id:
+        theapplication.status = 'Withdrawn'
+        db.session.commit()
+        #db.session.delete(theapplication)
+        flash('You succesffuly withdrew this application!')
+        return redirect(url_for('main.index'))
+    flash('You cannot withdraw this application.')
+    return redirect(url_for('main.index'))
+
 @bp_student.route('/<student_id>/profile', methods=['GET'])
 @login_required
 def display_profile(student_id):

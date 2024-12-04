@@ -41,8 +41,8 @@
 .application-box {
     display: flex;
     vertical-align: middle;
-    background-color: rgb(233, 228, 228);
-    width: 29%; 
+    background-color: rgb(184, 211, 230);
+    width: 95%; 
     margin: 2px 2px 2px 2px;
     padding: 25px;
 }
@@ -57,8 +57,9 @@
 
 .applicationinfo {
     font-style: normal;
+    background-color: rgb(184, 211, 230);
     font-size: 12px;
     padding: 3px 5px 3px 5px;
-    margin: 5px; 
-    border: 1px solid lightgray;
+    margin: 5px 5px 5px 5px; 
+    border: 1px solid rgb(0, 0, 0);
 }
