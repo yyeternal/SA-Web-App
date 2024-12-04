@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, BooleanField, FloatField 
 from wtforms_sqlalchemy.fields import QuerySelectMultipleField
-from wtforms.validators import  ValidationError, DataRequired, EqualTo, Email
+from wtforms.validators import  ValidationError, DataRequired, EqualTo, Email, Length
 from wtforms.widgets import ListWidget, CheckboxInput
 from flask import redirect
 from app.main.models import User, Instructor, Course
@@ -34,7 +34,7 @@ class StudentRegistrationForm(FlaskForm):
     username = StringField('Email', validators=[DataRequired('Error, must enter a value'), Email(), is_unique('username')])
     firstname = StringField('First Name', validators=[DataRequired('Error, must enter a value')])
     lastname = StringField('Last Name', validators=[DataRequired('Error, must enter a value')])
-    WPI_id = StringField('WPI ID', validators=[DataRequired('Error, must enter a value'), is_unique('id')])
+    WPI_id = StringField('WPI ID', validators=[DataRequired('Error, must enter a value'), is_unique('id'), Length(min=9,max=9)])
     courses  = QuerySelectMultipleField('Courses Taken', 
                                         query_factory = lambda : db.session.scalars(sqla.select(Course)),
                                         get_label = lambda theCourse : theCourse.title,
@@ -53,7 +53,7 @@ class InstructorRegistrationForm(FlaskForm):
     username = StringField('Email', validators=[DataRequired('Error, must enter a value'), Email(), is_unique('username')])
     firstname = StringField('First Name', validators=[DataRequired('Error, must enter a value')])
     lastname = StringField('Last Name', validators=[DataRequired('Error, must enter a value')])
-    WPI_id = StringField('WPI ID', validators=[DataRequired(), is_unique('id')])
+    WPI_id = StringField('WPI ID', validators=[DataRequired(), is_unique('id'), Length(min=9,max=9)])
     title = StringField('Title', validators=[DataRequired()])
     phonenumber = StringField('Phone Number', validators=[DataRequired()])
     
