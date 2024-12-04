@@ -163,3 +163,7 @@ cython_debug/
 # untracked files
 .env
 CS 3733 - Term Project.pdf
+Dockerfile
+build.sh
+dockerignore.txt
+requirements.txt
