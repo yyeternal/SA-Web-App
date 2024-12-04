@@ -5,7 +5,9 @@
 	<h1>Student Assistant Positions for {{current_user.firstname}} {{current_user.lastname}}</h1>
 
 	{%for section in current_user.get_sections()%}
-            {%include '_sa_positions.html'%}
+			{% if section.SA_Position %}
+            	{%include '_sa_positions.html'%}
+			{% endif %}
 	{% endfor %}
 
 {% endblock %}
