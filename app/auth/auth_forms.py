@@ -7,6 +7,7 @@ from flask import redirect
 from app.main.models import User, Instructor, Course
 from app import db
 import sqlalchemy as sqla
+import re
 
 def is_unique(field_name):
     if field_name == 'username':
@@ -24,6 +25,11 @@ def is_unique(field_name):
                 raise ValidationError(message="There is already an account with that ID")
         return _is_unique_id
     
+def validate_phone(form, field):
+    input_number = field.data
+    if re.search("[a-z]", input_number) != None:
+        raise ValidationError(message="Not a valid phone number")     
+
 class LoginForm(FlaskForm):
     email = StringField('Username', validators = [DataRequired()])
     password = PasswordField('Password', validators = [DataRequired()])
@@ -40,7 +46,7 @@ class StudentRegistrationForm(FlaskForm):
                                         get_label = lambda theCourse : theCourse.title,
                                         widget=ListWidget(prefix_label=False),
                                         option_widget = CheckboxInput())
-    phonenumber = StringField('Phone Number', validators=[DataRequired()])
+    phonenumber = StringField('Phone Number', validators=[DataRequired(), Length(min=9,max=10), validate_phone])
     major = StringField('Major', validators=[DataRequired()])
     gpa = DecimalField('GPA', validators=[DataRequired()])
     graduation_date = StringField('Graduation Date', validators=[DataRequired()])
@@ -55,7 +61,7 @@ class InstructorRegistrationForm(FlaskForm):
     lastname = StringField('Last Name', validators=[DataRequired('Error, must enter a value')])
     WPI_id = StringField('WPI ID', validators=[DataRequired(), is_unique('id'), Length(min=9,max=9)])
     title = StringField('Title', validators=[DataRequired()])
-    phonenumber = StringField('Phone Number', validators=[DataRequired()])
+    phonenumber = StringField('Phone Number', validators=[DataRequired(), Length(min=9,max=10), validate_phone])
     
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])

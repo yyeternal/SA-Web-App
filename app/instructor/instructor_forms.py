@@ -8,6 +8,12 @@ from wtforms import StringField, SubmitField, PasswordField, IntegerField, Float
 from wtforms_sqlalchemy.fields import QuerySelectField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError, Length, NumberRange
 from wtforms.widgets import ListWidget, CheckboxInput
+import re
+
+def validate_phone(form, field):
+    input_number = field.data
+    if re.search("[a-z]", input_number) != None:
+        raise ValidationError(message="Not a valid phone number")     
 
 class CourseSectionForm(FlaskForm):
     course = QuerySelectField('Course',
@@ -32,7 +38,7 @@ class EditInstructorProfileForm(FlaskForm):
     firstname = StringField('First Name', validators=[DataRequired('Error, must enter a value')])
     lastname = StringField('Last Name', validators=[DataRequired('Error, must enter a value')])
     title = StringField('Title', validators=[DataRequired()])
-    phonenumber = StringField('Phone Number', validators=[DataRequired()])
+    phonenumber = StringField('Phone Number', validators=[DataRequired(), Length(min=9,max=10), validate_phone])
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')
