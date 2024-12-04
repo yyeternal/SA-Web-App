@@ -22,7 +22,7 @@ class CreatePositionForm(FlaskForm):
     section = QuerySelectField('Section',
                                  query_factory = lambda : db.session.scalars(sqla.select(Section).where(Section.instructor_id == current_user.id)),
                                  get_label = lambda s : 'CS {} {}'.format(db.session.scalars(sqla.select(Course).where(Course.id == s.course_id)).first().coursenum, s.sectionnum))
-    open_positions = IntegerField('Number of Positions', validators=[DataRequired()])
+    open_positions = IntegerField('Number of Positions', validators=[DataRequired(), NumberRange(min=1)])
     min_GPA = FloatField('Minimum GPA of Student Assistant', validators=[DataRequired(), NumberRange(min=0.01)])
     min_grade = StringField('Minimum Grade of Student Assistant', validators=[DataRequired(), Length(min = 1, max = 1)])
     submit = SubmitField('Create')
