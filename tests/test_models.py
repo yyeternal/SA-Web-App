@@ -30,7 +30,7 @@ class TestModels(unittest.TestCase):
         self.assertTrue(u.check_password('covid'))
 
     def test_password_hashing_student(self):
-        u = Instructor(username='john.stud@wpi.edu', firstname = 'john', lastname = 'student', user_type = 'Student', phone_number = '1231231234', major = 'cs', GPA = 3.4, graduation_date = 'may 2027', isSA = False)
+        u = Student(username='john.stud@wpi.edu', firstname = 'john', lastname = 'student', user_type = 'Student', phone_number = '1231231234', major = 'cs', GPA = 3.4, graduation_date = 'may 2027', isSA = False)
         u.set_password('covid')
         self.assertFalse(u.check_password('flu'))
         self.assertTrue(u.check_password('covid'))
@@ -67,9 +67,8 @@ class TestModels(unittest.TestCase):
         self.assertEqual(u1.get_sections()[0].sectionnum, '4')
         self.assertEqual(u1.get_sections()[0].term, 'B')
         # test the second section
-        self.assertEqual(len(u1.get_user_posts()), 1)
-        self.assertEqual(u1.get_sections()[0].sectionnum, '5')
-        self.assertEqual(u1.get_sections()[0].term, 'A')
+        self.assertEqual(u1.get_sections()[1].sectionnum, '5')
+        self.assertEqual(u1.get_sections()[1].term, 'A')
 
 
 
