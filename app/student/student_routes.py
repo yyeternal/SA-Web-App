@@ -118,6 +118,19 @@ def student_apply_position(position_id):
             return redirect(url_for('main.index'))
     return render_template('apply.html', form=apform, position_id=position_id, class_taken=class_taken)
     
+@bp_student.route('/student/<application_id>/withdraw', methods=['POST'])
+@login_required
+def withdraw(application_id):
+    theapplication = db.session.query(Application).filter_by(id=application_id).first()
+    if theapplication is not None and theapplication.user_id == current_user.id:
+        theapplication.status = 'Withdrawn'
+        db.session.commit()
+        #db.session.delete(theapplication)
+        flash('You succesffuly withdrew this application!')
+        return redirect(url_for('main.index'))
+    flash('You cannot withdraw this application.')
+    return redirect(url_for('main.index'))
+
 @bp_student.route('/<student_id>/profile', methods=['GET'])
 @login_required
 def display_profile(student_id):
