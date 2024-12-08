@@ -36,7 +36,7 @@ class AddCourseForm(FlaskForm):
                          get_label= lambda c : 'CS{} - {}'.format(c.coursenum, c.title))
     wasSA = BooleanField('Were you an SA?')
     grade = StringField('Grade recieved')
-    term = StringField('What term and year did you take this course?', validators=[DataRequired()])
+    term = StringField('What term and year did you take this course? Enter as term and year. e.g. "A 2023"', validators=[DataRequired()])
     submit = SubmitField('Add')
 
 class ApplyForm(FlaskForm):

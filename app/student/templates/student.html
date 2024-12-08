@@ -1,7 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Student Assistant Positions</h1>
+    {% if rec %}
+        <h1>Recommended Positions for {{current_user.firstname}} {{current_user.lastname}}</h1>
+        <form action="{{url_for('student.view_positions')}}"">
+            <button type="submit" class="button">View All Positions</button>
+        </form>
+    {% else %}
+        <h1>Student Assistant Positions</h1>
+        <form action="{{url_for('student.view_recommended_positions')}}"">
+            <button type="submit" class="button">View Recommended Positions</button>
+        </form>
+    {% endif %}
 
     {%for position in positions%}
         {%include '_saPositions.html'%}

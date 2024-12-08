@@ -5,7 +5,7 @@
 	width: 50%;
 }
 .button {
-    width : 85px;
+    width : auto;
     padding : 3px;    
     font-size: 16px;
     margin : 5px;

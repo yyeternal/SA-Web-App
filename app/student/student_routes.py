@@ -6,6 +6,9 @@ from app.main.models import SA_Position, Enrollment, Application, Student
 from app.student.student_forms import EditStudentProfileForm, AddCourseForm, ApplyForm, EmptyForm
 from flask_login import login_required
 import sqlalchemy as sqla
+import numpy as np
+from pymcdm.methods import TOPSIS
+from pymcdm.helpers import rrankdata
 
 @bp_student.route('/positions/view', methods=['GET'])
 @login_required
@@ -15,6 +18,40 @@ def view_positions():
         return redirect(url_for('main.index'))
     positions = db.session.scalars(sqla.select(SA_Position)).all()
     return render_template('student.html', positions=positions)
+
+@bp_student.route('/positions/view/recommended', methods=['GET'])
+@login_required
+def view_recommended_positions():
+    if not current_user.user_type == 'Student':
+        flash('You do not have access to this page')
+        return redirect(url_for('main.index'))
+    positions = db.session.scalars(sqla.select(SA_Position)).all()
+    # TODO: develop algorithm to filter/sort positions by recommendation rank
+    positions = list(positions)
+    dmat = []
+    ranked_positions = []
+    # filter out positions that have qualifications that are too high, e.g. GPA or grade is not high enough
+    for p in positions:
+        class_taken = db.session.scalars(sqla.select(Enrollment).where(Enrollment.student_id == current_user.id).where(Enrollment.course_id == p.course_id)).first()
+        if class_taken is not None and p.min_Grade < class_taken.grade: # remove if min grade required is "less than" (comes before in alphabet) grade received
+            continue
+        if p.min_GPA > current_user.GPA:
+            continue
+        ranked_positions.append(p)
+        row = [int(class_taken is not None and class_taken.wasSA == True), current_user.GPA - p.min_GPA, ord(class_taken.grade) - ord(p.min_Grade) if class_taken is not None else ord(p.min_Grade)]
+        dmat.append(row)
+    # sort based on if student has SA'd for the class before, difference btwn GPA and min_GPA, difference btwn grade and min_Grade
+    data = np.array(dmat)
+    weights = np.array([0.5, 0.25, 0.25])
+    types = np.array([1, 1, 1])
+
+    topsis = TOPSIS()
+    
+    pref = topsis(data, weights=weights, types=types)
+    ranking = rrankdata(pref)
+    ranked_positions = [val for (_, val) in sorted(zip(ranking, ranked_positions), key=lambda x: x[0])]
+
+    return render_template('student.html', positions=ranked_positions, rec=True)
 
 @bp_student.route('/applications/view', methods=['GET'])
 @login_required
@@ -76,7 +113,7 @@ def student_add_course():
     if aform.validate_on_submit():
         e = db.session.scalars(sqla.select(Enrollment).where(Enrollment.student_id == current_user.id).where(Enrollment.course_id == aform.course.data.id)).first()
         if e is None:
-            new_enrollment = Enrollment(student_id=current_user.id, course_id=aform.course.data.id, grade=aform.grade.data, wasSA=aform.wasSA.data, term=aform.term.data)
+            new_enrollment = Enrollment(student_id=current_user.id, course_id=aform.course.data.id, grade=aform.grade.data.upper(), wasSA=aform.wasSA.data, term=aform.term.data)
             db.session.add(new_enrollment)
             db.session.commit()
             flash('Course experience added')

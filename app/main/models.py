@@ -85,7 +85,7 @@ class SA_Position(db.Model):
     timestamp : sqlo.Mapped[Optional[datetime]] = sqlo.mapped_column(default = lambda : datetime.now(timezone.utc))
     instructor_id : sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(Instructor.id))
     course_id : sqlo.Mapped['Course'] = sqlo.mapped_column(sqla.ForeignKey(Course.id))
-    term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(6))
+    term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(7))
 
     __table_args__ = (
         sqla.UniqueConstraint('sectionnum', 'course_id', 'term', name='unique_section'),
@@ -144,7 +144,7 @@ class Enrollment(db.Model):
     course_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Course.id), primary_key=True)
     grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1), nullable=True)
     wasSA : sqlo.Mapped[bool] = sqlo.mapped_column(sqla.Boolean())
-    term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(6), nullable=True)
+    term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(7), nullable=True)
 
     # relationships
     student : sqlo.Mapped['Student'] = sqlo.relationship(back_populates='enrollments')
