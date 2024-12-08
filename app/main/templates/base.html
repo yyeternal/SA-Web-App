@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% if title %}
-    <title>{{ title }} - Smile </title>
+    <title>{{ title }}</title>
     {% else %}
-    <title>Welcome to Smile Portal!</title>
+    <title>SA Recruitment</title>
     {% endif %}
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
@@ -15,11 +15,16 @@
         crossorigin="anonymous">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('dropdown-toggle').dropdown()
+        });
+        </script>
   </head>
   <body>
 
 
-    <nav class="navbar navbar-light navbar-expand-lg" style="background-color: #b4cbdd;">
+    <nav class="navbar navbar-dark navbar-expand-lg" style="background-color: #444444;">
         <div class="container">
           <a class="navbar-brand" href="{{ url_for('main.index') }}">SA Web App</a>
           <button class="navbar-toggler" type="button" >
@@ -27,47 +32,64 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item border border-light px-3 ms-2 ">
+              <li class="nav-item border border-dark px-3 ms-2 ">
                 <a class="nav-link" aria-current="page" href="{{ url_for('main.index') }}">Home</a>
               </li>
-            </ul>
-            {% if not current_user.is_anonymous %}
+              {% if not current_user.is_anonymous %}
                 {% if current_user.user_type == 'Instructor' %}
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item border border-light px-3 ms-2 ">
+                        <li class="nav-item border border-dark px-3 ms-2 ">
                         <a class="nav-link" aria-current="page" href="{{ url_for('instructor.create_sa_position') }}">Create New SA Position</a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item border border-light px-3 ms-2 ">
-                        <a class="nav-link" aria-current="page" href="{{ url_for('instructor.edit_instructor_profile') }}">Edit Profile</a>
                         </li>
                     </ul>
                 {% elif current_user.user_type == 'Student' %}
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item border border-light px-3 ms-2 ">
-                        <a class="nav-link" aria-current="page" href="{{ url_for('student.edit_student_profile') }}">Edit Profile</a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item border border-light px-3 ms-2 ">
+                        <li class="nav-item border border-dark px-3 ms-2 ">
                         <a class="nav-link" aria-current="page" href="{{ url_for('student.student_add_course') }}">Add Experience</a>
                         </li>
                     </ul>
                 {% endif %}
             {% endif %}
+            </ul>
+            
             <ul class="navbar-nav mb-2 mb-lg-0">
               {% if current_user.is_anonymous %}
-              <li class="nav-item border border-light px-2 ms-2">
+              <li class="nav-item border border-dark px-2 ms-2">
                 <a class="nav-link" aria-current="page" href="{{ url_for('auth.login') }}" class = "button"> Login </a>
               </li>
               {% else %}
-              <li class="nav-item border border-light px-2 ms-2">
-                <a class="nav-link" aria-current="page" href="{{ url_for('auth.logout') }}">Logout</a>
-              </li>
+                <div class="dropdown">
+                    <span class="navbar-text" id="user-dropdown">{{current_user.lastname}}, {{current_user.firstname}}<span class="caret"></span></span>
+                    <div class="dropdown-content" id="dropdownMenu">
+                        {% if current_user.user_type == "Instructor" %}
+                        <a href="{{ url_for('instructor.edit_instructor_profile') }}">Edit Profile</a>
+                        {% elif current_user.user_type == "Student" %}
+                        <a href="{{ url_for('student.edit_student_profile') }}">Edit Profile</a>
+                        {% endif %}
+                        <a href="{{ url_for('auth.logout') }}">Logout</a>
+                    </div>
+                </div>
+                <script>
+                    // Toggle dropdown menu on click
+                    document.getElementById("user-dropdown").addEventListener("click", function() {
+                        const dropdown = document.getElementById("dropdownMenu");
+                        dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+                    });
+            
+                    // Close dropdown if clicking outside of it
+                    window.addEventListener("click", function(event) {
+                        const dropdown = document.getElementById("dropdownMenu");
+                        const profileImg = document.getElementById("user-dropdown");
+            
+                        if (event.target !== profileImg && !profileImg.contains(event.target)) {
+                            dropdown.style.display = "none";
+                        }
+                    });
+                </script>
               {% endif %}
             </ul>
           </div>
+        </div>
         </div>
       </nav>
 
