@@ -111,7 +111,7 @@ def student_add_course():
         return redirect(url_for('main.index'))
     aform = AddCourseForm()
     if aform.validate_on_submit():
-        e = db.session.scalars(sqla.select(Enrollment).where(Enrollment.student_id == current_user.id).where(Enrollment.course_id == aform.course.data.id)).first()
+        e = db.session.scalars(sqla.select(Enrollment).where(Enrollment.student_id == current_user.id).where(Enrollment.course_id == aform.course.data.id).where(Enrollment.wasSA == aform.wasSA.data)).first()
         if e is None:
             new_enrollment = Enrollment(student_id=current_user.id, course_id=aform.course.data.id, grade=aform.grade.data.upper(), wasSA=aform.wasSA.data, term=aform.term.data)
             db.session.add(new_enrollment)
@@ -151,7 +151,7 @@ def student_apply_position(position_id):
         db.session.commit()
         flash('Application completed!')
         return redirect(url_for('main.index'))
-    return render_template('apply.html', form=apform, position_id=position_id, class_taken=class_taken)
+    return render_template('apply.html', form=apform, position=position, class_taken=class_taken)
     
 @bp_student.route('/student/<application_id>/withdraw', methods=['POST'])
 @login_required

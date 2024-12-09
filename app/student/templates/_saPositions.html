@@ -1,10 +1,17 @@
-<table class = 'SA Position'>
-    <tr>
-        <td width = "38%" class="positioninfo"><b>{{position.course.coursenum}}-{{position.sectionnum}} {{position.course.title}}</b></td>
-        <td width = "38%" class="positioninfo">Instructor: {{position.instructor.firstname}}  {{position.instructor.lastname}}</td>
-        <td width = 10% class ="positioninfo">Posted at: {{ position.timestamp }}</td>
-        <td>
-            <a class = "positioninfo" href = "{{url_for('student.view_selected_position', position_id = position.id)}}">View</a>
-        </td>
-    </tr>
-</table>
+<li position-id="{{position.id}}"
+    position-title="{{position.course.coursenum}}-{{position.sectionnum}} {{position.course.title}}"
+    position-instructor-name="{{position.instructor.firstname}} {{position.instructor.lastname}}"
+    position-instructor-username="{{position.instructor.username}}"
+    position-term="{{position.term}}"
+    position-minGPA="{{position.min_GPA}}"
+    position-minGrade="{{position.min_Grade}}"
+    position-numPos="{{position.open_positions}}"
+    position-timestamp="{{position.timestamp}}">
+
+    <div class="position-preview-box">
+        <p>
+            <h4>{{position.course.coursenum}}-{{position.sectionnum}} {{position.course.title}}</h4>
+            <p>Instructor: {{position.instructor.firstname}} {{position.instructor.lastname}}<br>Term: {{position.term}}</p>
+        </p>
+    </div>
+</li>

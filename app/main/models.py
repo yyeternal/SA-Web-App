@@ -88,7 +88,7 @@ class SA_Position(db.Model):
     term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(7))
 
     __table_args__ = (
-        sqla.UniqueConstraint('sectionnum', 'course_id', 'term', name='unique_section'),
+        sqla.UniqueConstraint('sectionnum', 'course_id', 'term', name='unique_position'),
     )
 
     # relationships
@@ -140,11 +140,16 @@ class Student(User):
         return self.major
     
 class Enrollment(db.Model):
-    student_id : sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(Student.id), primary_key=True)
-    course_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Course.id), primary_key=True)
+    id : sqlo.Mapped[int] = sqlo.mapped_column(primary_key=True)
+    student_id : sqlo.Mapped[str] = sqlo.mapped_column(sqla.ForeignKey(Student.id))
+    course_id : sqlo.Mapped[int] = sqlo.mapped_column(sqla.ForeignKey(Course.id))
     grade : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(1), nullable=True)
     wasSA : sqlo.Mapped[bool] = sqlo.mapped_column(sqla.Boolean())
-    term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(7), nullable=True)
+    term : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(7))
+
+    __table_args__ = (
+        sqla.UniqueConstraint('student_id', 'course_id', 'wasSA', name='unique_enrollment'),
+    )
 
     # relationships
     student : sqlo.Mapped['Student'] = sqlo.relationship(back_populates='enrollments')

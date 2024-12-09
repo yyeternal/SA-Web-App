@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Apply</h1>
-    <form action="{{url_for('student.student_apply_position', position_id=position_id)}}" method="POST">
+<h1>Apply to {{position.course.coursenum}}-{{position.sectionnum}} {{position.course.title}}</h1>
+    <form action="{{url_for('student.student_apply_position', position_id=position.id)}}" method="POST">
         {{ form.hidden_tag() }}
         {% if class_taken%}
             <p>

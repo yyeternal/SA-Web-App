@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
+<header>
     {% if rec %}
         <h1>Recommended Positions for {{current_user.firstname}} {{current_user.lastname}}</h1>
-        <form action="{{url_for('student.view_positions')}}"">
+        <form action="{{url_for('student.view_positions')}}">
             <button type="submit" class="button">View All Positions</button>
         </form>
     {% else %}
@@ -12,20 +13,62 @@
             <button type="submit" class="button">View Recommended Positions</button>
         </form>
     {% endif %}
+</header>
+<br>
+<p>
+    <div class="column-divider">
+        <div class="left-column">
+            <ul id="position-list">
+                {%for position in positions%}
+                    {%include '_saPositions.html'%}
+                    <!-- <hr> -->
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="right-column">
+            <div class="card" id="details-card">
+                <h2 id="card-title">{{ "{}-{} {}".format(positions[0].course.coursenum, positions[0].sectionnum, positions[0].course.title) }}</h2>
+                <p id="card-name">Instructor: {{positions[0].instructor.firstname}} {{positions[0].instructor.lastname}}</p>
+                <p id="card-username">{{positions[0].instructor.username}}</p>
+                <p id="card-term">Term: {{positions[0].term}}</p>
+                <p id="card-minGPA">Minimum GPA: {{positions[0].min_GPA}}</p>
+                <p id="card-minGrade">Minimum Grade Required: {{positions[0].min_Grade}}</p>
+                <p id="card-numPos">Open Positions: {{positions[0].open_positions}}</p>
+                <p id="card-timestamp">Posted: {{positions[0].timestamp}}</p>
+                <form id="apply-form" action="{{ url_for('student.student_apply_position', position_id=positions[0].id) }}">
+                    <button type="submit" class="apply-button">Apply</button>
+                </form>
+              </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const items = document.querySelectorAll("#position-list li");
+            const cardTitle = document.getElementById("card-title");
+            const cardName = document.getElementById("card-name");
+            const cardUsername = document.getElementById("card-username");
+            const cardTerm = document.getElementById("card-term");
+            const cardGPA = document.getElementById("card-minGPA");
+            const cardGrade = document.getElementById("card-minGrade");
+            const cardNumPos = document.getElementById("card-numPos");
+            const cardTime = document.getElementById("card-timestamp");
+            const applyForm = document.getElementById("apply-form");
 
-    {%for position in positions%}
-        {%include '_saPositions.html'%}
-    {% endfor %}
-    </p>
-    <p>
-    {%if sa_position%}
-        <p class = 'positioninfo'>{{sa_position.course.coursenum}}-{{sa_position.sectionnum}} {{sa_position.course.title}}</p>
-        <p class = 'positioninfo'>Instructor: {{sa_position.instructor.firstname}} {{sa_position.instructor.lastname}}</p>
-        <p class = 'positioninfo'>{{sa_position.instructor.username}}</p>
-        <p class = 'positioninfo'>Term: {{term}}</p>
-        <p class = 'positioninfo'>Minimum GPA: {{min_GPA}}</p>
-        <p class = 'positioninfo'>Minimum Grade: {{min_Grade}}</p>
-        <a class = "button" href = "{{url_for('student.student_apply_position', position_id = sa_position.id)}}">Apply</a>
-    {%endif%}
-    </p>
+            items.forEach(item => {
+                item.addEventListener("click", () => {
+                    // Update card content
+                    cardTitle.textContent = item.getAttribute("position-title");
+                    cardName.textContent = "Instructor: " + item.getAttribute("position-instructor-name");
+                    cardUsername.textContent = item.getAttribute("position-instructor-username");
+                    cardTerm.textContent = "Term: " + item.getAttribute("position-term");
+                    cardGPA.textContent = "Minimum GPA: " + item.getAttribute("position-minGPA");
+                    cardGrade.textContent = "Minimum Grade Required: " + item.getAttribute("position-minGrade");
+                    cardNumPos.textContent = "Open Positions: " + item.getAttribute("position-numPos");
+                    cardTime.textContent = "Posted: " + item.getAttribute("position-timestamp");
+                    applyForm.action = "{{ url_for('student.student_apply_position', position_id='id') }}".replace("id", item.getAttribute("position-id"));
+                });
+            });
+        });
+    </script>
+</p>
 {% endblock %}

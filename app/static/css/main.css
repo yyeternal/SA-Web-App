@@ -111,3 +111,78 @@
   .navbar-text:hover {
     color: #ffffff; /* Change text color to white */
   }
+
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  .column-divider {
+    display: flex;
+  }
+  
+  .left-column {
+    flex: 1;
+    padding: 10px;
+  }
+  
+  .left-column ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .left-column li {
+    padding: 10px;
+    margin: 5px 0;
+    background: #ddd;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s;
+  }
+  
+  .left-column li:hover {
+    background: #bbb;
+  }
+  
+  .right-column {
+    flex: 2;
+    padding: 20px;
+    background-color: #fff;
+  }
+  
+  .card {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fafafa;
+  }
+  
+  .card h2 {
+    margin-top: 0;
+  }
+
+  /* .position-preview-box {
+    padding: 5px;
+    background: #f4f4f4;
+    border-width: 5px;
+    border-radius: 5px;
+    border-color: #525252;
+    border-style: solid;
+  } */
+
+  .apply-button {
+    
+    width : auto;
+    padding : 3px;    
+    font-size: 16px;
+    margin : 5px;
+    padding : 5px;
+    border: 1px solid lightgray;
+  }
+
+  .apply-button:hover {
+    background-color: rgb(138, 211, 236);
+    color: rgb(255, 255, 255);
+    cursor:pointer;
+  }
