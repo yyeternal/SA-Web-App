@@ -32,13 +32,14 @@ def view_recommended_positions():
     ranked_positions = []
     # filter out positions that have qualifications that are too high, e.g. GPA or grade is not high enough
     for p in positions:
-        class_taken = db.session.scalars(sqla.select(Enrollment).where(Enrollment.student_id == current_user.id).where(Enrollment.course_id == p.course_id)).first()
+        class_taken = db.session.scalars(sqla.select(Enrollment).where(Enrollment.student_id == current_user.id).where(Enrollment.course_id == p.course_id).where(not Enrollment.wasSA)).first()
+        class_sa = db.session.scalars(sqla.select(Enrollment).where(Enrollment.student_id == current_user.id).where(Enrollment.course_id == p.course_id).where(Enrollment.wasSA)).first()
         if class_taken is not None and p.min_Grade < class_taken.grade: # remove if min grade required is "less than" (comes before in alphabet) grade received
             continue
         if p.min_GPA > current_user.GPA:
             continue
         ranked_positions.append(p)
-        row = [int(class_taken is not None and class_taken.wasSA == True), current_user.GPA - p.min_GPA, ord(class_taken.grade) - ord(p.min_Grade) if class_taken is not None else ord(p.min_Grade)]
+        row = [int(class_sa is not None), current_user.GPA - p.min_GPA, ord(class_taken.grade) - ord(p.min_Grade) if class_taken is not None else ord(p.min_Grade)]
         dmat.append(row)
     # sort based on if student has SA'd for the class before, difference btwn GPA and min_GPA, difference btwn grade and min_Grade
     data = np.array(dmat)
