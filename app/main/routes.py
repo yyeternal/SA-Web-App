@@ -9,4 +9,8 @@ import sqlalchemy as sqla
 @bp_main.route('/index', methods=['GET'])
 @login_required
 def index():
+    if current_user.user_type == "Student":
+        return redirect(url_for('student.view_positions'))
+    if current_user.user_type == "Instructor":
+        return redirect(url_for('instructor.view_positions'))
     return render_template('index.html', title='SA Recruitment Web App')
