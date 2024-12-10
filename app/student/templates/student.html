@@ -14,7 +14,6 @@
         </form>
     {% endif %}
 </header>
-<br>
 <p>
     <div class="column-divider">
         <div class="left-column">
@@ -27,6 +26,7 @@
         </div>
         <div class="right-column">
             <div class="card" id="details-card">
+                {% if positions %}
                 <h2 id="card-title">{{ "{}-{} {}".format(positions[0].course.coursenum, positions[0].sectionnum, positions[0].course.title) }}</h2>
                 <p id="card-name">Instructor: {{positions[0].instructor.firstname}} {{positions[0].instructor.lastname}}</p>
                 <p id="card-username">{{positions[0].instructor.username}}</p>
@@ -38,6 +38,9 @@
                 <form id="apply-form" action="{{ url_for('student.student_apply_position', position_id=positions[0].id) }}">
                     <button type="submit" class="apply-button">Apply</button>
                 </form>
+                {% else %}
+                <h2 id="card-title">No Positions have been posted yet</h2>
+                {% endif %}
               </div>
         </div>
     </div>
