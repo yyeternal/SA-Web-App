@@ -1,10 +1,17 @@
-<table class = "SA Position">
-	<tr>
-		<td width = "38%" class="positioninfo">{{position.course.get_coursenum()}}-{{position.sectionnum}} {{position.course.title}}</td>
-		<td width = "38%" class="positioninfo">Term: {{position.term}}</td>
-		<td width = "38%" class="positioninfo">Minimum GPA: {{position.min_GPA}}</td>
-		<td width = "38%" class="positioninfo">Minimum Grade: {{position.min_Grade}}</td>
-		<td width = 10% class ="positioninfo">Posted at: {{ position.timestamp }}</td>
-		<td><a class = "button" href = "{{url_for('instructor.view_applications', position_id = position.id)}}">View Applications</a></td>
-	</tr>
-</table>
+<li position-id="{{position.id}}"
+    position-title="{{position.course.coursenum}}-{{position.sectionnum}} {{position.course.title}}"
+    position-instructor-name="{{position.instructor.firstname}} {{position.instructor.lastname}}"
+    position-instructor-username="{{position.instructor.username}}"
+    position-term="{{position.term}}"
+    position-minGPA="{{position.min_GPA}}"
+    position-minGrade="{{position.min_Grade}}"
+    position-numPos="{{position.open_positions}}"
+    position-timestamp="{{position.timestamp}}">
+
+    <div class="position-preview-box">
+        <p>
+            <h4>{{position.course.coursenum}}-{{position.sectionnum}} {{position.course.title}}</h4>
+            <p>Term: {{position.term}}</p>
+        </p>
+    </div>
+</li>

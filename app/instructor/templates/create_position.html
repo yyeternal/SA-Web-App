@@ -7,32 +7,44 @@
     {% if form %}
         <form action="" method="POST">
             {{ form.hidden_tag() }}
-            <p>
+            <p class="forminput">
                 {{ form.course.label }}
                 {{ form.course() }}
             </p>
-            <p>
+            <p class="forminput">
                 {{ form.sectionnum.label }}
                 {{ form.sectionnum() }}
             </p>
-            <p>
+            <p class="forminput">
                 {{ form.term.label }}
                 {{ form.term() }}
+                {% for error in form.term.errors %}
+                    <span style = "color: red;">[{{ error}}]</span>
+                {% endfor %}
             </p>
-            <p>
+            <p class="forminput">
                 {{ form.open_positions.label }}
                 {{ form.open_positions() }}
+                {% for error in form.open_positions.errors %}
+                    <span style = "color: red;">[{{ error}}]</span>
+                {% endfor %}
             </p>
-            <p>
+            <p class="forminput">
                 {{ form.min_GPA.label }}
                 {{ form.min_GPA() }}
+                {% for error in form.min_GPA.errors %}
+                    <span style = "color: red;">[{{ error}}]</span>
+                {% endfor %}
             </p>
-            <p>
+            <p class="forminput">
                 {{ form.min_grade.label }}
                 {{ form.min_grade() }}
+                {% for error in form.min_grade.errors %}
+                    <span style = "color: red;">[{{ error}}]</span>
+                {% endfor %}
             </p>
             <p>
-                {{ form.submit() }}
+                {{ form.submit(class="button") }}
             </p>
         </form>
     {% endif %}

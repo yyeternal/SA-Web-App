@@ -14,3 +14,4 @@ class Config(object):
     TEMPLATE_FOLDER_AUTH = os.path.join(basedir, 'app//auth//templates')
     TEMPLATE_FOLDER_INSTRUCTOR = os.path.join(basedir, 'app//instructor//templates')
     TEMPLATE_FOLDER_STUDENT = os.path.join(basedir, 'app//student//templates')
+    

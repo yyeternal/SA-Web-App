@@ -4,6 +4,7 @@ from app.main.models import Course, User, Student, SA_Position, Enrollment, Appl
 import sqlalchemy as sqla
 import sqlalchemy.orm as sqlo
 
+
 from app.main.models import User, Instructor
 
 app = create_app(Config)
