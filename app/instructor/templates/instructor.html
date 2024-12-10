@@ -4,8 +4,60 @@
 
 	<h1>Student Assistant Positions for {{current_user.firstname}} {{current_user.lastname}}</h1>
 
-	{%for position in current_user.get_positions()%}
-            {%include '_sa_positions.html'%}
-	{% endfor %}
+	{%if positions%}
+    <div class="column-divider">
+        <div class="left-column">
+            <ul id="position-list">
+                {%for position in positions%}
+                    {%include '_sa_positions.html'%}
+                    <!-- <hr> -->
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="right-column">
+            <div class="card" id="details-card">
+                <h2 id="card-title">{{ "{}-{} {}".format(positions[0].course.coursenum, positions[0].sectionnum, positions[0].course.title) }}</h2>
+                <p id="card-name">Instructor: {{positions[0].instructor.firstname}} {{positions[0].instructor.lastname}}</p>
+                <p id="card-username">Email: {{positions[0].instructor.username}}</p>
+                <p id="card-term">Term: {{positions[0].term}}</p>
+                <p id="card-minGPA">Minimum GPA: {{positions[0].min_GPA}}</p>
+                <p id="card-minGrade">Minimum Grade Required: {{positions[0].min_Grade}}</p>
+                <p id="card-numPos">Open Positions: {{positions[0].open_positions}}</p>
+                <p id="card-timestamp">Posted: {{positions[0].timestamp}}</p>
+                <p id="view-applications"><a class="button" href="{{ url_for('instructor.view_applications', position_id=positions[0].id) }}">View Applications</a></p>
+              </div>
+        </div>
+    </div>
+	{%endif%}
+
+	<script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const items = document.querySelectorAll("#position-list li");
+            const cardTitle = document.getElementById("card-title");
+            const cardName = document.getElementById("card-name");
+            const cardUsername = document.getElementById("card-username");
+            const cardTerm = document.getElementById("card-term");
+            const cardGPA = document.getElementById("card-minGPA");
+            const cardGrade = document.getElementById("card-minGrade");
+            const cardNumPos = document.getElementById("card-numPos");
+            const cardTime = document.getElementById("card-timestamp");
+            const view_applications = document.getElementById("view-applications");
+
+            items.forEach(item => {
+                item.addEventListener("click", () => {
+                    // Update card content
+                    cardTitle.textContent = item.getAttribute("position-title");
+                    cardName.textContent = "Instructor: " + item.getAttribute("position-instructor-name");
+                    cardUsername.textContent = "Email: " + item.getAttribute("position-instructor-username");
+                    cardTerm.textContent = "Term: " + item.getAttribute("position-term");
+                    cardGPA.textContent = "Minimum GPA: " + item.getAttribute("position-minGPA");
+                    cardGrade.textContent = "Minimum Grade Required: " + item.getAttribute("position-minGrade");
+                    cardNumPos.textContent = "Open Positions: " + item.getAttribute("position-numPos");
+                    cardTime.textContent = "Posted: " + item.getAttribute("position-timestamp");
+                    view_applications.action = "{{ url_for('instructor.view_applications', position_id='id') }}".replace("id", item.getAttribute("position-id"));
+                });
+            });
+        });
+    </script>
 
 {% endblock %}

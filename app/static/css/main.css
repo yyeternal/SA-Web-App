@@ -1,5 +1,5 @@
 .forminput {
-    padding: 2px;
+  padding: 2px;
 	font-family: 'Segoe UI', Tahoma, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
 	font-size: 18px;
 	width: 50%;
@@ -10,7 +10,7 @@
     font-size: 16px;
     margin : 5px;
     padding : 5px;
-    border: 1px solid lightgray;
+    border: 1px solid rgb(0, 0, 0);
     background-color: #ffffff;
 }
 .button:hover {
@@ -180,7 +180,8 @@
     font-size: 16px;
     margin : 5px;
     padding : 5px;
-    border: 1px solid lightgray;
+    border: 1px solid rgb(0, 0, 0);
+    background-color: #ffffff;
   }
 
   .apply-button:hover {
