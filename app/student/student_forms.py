@@ -6,10 +6,9 @@ import sqlalchemy as sqla
 from app.main.models import User, Instructor, Course
 from wtforms import StringField, SubmitField, PasswordField, IntegerField, FloatField, BooleanField, DecimalField
 from wtforms_sqlalchemy.fields import QuerySelectField
-from wtforms.validators import DataRequired, Email, EqualTo, ValidationError, Length, NumberRange
+from wtforms.validators import DataRequired, Email, EqualTo, ValidationError, Length, NumberRange, AnyOf
 from wtforms.widgets import ListWidget, CheckboxInput
 import re
-
 
 
 class EditStudentProfileForm(FlaskForm):
@@ -23,7 +22,7 @@ class EditStudentProfileForm(FlaskForm):
     phonenumber = StringField('Phone Number', validators=[DataRequired(), Length(min=9,max=10), validate_phone])
     major = StringField('Major', validators=[DataRequired()])
     gpa = DecimalField('GPA', validators=[DataRequired(), NumberRange(min=0,max=4.0)])
-    graduation_date = StringField('Graduation Date', validators=[DataRequired()])    
+    graduation_date = StringField('Graduation Date', validators=[DataRequired(), Length(min = 6, max = 6, message='Must format in the style of A 2024 for example')])    
 
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
@@ -35,14 +34,14 @@ class AddCourseForm(FlaskForm):
                          query_factory= lambda : db.session.scalars(sqla.select(Course)),
                          get_label= lambda c : 'CS{} - {}'.format(c.coursenum, c.title))
     wasSA = BooleanField('Were you an SA?')
-    grade = StringField('Grade recieved')
-    term = StringField('What term and year did you take this course? Enter as term and year. e.g. "A 2023"', validators=[DataRequired()])
+    grade = StringField('Grade recieved', validators=[DataRequired(message="Please fill out this field"), AnyOf(values=['A', 'B', 'C'], message= "Must be A, B, or C")])
+    term = StringField('What term and year did you take this course? Enter as term and year. e.g. "A 2023"', validators=[DataRequired(), Length(min = 6, max = 6, message='Must format in the style of A 2024 for example')])
     submit = SubmitField('Add')
 
 class ApplyForm(FlaskForm):
-    grade = StringField('What grade did you get in this class?', validators=[DataRequired('Error, must enter a value')])
-    when_taken = StringField('When did you take this class?', validators=[DataRequired('Error, must enter a value')])
-    when_SA = StringField('When are you trying to SA this class?', validators=[DataRequired('Error, must enter a value')])
+    grade = StringField('What grade did you get in this class?', validators=[DataRequired('Error, must enter a value'), AnyOf(values=['A', 'B', 'C'], message="Must be A, B, or C")])
+    when_taken = StringField('When did you take this class?', validators=[DataRequired('Error, must enter a value'), Length(min = 6, max = 6, message='Must format in the style of A 2024 for example')])
+    when_SA = StringField('When are you trying to SA this class?', validators=[DataRequired('Error, must enter a value'), Length(min = 6, max = 6, message='Must format in the style of A 2024 for example')])
     why = StringField('Why do you want to SA this class?', validators=[DataRequired('Error, must enter a value')])
     submit = SubmitField('Apply')
 

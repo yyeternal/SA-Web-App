@@ -18,10 +18,16 @@
             <p>
                 {{ form.grade.label }}
                 {{ form.grade() }}
+                {% for error in form.grade.errors %}
+                    <span style = "color: red;">[{{ error}}]</span>
+                {% endfor %}
             </p>
             <p>
                 {{ form.term.label }}
                 {{ form.term() }}
+                {% for error in form.term.errors %}
+                    <span style = "color: red;">[{{ error}}]</span>
+                {% endfor %}
             </p>
             <p>
                 {{ form.submit() }}
