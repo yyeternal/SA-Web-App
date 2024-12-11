@@ -49,7 +49,7 @@ class StudentRegistrationForm(FlaskForm):
     phonenumber = StringField('Phone Number', validators=[DataRequired(), Length(min=9,max=10), validate_phone])
     major = StringField('Major', validators=[DataRequired(), validate_major])
     gpa = DecimalField('GPA', validators=[DataRequired(), NumberRange(min=0,max=4.0)])
-    graduation_date = StringField('Graduation Date', validators=[DataRequired(), Length(min=6, max=6, message='Must be in the format of A 2024')])
+    graduation_date = StringField('Graduation Date', validators=[DataRequired(), Length(min=8, max=15, message='Must be in the format of May 2024')])
 
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
