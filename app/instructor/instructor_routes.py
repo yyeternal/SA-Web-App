@@ -97,6 +97,24 @@ def approve_applications(position_id):
     flash("Accepted students application!")
     return redirect(url_for('main.index'))
 
+@bp_instructor.route('/instructor/reject_application/<position_id>', methods=['GET', 'POST'])
+@login_required
+def reject_applications(position_id):
+    if not current_user.user_type == 'Instructor':
+        flash('You do not have access to this page')
+        return redirect(url_for('main.index'))
+    position = SA_Position.query.get(position_id)
+    application = Application.query.filter_by(position_id=int(position_id), status='Pending').first()
+    student = db.session.scalars(sqla.select(Student).where(Student.id == application.student_id)).first()
+    if student.isSA:
+        flash("Cannot reject, student has already been accepted for a position")
+        return redirect(url_for('main.index'))
+    application.status = 'REJECTED'
+    db.session.commit()
+
+    flash("REJECTED students application!")
+    return redirect(url_for('main.index'))
+
 @bp_instructor.route('/instructor/view_student/<student_id>', methods=['GET', 'POST'])
 @login_required
 def view_student(student_id):
