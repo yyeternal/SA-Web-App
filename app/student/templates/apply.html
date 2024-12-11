@@ -49,7 +49,9 @@
                 <span style = "color: red;">[{{ error}}]</span>
             {% endfor %}
         </p>
+        {%if not current_user.isSA%}
         <p>{{form.submit(class="button")}}</p>
+        {%endif%}
     </form>
 
 {%endblock%}
