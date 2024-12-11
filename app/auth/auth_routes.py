@@ -1,7 +1,7 @@
 
 from flask import render_template, flash, redirect, url_for
 
-from app import db
+from app import db, app
 from app.auth import auth_blueprint as bp_auth 
 import sqlalchemy as sqla
 
@@ -27,6 +27,18 @@ def login():
 
         return redirect(url_for('main.index'))
     return render_template('login.html', form = lform)
+
+# @bp_auth.route('/sso/login', methods=['GET', 'POST'])
+# def sso_login():
+#     return render_template("login.html", **auth.log_in(
+#         scopes=app.config.SCOPE, # Have user consent to scopes during log-in
+#         redirect_uri="http://localhost:5000/getAToken", # Optional. If present, this absolute URL must match your app's redirect_uri registered in Microsoft Entra admin center
+#         prompt="select_account",  # Optional.
+#         ))
+
+@bp_auth.route('/response/<_external>', methods=['GET'])
+def response(_external):
+
 
 @bp_auth.route('/user/logout', methods=['GET'])
 @login_required

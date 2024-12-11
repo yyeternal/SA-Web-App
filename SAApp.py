@@ -1,11 +1,8 @@
 from app import db, create_app
 from config import Config
-from app.main.models import Course, User, Student, SA_Position, Enrollment, Application
+from app.main.models import Course, User, Student, Instructor, SA_Position, Enrollment, Application
 import sqlalchemy as sqla
 import sqlalchemy.orm as sqlo
-
-
-from app.main.models import User, Instructor
 
 app = create_app(Config)
 
