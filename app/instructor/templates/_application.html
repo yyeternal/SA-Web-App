@@ -15,12 +15,12 @@
                 <p class="applicationinfo">Why they want to be an SA: {{application.reasoning}}</p>   
                 <br> 
                 {% if application.status == 'Pending' %}
-                    <p><a class = "button" href = "{{url_for('instructor.approve_applications', position_id = application.position.id)}}">Approve</a></p>   
+                    <p><a class = "apply-button" href = "{{url_for('instructor.approve_applications', position_id = application.position.id)}}">Approve</a></p>   
                     <br> 
                 {% else %}
                     <p class="applicationinfo"><b>Already Hired!</b></p>
                 {% endif %}
-                <p><a class="button" href = "{{url_for('instructor.view_student', student_id=application.appStudent.id)}}">View Student</a></p>
+                <p><a class="apply-button" href = "{{url_for('instructor.view_student', student_id=application.appStudent.id)}}">View Student</a></p>
             </td> 
         </tr>
     </table>
