@@ -104,3 +104,12 @@ def view_student(student_id):
         return redirect(url_for('main.index'))
     student = Student.query.get(student_id)
     return render_template('display_profile.html', student=student)
+
+@bp_instructor.route('/instructor/view_student_experience/<student_id>', methods=['GET', 'POST'])
+@login_required
+def view_student_experience(student_id):
+    if not current_user.user_type == 'Instructor':
+        flash('You do not have access to this page')
+        return redirect(url_for('main.index'))
+    student = Student.query.get(student_id)
+    return render_template('student_experience.html', student=student)

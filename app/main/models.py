@@ -43,7 +43,8 @@ class Course(db.Model):
     title : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(150))
 
     # relationships
-    position : sqlo.Mapped['SA_Position'] = sqlo.relationship(back_populates= 'course')
+    positions : sqlo.WriteOnlyMapped['SA_Position'] = sqlo.relationship(back_populates= 'course')
+    enrollments : sqlo.WriteOnlyMapped['Enrollment']  = sqlo.relationship(back_populates='course')
 
     def __repr__(self):
         return '<Course {} - {} {}>'.format(self.id, self.coursenum, self.title)
@@ -53,6 +54,9 @@ class Course(db.Model):
     
     def get_title(self):
         return self.title
+    
+    def get_positions(self):
+        return db.session.scalars(self.positions.select()).all()
 
 class Instructor(User):
     __tablename__ = 'instructor'
@@ -95,7 +99,7 @@ class SA_Position(db.Model):
     instructor : sqlo.Mapped['Instructor'] = sqlo.relationship(back_populates = 'positions')
     students : sqlo.WriteOnlyMapped['Student'] = sqlo.relationship(back_populates = 'position')
     applications : sqlo.WriteOnlyMapped['Application'] = sqlo.relationship(back_populates = 'position')
-    course : sqlo.Mapped['Course'] = sqlo.relationship(back_populates = 'position')
+    course : sqlo.Mapped['Course'] = sqlo.relationship(back_populates = 'positions')
 
     def __repr__(self):
         return "".format()
@@ -153,6 +157,7 @@ class Enrollment(db.Model):
 
     # relationships
     student : sqlo.Mapped['Student'] = sqlo.relationship(back_populates='enrollments')
+    course : sqlo.Mapped['Course'] = sqlo.relationship(back_populates='enrollments')
 
     def get_course(self):
         return db.session.scalars(sqla.select(Course).where(Course.id == self.course_id)).first()

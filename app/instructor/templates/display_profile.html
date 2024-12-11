@@ -12,6 +12,9 @@
         <p> <b>Graduation Date:</b> {{student.graduation_date}}</p> <br>
         <p> <b><a class="button" href="{{url_for('main.index')}}">Home</a></b></p>
         <hr>
+        <form action="{{ url_for('instructor.view_student_experience', student_id=student.id) }}">
+            <button type="submit">View Student's Past Enrollments</button>
+        </form>
     <hr>
 
 {% endblock %}
