@@ -1,4 +1,4 @@
-from flask import Flask, session
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from config import Config
@@ -25,12 +25,6 @@ def create_app(config_class = Config):
     app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
     app.jinja_env.globals.update(Auth=identity.web.Auth)  # Useful in template for B2C
-    auth = identity.web.Auth(
-        session=session,
-        authority=app.config["AUTHORITY"],
-        client_id=app.config["CLIENT_ID"],
-        client_credential=app.config["CLIENT_SECRET"],
-    )
 
     db.init_app(app)
     migrate.init_app(app, db)

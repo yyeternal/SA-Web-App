@@ -1,6 +1,7 @@
 
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, session, request
 
+import os
 from app import db
 from app.auth import auth_blueprint as bp_auth 
 import sqlalchemy as sqla
@@ -9,6 +10,15 @@ from app.main.models import User, Instructor, Student, Enrollment
 from app.auth.auth_forms import LoginForm, InstructorRegistrationForm, StudentRegistrationForm
 
 from flask_login import login_user, current_user, logout_user, login_required
+from config import Config
+import identity.web
+
+authent = identity.web.Auth(
+        session=session,
+        authority=os.getenv("AUTHORITY"),
+        client_id=os.getenv("CLIENT_ID"),
+        client_credential=os.getenv("CLIENT_SECRET"),
+    )
 
 @bp_auth.route('/user/login', methods=['GET', 'POST'])
 def login():
@@ -28,17 +38,22 @@ def login():
         return redirect(url_for('main.index'))
     return render_template('login.html', form = lform)
 
-# @bp_auth.route('/sso/login', methods=['GET', 'POST'])
-# def sso_login():
-#     return render_template("login.html", **auth.log_in(
-#         scopes=app.config.SCOPE, # Have user consent to scopes during log-in
-#         redirect_uri="http://localhost:5000/getAToken", # Optional. If present, this absolute URL must match your app's redirect_uri registered in Microsoft Entra admin center
-#         prompt="select_account",  # Optional.
-#         ))
+@bp_auth.route('/sso/login', methods=['GET', 'POST'])
+def sso_login():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.index'))
+    return render_template("sso_login.html", **authent.log_in(
+        scopes=Config.SCOPE, # Have user consent to scopes during log-in
+        redirect_uri=url_for('auth.response', _external=True), # Optional. If present, this absolute URL must match your app's redirect_uri registered in Microsoft Entra admin center
+        prompt="select_account",  # Optional.
+        ))
 
-@bp_auth.route('/response/<_external>', methods=['GET'])
-def response(_external):
-    pass
+@bp_auth.route('/response', methods=['GET'])
+def response():
+    result = authent.complete_log_in(request.args)
+    if "error" in result:
+        return render_template("auth_error.html", result=result)
+    return redirect(url_for("main.index"))
 
 @bp_auth.route('/user/logout', methods=['GET'])
 @login_required
