@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, BooleanField, FloatField, DecimalField
+from wtforms import StringField, SubmitField, PasswordField, BooleanField, FloatField, DecimalField, SelectField
 from wtforms_sqlalchemy.fields import QuerySelectMultipleField
 from wtforms.validators import  ValidationError, DataRequired, EqualTo, Email, Length, NumberRange, AnyOf
 from wtforms.widgets import ListWidget, CheckboxInput
@@ -42,7 +42,8 @@ class StudentRegistrationForm(FlaskForm):
     lastname = StringField('Last Name', validators=[DataRequired('Error, must enter a value')])
     WPI_id = StringField('WPI ID', validators=[DataRequired('Error, must enter a value'), is_unique('id'), Length(min=9,max=9)])
     phonenumber = StringField('Phone Number', validators=[DataRequired(), Length(min=9,max=10), validate_phone])
-    major = StringField('Major', validators=[DataRequired(), AnyOf(values=['CS','RBE','ME','DS','IMGD'], message="Must enter a valid major")])
+    major = SelectField('Major',
+                         choices= ['CS', 'RBE', 'IMGD', 'DS'])
     gpa = DecimalField('GPA', validators=[DataRequired(), NumberRange(min=0,max=4.0)])
     graduation_date = StringField('Graduation Date', validators=[DataRequired(), Length(min=8, max=15, message='Must be in the format of May 2024')])
 
