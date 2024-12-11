@@ -6,7 +6,7 @@ from flask_login import LoginManager, current_user
 from flask_moment import Moment
 import identity.web
 import requests
-from flask_session import Session
+# from flask_session import Session
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 db = SQLAlchemy()
@@ -20,7 +20,7 @@ def create_app(config_class = Config):
     app.config.from_object(config_class)
     app.static_folder = config_class.STATIC_FOLDER
     app.template_folder = config_class.TEMPLATE_FOLDER_MAIN
-    Session(app)
+    #Session(app)
 
     app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 

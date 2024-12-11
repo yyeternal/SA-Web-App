@@ -167,4 +167,5 @@ Dockerfile
 build.sh
 .dockerignore
 requirements.txt
+student.db
 flask_session/
