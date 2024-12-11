@@ -1,60 +1,75 @@
+{% extends "base.html" %}
 {% block content %}
     <h1>Register</h1>
     <form action = "{{url_for('auth.student_register')}}" method = "POST" class="edit-box">
         {{ form.hidden_tag()}}
         <p>
-            {{form.username.label(class="formlabel")}} / Username  <span style="margin: 0 93px">{{form.WPI_id.label}}</span><br>
-            {{form.username(class = 'forminput')}}  <span style="margin: 0 40px">{{form.WPI_id(class = 'forminput')}}</span> <br>
+            {{form.username.label(class="formlabel")}} / Username  <br>
+            {{form.username(class = 'registerinput')}} <br>
             {% for error in form.username.errors %}
                 <span style = "color: red;">[{{ error}}]</span>
             {% endfor %}
+        </p>
+        <p>
+            {{form.WPI_id.label}}  <br>
+            {{form.WPI_id(class = 'registerinput')}} <br>
             {% for error in form.WPI_id.errors %}
                 <span style = "color: red;">[{{ error}}]</span>
             {% endfor %}
         </p>
         <p>
-            {{form.firstname.label(class="formlabel")}} <span style="margin: 0 138px">{{form.lastname.label}}</span><br>
-            {{form.firstname(class = 'forminput')}} <span style="margin: 0 40px">{{form.lastname(class = 'forminput')}}</span><br>
+            {{form.firstname.label(class="formlabel")}} <br>
+            {{form.firstname(class = 'registerinput')}} <br>
             {% for error in form.firstname.errors %}
                 <span style = "color: red;">[{{ error}}]</span>
             {% endfor %}
+        </p>
+        <p>
+            {{form.lastname.label(class="formlabel")}} <br>
+            {{form.lastname(class = 'registerinput')}} <br>
             {% for error in form.lastname.errors %}
                 <span style = "color: red;">[{{ error}}]</span>
             {% endfor %}
         </p>
         
         <p>
-            {{form.phonenumber.label(class="formlabel")}} <span style="margin: 0 113px">{{form.major.label}}</span><br>
-            {{form.phonenumber(class = 'forminput')}} <span style="margin: 0 40px">{{form.major(class = 'forminput')}}</span><br>
+            {{form.phonenumber.label(class="formlabel")}} <br>
+            {{form.phonenumber(class = 'registerinput')}} <br>
             {% for error in form.phonenumber.errors %}
                 <span style = "color: red;">[{{ error}}]</span>
             {% endfor %}
-            <span style="margin: 0 211px">
-                {% for error in form.major.errors %}
-                <span style = "color: red;">[{{ error}}]</span>
-                {% endfor %} </span>
         </p>
         <p>
-            {{form.gpa.label(class="formlabel")}} <span style="margin: 0 179px">{{form.graduation_date.label}}</span><br>
-            {{form.gpa(class = 'forminput')}} <span style="margin: 0 40px">{{form.graduation_date(class = 'forminput')}}</span><br>
+            {{form.major.label(class="formlabel")}} <br>
+            {{form.major(class = 'registerinput')}} <br>
+            {% for error in form.major.errors %}
+                <span style = "color: red;">[{{ error}}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{form.gpa.label(class="formlabel")}} <br>
+            {{form.gpa(class = 'registerinput')}} <br>
             {% for error in form.gpa.errors %}
                 <span style = "color: red;">[{{ error}}]</span>
             {% endfor %}
-            <span style="margin: 0 211px"></span>
+        </p>
+        <p>
+            {{form.graduation_date.label(class="formlabel")}}<br>
+            {{form.graduation_date(class = 'registerinput')}}<br>
             {% for error in form.graduation_date.errors %}
                 <span style = "color: red;">[{{ error}}]</span>
-            {% endfor %} </span>
+            {% endfor %}
         </p>
         <p>
             {{form.password.label(class="formlabel")}}<br>
-            {{form.password(class = 'forminput')}}<br>
+            {{form.password(class = 'registerinput')}}<br>
             {% for error in form.password.errors %}
                 <span style = "color: red;">[{{ error}}]</span>
             {% endfor %}
         </p>
         <p>
             {{form.password2.label(class="formlabel")}}<br>
-            {{form.password2(class = 'forminput')}}<br>
+            {{form.password2(class = 'registerinput')}}<br>
             {% for error in form.password2.errors %}
                 <span style = "color: red;">[{{ error}}]</span>
             {% endfor %}

@@ -1,0 +1,15 @@
+<table class="applicationtable">
+    <tr> 
+        <td colspan="3"><div class="applicationtitle">{{enrollment.course.coursenum}} {{enrollment.course.title}} </div></td>
+    </tr>
+    <tr>
+        <td width="100%" class="applicationmessage">
+            <p class="applicationinfo">Grade Received: {{enrollment.grade}}</p>   
+            <br> 
+            <p class="applicationinfo">When you took the course: {{enrollment.term}}</p>   
+            <br> 
+            <p class="applicationinfo">Was SA: {{enrollment.wasSA}}</p>
+			<p><a class="button" href="{{url_for('student.delete_exp', experience_id=enrollment.id)}}">Delete</a></p>   
+        </td> 
+    </tr>
+</table>

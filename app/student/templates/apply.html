@@ -4,22 +4,7 @@
 <h1>Apply to {{position.course.coursenum}}-{{position.sectionnum}} {{position.course.title}}</h1>
     <form action="{{url_for('student.student_apply_position', position_id=position.id)}}" method="POST" class="edit-box">
         {{ form.hidden_tag() }}
-        {% if class_taken%}
-            <p>
-                {{form.grade.label}}<br>
-                <span class="forminput">{{class_taken.grade}}</span><br>
-                {% for error in form.grade.errors %}
-                    <span style = "color: red;">[{{ error}}]</span>
-                {% endfor %}
-            </p>
-            <p>
-                {{form.when_taken.label}}<br>
-                <span class="forminput">{{class_taken.term}}</span><br>
-                {% for error in form.when_taken.errors %}
-                    <span style = "color: red;">[{{ error}}]</span>
-                {% endfor %}
-            </p>
-        {% else %}
+        
             <p>
                 {{form.grade.label}}<br>
                 {{form.grade(class = 'forminput')}}<br>
@@ -34,7 +19,7 @@
                     <span style = "color: red;">[{{ error}}]</span>
                 {% endfor %}
             </p>
-        {% endif %}
+        
         <p>
             {{form.when_SA.label}}<br>
             {{form.when_SA(class = 'forminput')}}<br>
@@ -50,7 +35,7 @@
             {% endfor %}
         </p>
         {%if not current_user.isSA%}
-        <p>{{form.submit(class="button")}}</p>
+            <p>{{form.submit(class="button")}}</p>
         {%endif%}
     </form>
 
