@@ -68,7 +68,8 @@ def view_applications(position_id):
     if not current_user.user_type == 'Instructor':
         flash('You do not have access to this page')
         return redirect(url_for('main.index'))
-    applications = Application.query.filter_by(position_id=int(position_id)).all()
+    applications = Application.query.filter_by(position_id=int(position_id)).filter(Application.instructor_id == current_user.id).filter(Application.status == 'Pending' or Application.status =='Approved').all()
+    print(f"Number of applications found: {len(applications)}")
     return render_template('view_applications.html', title="Applications", applications=applications)
 
 @bp_instructor.route('/instructor/approve_application/<position_id>', methods=['GET', 'POST'])

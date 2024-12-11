@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Sign In</h1>
+    <h1><u>Sign In</u></h1>
     <form action = "{{url_for('auth.login')}}" method = "POST" class="right-column">
         {{form.hidden_tag()}}
         <p>

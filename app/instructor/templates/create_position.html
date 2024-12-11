@@ -14,6 +14,9 @@
             <p>
                 {{ form.sectionnum.label(class="formlabel") }}:
                 {{ form.sectionnum(class="forminput") }}
+                {% for error in form.sectionnum.errors %}
+                    <span style = "color: red;">[{{ error}}]</span>
+                {% endfor %}
             </p>
             <p>
                 {{ form.term.label(class="formlabel") }}:

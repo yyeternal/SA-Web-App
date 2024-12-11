@@ -17,7 +17,7 @@
                 {% if application.status == 'Pending' %}
                     <p><a class = "apply-button" href = "{{url_for('instructor.approve_applications', position_id = application.position.id)}}">Approve</a></p>   
                     <br> 
-                {% else %}
+                {% elif application.status == 'Approved' %}
                     <p class="applicationinfo"><b>Already Hired!</b></p>
                 {% endif %}
                 <p><a class="apply-button" href = "{{url_for('instructor.view_student', student_id=application.appStudent.id)}}">View Student</a></p>

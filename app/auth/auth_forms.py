@@ -29,6 +29,11 @@ def validate_phone(form, field):
     input_number = field.data
     if re.search("[a-z]", input_number) != None:
         raise ValidationError(message="Not a valid phone number")     
+    
+def validate_major(form, field):
+    input_number = field.data
+    if re.search("[a-z]", input_number) is None:
+        raise ValidationError(message="Not a valid major")  
 
 class LoginForm(FlaskForm):
     email = StringField('Username', validators = [DataRequired()])
@@ -41,15 +46,10 @@ class StudentRegistrationForm(FlaskForm):
     firstname = StringField('First Name', validators=[DataRequired('Error, must enter a value')])
     lastname = StringField('Last Name', validators=[DataRequired('Error, must enter a value')])
     WPI_id = StringField('WPI ID', validators=[DataRequired('Error, must enter a value'), is_unique('id'), Length(min=9,max=9)])
-    courses  = QuerySelectMultipleField('Courses Taken', 
-                                        query_factory = lambda : db.session.scalars(sqla.select(Course)),
-                                        get_label = lambda theCourse : theCourse.title,
-                                        widget=ListWidget(prefix_label=False),
-                                        option_widget = CheckboxInput())
     phonenumber = StringField('Phone Number', validators=[DataRequired(), Length(min=9,max=10), validate_phone])
-    major = StringField('Major', validators=[DataRequired()])
+    major = StringField('Major', validators=[DataRequired(), validate_major])
     gpa = DecimalField('GPA', validators=[DataRequired(), NumberRange(min=0,max=4.0)])
-    graduation_date = StringField('Graduation Date', validators=[DataRequired()])
+    graduation_date = StringField('Graduation Date', validators=[DataRequired(), Length(min=6, max=6, message='Must be in the format of A 2024')])
 
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
