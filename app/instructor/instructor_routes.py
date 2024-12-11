@@ -89,6 +89,7 @@ def approve_applications(position_id):
     if student.isSA:
         flash("Cannot approve, student has already been accepted for a position")
         return redirect(url_for('main.index'))
+    student.isSA = True
     position.open_positions -= 1
     application.status = 'Approved'
     db.session.commit()

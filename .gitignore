@@ -167,3 +167,4 @@ Dockerfile
 build.sh
 .dockerignore
 requirements.txt
+student.db

@@ -43,6 +43,23 @@
   outline: 1px solid black;
   margin: 7px;
 }
+@media screen and (min-width: 800px) and (max-width:1200px){
+  .application-box{
+      width: 42%;
+  }
+}
+
+@media screen and (min-width: 1201px){
+  .application-box{
+      width: 32%;
+  }
+}
+
+@media screen and (max-width: 799px){
+  .application-box{
+      width: 90%;
+  }
+}
 
 .applicationtable { 
   width : 100%;
