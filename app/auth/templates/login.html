@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Sign In</h1>
-    <form action = "{{url_for('auth.login')}}" method = "POST">
+    <h1><u>Sign In</u></h1>
+    <form action = "{{url_for('auth.login')}}" method = "POST" class="right-column">
         {{form.hidden_tag()}}
         <p>
             {{form.email.label}}<br>
@@ -23,8 +23,8 @@
         </p>
         <p>{{form.submit(class="button")}}</p>
     </form>
-    New Student? <a href = "{{url_for('auth.student_register')}}"> Click to Register!</a>
-    <p>New Instructor? <a href = "{{url_for('auth.instructor_register')}}"> Click to Register!</a></p>
+    <p class="formlabel"><u>New Student? </u><a href = "{{url_for('auth.student_register')}}"> Click to Register!</a></p>
+    <p class="formlabel"><u>New Instructor?</u> <a href = "{{url_for('auth.instructor_register')}}"> Click to Register!</a></p>
     
 {% endblock %}
 

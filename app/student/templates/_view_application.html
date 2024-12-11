@@ -1,11 +1,25 @@
-<h1>My Applications</h1>
-<table class = "applicationtable">
-	<tr>
-		<td width = "38%" class="positioninfo">Application for {{application.position.course.coursenum}}-{{application.position.sectionnum}} {{application.position.course.title}}</td>
-		<td width = "38%" class="positioninfo">Course Taken: {{application.when_course_taken}}</td>
-		<td width = "38%" class="positioninfo">Grade Received: {{application.grade_received}}</td>
-		<td width = "38%" class="positioninfo">Term of SA Position: {{application.when_SA}}</td>
-		<td width = "38%" class="positioninfo">Reasoning: {{application.reasoning}}</td>
-		<td width = "38%" class="positioninfo">Status: {{application.status}}</td>
-	</tr>
+
+<table class="applicationtable">
+    <tr> 
+        <td colspan="3"><div class="applicationtitle">Application for {{application.position.course.coursenum}}-{{application.position.sectionnum}} {{application.position.course.title}} </div></td>
+    </tr>
+    <tr>
+        <td width="100%" class="applicationmessage">
+            <p class="applicationinfo">Position id: {{application.position_id}}</p>   
+            <br> 
+            <p class="applicationinfo">Grade Received: {{application.grade_received}}</p>   
+            <br> 
+            <p class="applicationinfo">When you took the course: {{application.when_course_taken}}</p>   
+            <br> 
+            <p class="applicationinfo">When you wanted to SA the course: {{application.when_SA}}</p>   
+            <br> 
+            <p class="applicationinfo">Reasoning: {{application.reasoning}}</p>   
+            <br> 
+            <p class="applicationinfo">Status: {{application.status}}</p>   
+            <br> 
+            {%if application.status == 'Pending'%}
+                <p><a class="button" href="{{url_for('student.withdraw', application_id=application.id)}}">Withdraw</a></p>
+            {%endif%}
+        </td> 
+    </tr>
 </table>

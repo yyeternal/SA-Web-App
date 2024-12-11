@@ -5,40 +5,43 @@
     <h1>Create New Student Assistant Position</h1>
 
     {% if form %}
-        <form action="" method="POST">
+        <form action="" method="POST" class="edit-box">
             {{ form.hidden_tag() }}
-            <p class="forminput">
-                {{ form.course.label }}
-                {{ form.course() }}
+            <p>
+                {{ form.course.label(class="formlabel") }}
+                {{ form.course(class="forminput") }}
             </p>
-            <p class="forminput">
-                {{ form.sectionnum.label }}
-                {{ form.sectionnum() }}
+            <p>
+                {{ form.sectionnum.label(class="formlabel") }}:
+                {{ form.sectionnum(class="forminput") }}
+                {% for error in form.sectionnum.errors %}
+                    <span style = "color: red;">[{{ error}}]</span>
+                {% endfor %}
             </p>
-            <p class="forminput">
-                {{ form.term.label }}
-                {{ form.term() }}
+            <p>
+                {{ form.term.label(class="formlabel") }}:
+                {{ form.term(class="forminput") }}
                 {% for error in form.term.errors %}
                     <span style = "color: red;">[{{ error}}]</span>
                 {% endfor %}
             </p>
-            <p class="forminput">
-                {{ form.open_positions.label }}
-                {{ form.open_positions() }}
+            <p>
+                {{ form.open_positions.label(class="formlabel") }}:
+                {{ form.open_positions(class="forminput") }}
                 {% for error in form.open_positions.errors %}
                     <span style = "color: red;">[{{ error}}]</span>
                 {% endfor %}
             </p>
-            <p class="forminput">
-                {{ form.min_GPA.label }}
-                {{ form.min_GPA() }}
+            <p>
+                {{ form.min_GPA.label(class="formlabel") }}:
+                {{ form.min_GPA(class="forminput") }}
                 {% for error in form.min_GPA.errors %}
                     <span style = "color: red;">[{{ error}}]</span>
                 {% endfor %}
             </p>
-            <p class="forminput">
-                {{ form.min_grade.label }}
-                {{ form.min_grade() }}
+            <p>
+                {{ form.min_grade.label(class="formlabel") }}:
+                {{ form.min_grade(class="forminput") }}
                 {% for error in form.min_grade.errors %}
                     <span style = "color: red;">[{{ error}}]</span>
                 {% endfor %}

@@ -63,7 +63,7 @@ def view_applications():
     if not current_user.user_type == 'Student':
         flash('You do not have access to this page')
         return redirect(url_for('main.index'))
-    applications = db.session.scalars(sqla.select(Application).where(Application.student_id == current_user.id)).all()
+    applications = db.session.scalars(sqla.select(Application).where(Application.student_id == current_user.id).where(Application.status != 'Withdrawn')).all()
     return render_template('student_applications.html', applications = applications)
 
 @bp_student.route('/positions/<position_id>/view', methods=['GET'])
@@ -157,18 +157,22 @@ def student_apply_position(position_id):
         return redirect(url_for('main.index'))
     return render_template('apply.html', form=apform, position=position, class_taken=class_taken)
     
-@bp_student.route('/student/<application_id>/withdraw', methods=['POST'])
+@bp_student.route('/student/<application_id>/withdraw', methods=['POST', 'GET'])
 @login_required
 def withdraw(application_id):
-    theapplication = db.session.query(Application).filter_by(id=application_id).first()
-    if theapplication is not None and theapplication.user_id == current_user.id:
-        theapplication.status = 'Withdrawn'
-        db.session.commit()
-        #db.session.delete(theapplication)
-        flash('You succesffuly withdrew this application!')
+    if not current_user.user_type == 'Student':
+        flash('You do not have access to this page')
         return redirect(url_for('main.index'))
-    flash('You cannot withdraw this application.')
-    return redirect(url_for('main.index'))
+    theapplication = db.session.get(Application, application_id)
+    if theapplication is None:
+        flash("Idk bro")
+        return redirect(url_for('main.index'))
+    theapplication.status = 'Withdrawn'
+    db.session.add(theapplication)
+    db.session.commit()
+    flash('You succesffuly withdrew this application!')
+    applications = db.session.scalars(sqla.select(Application).where(Application.student_id == current_user.id)).all()
+    return render_template('student_applications.html', applications = applications)
 
 @bp_student.route('/<student_id>/profile', methods=['GET'])
 @login_required

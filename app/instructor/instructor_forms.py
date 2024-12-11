@@ -13,13 +13,20 @@ import re
 def validate_phone(form, field):
     input_number = field.data
     if re.search("[a-z]", input_number) != None:
-        raise ValidationError(message="Not a valid phone number")     
+        raise ValidationError(message="Not a valid phone number")  
+
+def validate_course_num(form, field):
+    input_num = field.data
+    courses = db.session.scalars(sqla.select(Course)).all()
+    for course in courses:
+        if input_num == course.coursenum:
+            raise ValidationError(message="This section already exists!") 
 
 class CreatePositionForm(FlaskForm):
     course = QuerySelectField('Course',
                          query_factory= lambda : db.session.scalars(sqla.select(Course)),
                          get_label= lambda c : '{} - {}'.format(c.coursenum, c.title))
-    sectionnum = StringField('Section Number', validators=[DataRequired(), Length(min=1, max=10)])
+    sectionnum = StringField('Section Number', validators=[DataRequired(), Length(min=1, max=10), validate_course_num])
     term = StringField('Enter the term for the class. e.g. "A 2023"', validators=[DataRequired(), Length(min=6, max=6, message='Must be in the format of A 2024')])
     open_positions = IntegerField('Number of Positions', validators=[DataRequired(), NumberRange(min=1)])
     min_GPA = DecimalField('Minimum GPA of SA', validators=[DataRequired(), NumberRange(min=0,max=4.0)])
