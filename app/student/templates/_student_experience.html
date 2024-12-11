@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>My Previous Experience</h1>
+    <div class="applicationlist">
+        {% for enrollment in enrollments %}
+        <div class="application-box">
+            {% include '_experience.html' %} 
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

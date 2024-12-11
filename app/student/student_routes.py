@@ -174,7 +174,7 @@ def withdraw(application_id):
     theapplication.status = 'Withdrawn'
     db.session.add(theapplication)
     db.session.commit()
-    flash('You succesffuly withdrew this application!')
+    flash('You succesfully withdrew this application!')
     applications = db.session.scalars(sqla.select(Application).where(Application.student_id == current_user.id)).all()
     return render_template('student_applications.html', applications = applications)
 
@@ -183,3 +183,28 @@ def withdraw(application_id):
 def display_profile(student_id):
     empty_form = EmptyForm()
     return render_template('display_profile.html', title = 'Display Profile', student = db.session.scalars(sqla.Select(Student).where(Student.id == student_id)), form = empty_form)
+
+@bp_student.route('/experience/view', methods=['GET'])
+@login_required
+def view_experience():
+    if not current_user.user_type == 'Student':
+        flash('You do not have access to this page')
+        return redirect(url_for('main.index'))
+    enrollments = current_user.get_enrollments()
+    return render_template('_student_experience.html', enrollments = enrollments)
+
+@bp_student.route('/student/<experience_id>/delete', methods=['POST', 'GET'])
+@login_required
+def delete_exp(experience_id):
+    if not current_user.user_type == 'Student':
+        flash('You do not have access to this page')
+        return redirect(url_for('main.index'))
+    the_exp = db.session.get(Enrollment, experience_id)
+    if the_exp is None:
+        flash("Idk bro")
+        return redirect(url_for('main.index'))
+    db.session.delete(the_exp)
+    db.session.commit()
+    flash('You succesfully deleted that previous experience!')
+    # enrollments = current_user.get_enrollments()
+    return redirect(url_for("student.view_experience"))
