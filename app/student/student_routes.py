@@ -135,6 +135,9 @@ def student_apply_position(position_id):
     if already_applied is not None:
         flash('You already applied for this position!')
         return redirect(url_for('main.index'))
+    if current_user.isSA:
+        flash('You have already been accepted to a position!')
+        return redirect(url_for('main.index'))
     position = db.session.scalars(sqla.select(SA_Position).where(SA_Position.id == int(position_id))).first()
     student = db.session.scalars(sqla.select(Student).where(Student.id==current_user.id)).first()
     class_taken = db.session.scalars(sqla.select(Enrollment).where(Enrollment.student_id == student.id, Enrollment.course_id == position.course_id)).first()

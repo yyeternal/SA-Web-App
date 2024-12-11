@@ -68,9 +68,11 @@ def view_applications(position_id):
     if not current_user.user_type == 'Instructor':
         flash('You do not have access to this page')
         return redirect(url_for('main.index'))
-    applications = Application.query.filter_by(position_id=int(position_id)).filter(Application.instructor_id == current_user.id).filter(Application.status == 'Pending' or Application.status =='Approved').all()
-    print(f"Number of applications found: {len(applications)}")
-    return render_template('view_applications.html', title="Applications", applications=applications)
+    pending_applications = db.session.scalars(sqla.select(Application).where(Application.position_id == position_id).where(Application.instructor_id == current_user.id).where(Application.status == 'Pending')).all()
+    approved_applications = db.session.scalars(sqla.select(Application).where(Application.position_id == position_id).where(Application.instructor_id == current_user.id).where(Application.status == 'Approved')).all()
+    print(f"Number of applications found: {len(pending_applications)+len(approved_applications)}")
+    apps = pending_applications + approved_applications
+    return render_template('view_applications.html', title="Applications", applications=apps)
 
 @bp_instructor.route('/instructor/approve_application/<position_id>', methods=['GET', 'POST'])
 @login_required
@@ -85,9 +87,14 @@ def approve_applications(position_id):
     if (position.open_positions - 1) < 0:
         flash("Cannot approve, already accepted applicants for all available open positions")
         return redirect(url_for('main.index'))
+    student = db.session.scalars(sqla.select(Student).where(Student.id == application.student_id)).first()
+    if student.isSA:
+        flash("Cannot approve, student has already been accepted for a position")
+        return redirect(url_for('main.index'))
     position.open_positions -= 1
     application.status = 'Approved'
     db.session.commit()
+
     flash("Accepted students application!")
     return redirect(url_for('main.index'))
 
