@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, BooleanField, FloatField, DecimalField
 from wtforms_sqlalchemy.fields import QuerySelectMultipleField
-from wtforms.validators import  ValidationError, DataRequired, EqualTo, Email, Length, NumberRange
+from wtforms.validators import  ValidationError, DataRequired, EqualTo, Email, Length, NumberRange, AnyOf
 from wtforms.widgets import ListWidget, CheckboxInput
 from flask import redirect
 from app.main.models import User, Instructor, Course
@@ -29,11 +29,6 @@ def validate_phone(form, field):
     input_number = field.data
     if re.search("[a-z]", input_number) != None:
         raise ValidationError(message="Not a valid phone number")     
-    
-def validate_major(form, field):
-    input_number = field.data
-    if re.search("[a-z]", input_number) is None:
-        raise ValidationError(message="Not a valid major")  
 
 class LoginForm(FlaskForm):
     email = StringField('Username', validators = [DataRequired()])
@@ -47,9 +42,9 @@ class StudentRegistrationForm(FlaskForm):
     lastname = StringField('Last Name', validators=[DataRequired('Error, must enter a value')])
     WPI_id = StringField('WPI ID', validators=[DataRequired('Error, must enter a value'), is_unique('id'), Length(min=9,max=9)])
     phonenumber = StringField('Phone Number', validators=[DataRequired(), Length(min=9,max=10), validate_phone])
-    major = StringField('Major', validators=[DataRequired(), validate_major])
+    major = StringField('Major', validators=[DataRequired(), AnyOf(values=['CS','RBE','ME','DS','IMGD'], message="Must enter a valid major")])
     gpa = DecimalField('GPA', validators=[DataRequired(), NumberRange(min=0,max=4.0)])
-    graduation_date = StringField('Graduation Date', validators=[DataRequired(), Length(min=6, max=6, message='Must be in the format of A 2024')])
+    graduation_date = StringField('Graduation Date', validators=[DataRequired(), Length(min=8, max=15, message='Must be in the format of May 2024')])
 
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])

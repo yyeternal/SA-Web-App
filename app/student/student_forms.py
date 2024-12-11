@@ -16,16 +16,12 @@ class EditStudentProfileForm(FlaskForm):
         input_number = field.data
         if re.search("[a-z]", input_number) != None:
             raise ValidationError(message="Not a valid phone number") 
-
-    def validate_major(form, field):
-        input_number = field.data
-        if re.search("[a-z]", input_number) is None:
-            raise ValidationError(message="Not a valid major")        
+        
          
     firstname = StringField('First Name', validators=[DataRequired('Error, must enter a value')])
     lastname = StringField('Last Name', validators=[DataRequired('Error, must enter a value')])
     phonenumber = StringField('Phone Number', validators=[DataRequired(), Length(min=9,max=10), validate_phone])
-    major = StringField('Major', validators=[DataRequired(), validate_major])
+    major = StringField('Major', validators=[DataRequired(), AnyOf(values=['CS','RBE','ME','DS','IMGD'], message="Must enter a valid major")])
     gpa = DecimalField('GPA', validators=[DataRequired(), NumberRange(min=0,max=4.0)])
     graduation_date = StringField('Graduation Date', validators=[DataRequired(), Length(min = 6, max = 6, message='Must format in the style of A 2024 for example')])    
 

@@ -29,9 +29,10 @@
             {% for error in form.phonenumber.errors %}
                 <span style = "color: red;">[{{ error}}]</span>
             {% endfor %}
-            {% for error in form.major.errors %}
+            <span style="margin: 0 211px">
+                {% for error in form.major.errors %}
                 <span style = "color: red;">[{{ error}}]</span>
-            {% endfor %}
+                {% endfor %} </span>
         </p>
         <p>
             {{form.gpa.label(class="formlabel")}} <span style="margin: 0 179px">{{form.graduation_date.label}}</span><br>
@@ -39,9 +40,10 @@
             {% for error in form.gpa.errors %}
                 <span style = "color: red;">[{{ error}}]</span>
             {% endfor %}
+            <span style="margin: 0 211px"></span>
             {% for error in form.graduation_date.errors %}
                 <span style = "color: red;">[{{ error}}]</span>
-            {% endfor %}
+            {% endfor %} </span>
         </p>
         <p>
             {{form.password.label(class="formlabel")}}<br>
