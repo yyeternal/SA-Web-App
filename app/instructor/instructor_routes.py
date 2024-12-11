@@ -81,9 +81,7 @@ def approve_applications(position_id):
         flash('You do not have access to this page')
         return redirect(url_for('main.index'))
     position = SA_Position.query.get(position_id)
-    application = Application.query.filter_by(position_id=int(Application.position_id), status='Pending').first()
-    student = application.appStudent
-    student.isSa = True
+    application = Application.query.filter_by(position_id=int(position_id), status='Pending').first()
     if (position.open_positions - 1) < 0:
         flash("Cannot approve, already accepted applicants for all available open positions")
         return redirect(url_for('main.index'))
@@ -91,6 +89,7 @@ def approve_applications(position_id):
     if student.isSA:
         flash("Cannot approve, student has already been accepted for a position")
         return redirect(url_for('main.index'))
+    student.isSA = True
     position.open_positions -= 1
     application.status = 'Approved'
     db.session.commit()
