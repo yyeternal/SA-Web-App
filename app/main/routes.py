@@ -4,6 +4,8 @@ from flask import render_template, flash, redirect, url_for
 from flask_login import login_required, current_user
 from flask_login import login_required
 import sqlalchemy as sqla
+import os
+from app.auth.auth_routes import authent
 
 @bp_main.route('/', methods=['GET'])
 @bp_main.route('/index', methods=['GET'])
