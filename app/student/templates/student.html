@@ -35,7 +35,7 @@
                 <p id="card-minGPA">Minimum GPA: {{positions[0].min_GPA}}</p>
                 <p id="card-minGrade">Minimum Grade Required: {{positions[0].min_Grade}}</p>
                 <p id="card-numPos">Open Positions: {{positions[0].open_positions}}</p>
-                <p id="card-timestamp">Posted: {{positions[0].timestamp}}</p>
+                <p id="card-timestamp">Posted: {{ moment(positions[0].timestamp).format('LLL') }}</p>
                     {%if not current_user.isSA%}
                     <form id="apply-form" action="{{ url_for('student.student_apply_position', position_id=positions[0].id) }}">
                         <button type="submit" class="apply-button">Apply</button>

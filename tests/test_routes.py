@@ -70,10 +70,13 @@ def init_database():
     #add a user    
     #user1 = Instructor(username='profjohn@wpu.edu', firstname='john', lastname='instructor', user_type='Instructor', phone_number='1231231234', title = 'prof', id = '333333333')
     user1 = new_instructor('profjohn@wpi.edu', 'john', 'instructor', 'Instructor', '1231231234', 'prof', '333333333', '123')
-    user2 = new_student('studjohn@wpi.edu', 'john', 'student', 'Student', '1231231234', 'CS', 3.4, 'may2027', '444444444', False, '123')
+    user2 = new_student('studjohn@wpi.edu', 'john', 'student', 'Student', '1251231234', 'CS', 3.4, 'may2027', '444444444', False, '123')
+    user3 = new_student('studjoe@wpi.edu', 'joe', 'student', 'Student', '1231236634', 'CS', 3.4, 'may2027', '555555555', True, '123')
     # Insert user data
     db.session.add(user1)
     db.session.add(user2)
+    db.session.add(user3)
+    db.session.commit()
 
     course1 = Course(coursenum = 'CS 3733',title='Software Engineering')
     course2 = Course(coursenum = 'CS 1101',title='Intro to CS')
@@ -87,14 +90,18 @@ def init_database():
     position2 = SA_Position(sectionnum = 'section7', open_positions = 1, min_GPA = 3.0, min_Grade = 'A', instructor_id = user1.id, course_id = course3.id, term = 'A 2020')
     db.session.add(position1)
     db.session.add(position2)
+    db.session.commit()
 
     enrollment1 = Enrollment(student_id = user2.id, course_id = course1.id, grade = 'A', wasSA = False, term = 'A 2020')
     db.session.add(enrollment1)
 
     db.session.commit()
 
-    application1 = Application(position_id = position1.id, grade_received = 'A', when_course_taken = 'A 2020', when_SA = 'B 2020', student_id = user2.id, reasoning = 'want to ', status = 'Pending', instructor_id = user1.id)
+    application1 = Application(position_id = position1.id, grade_received = 'A', when_course_taken = 'A 2020', when_SA = 'B 2020', student_id = user2.id, reasoning = 'want to ', status = 'pending', instructor_id = user1.id)
     db.session.add(application1)
+
+    application2 = Application(position_id = position2.id, grade_received = 'A', when_course_taken = 'A 2020', when_SA = 'B 2020', student_id = user3.id, reasoning = 'want to ', status = 'Approved', instructor_id = user1.id)
+    db.session.add(application2)
 
 
     # Commit the changes for the users
@@ -425,4 +432,167 @@ def test_apply_exists(request, test_client,init_database):
                           follow_redirects = True)
     assert response.status_code == 200
     assert b"already" in response.data   
+    do_logout(test_client, path = '/user/logout')
+
+def test_accept(request, test_client,init_database):
+    """
+    GIVEN a Flask application configured for testing
+    WHEN the '/user/register' form is submitted (POST)
+    THEN check that the response is valid and the database is updated correctly
+    """
+    do_login(test_client, path = '/user/login', uname = 'profjohn@wpi.edu', passwd = '123')
+    application = db.session.scalars(sqla.select(Application).where(Application.status == 'pending')).first()
+
+    # Create a test client using the Flask application configured for testing
+    response = test_client.post('/instructor/approve_application/' + str(application.id),
+                          follow_redirects = True)
+    assert response.status_code == 200
+    assert b"Accepted students application" in response.data   
+    do_logout(test_client, path = '/user/logout')
+
+def test_accept2(request, test_client,init_database):
+    """
+    GIVEN a Flask application configured for testing
+    WHEN the '/user/register' form is submitted (POST)
+    THEN check that the response is valid and the database is updated correctly
+    """
+    do_login(test_client, path = '/user/login', uname = 'profjohn@wpi.edu', passwd = '123')
+    app = db.session.scalars(sqla.select(Application).where(Application.status == 'Approved')).first()
+
+    # Create a test client using the Flask application configured for testing
+    response = test_client.post('/instructor/approve_application/' + str(app.id),
+                          follow_redirects = True)
+    assert response.status_code == 200
+    assert b"Cannot approve" in response.data   
+    do_logout(test_client, path = '/user/logout')
+
+def test_reject(request, test_client,init_database):
+    """
+    GIVEN a Flask application configured for testing
+    WHEN the '/user/register' form is submitted (POST)
+    THEN check that the response is valid and the database is updated correctly
+    """
+    do_login(test_client, path = '/user/login', uname = 'profjohn@wpi.edu', passwd = '123')
+    application = db.session.scalars(sqla.select(Application).where(Application.status == 'pending')).first()
+
+    # Create a test client using the Flask application configured for testing
+    response = test_client.post('/instructor/reject_application/1',
+                          follow_redirects = True)
+    assert response.status_code == 200
+    assert b"REJECTED students application" in response.data   
+    do_logout(test_client, path = '/user/logout')
+
+def test_view_student(request, test_client,init_database):
+    """
+    GIVEN a Flask application configured for testing
+    WHEN the '/user/register' form is submitted (POST)
+    THEN check that the response is valid and the database is updated correctly
+    """
+    do_login(test_client, path = '/user/login', uname = 'profjohn@wpi.edu', passwd = '123')
+    student = db.session.scalars(sqla.select(Student).where(Student.firstname == 'john')).first()
+
+    # Create a test client using the Flask application configured for testing
+    response = test_client.post('/instructor/view_student/' + str(student.id),
+                          follow_redirects = True)
+    assert response.status_code == 200
+    assert b"Display Student Profile" in response.data   
+    do_logout(test_client, path = '/user/logout')
+
+def test_view_student_experience(request, test_client,init_database):
+    """
+    GIVEN a Flask application configured for testing
+    WHEN the '/user/register' form is submitted (POST)
+    THEN check that the response is valid and the database is updated correctly
+    """
+    do_login(test_client, path = '/user/login', uname = 'profjohn@wpi.edu', passwd = '123')
+    student = db.session.scalars(sqla.select(Student).where(Student.firstname == 'john')).first()
+
+    # Create a test client using the Flask application configured for testing
+    response = test_client.post('/instructor/view_student_experience/' + str(student.id),
+                          follow_redirects = True)
+    assert response.status_code == 200
+    assert b"Past Enrollments" in response.data   
+    do_logout(test_client, path = '/user/logout')
+
+def test_withdraw(request, test_client,init_database):
+    """
+    GIVEN a Flask application configured for testing
+    WHEN the '/user/register' form is submitted (POST)
+    THEN check that the response is valid and the database is updated correctly
+    """
+    do_login(test_client, path = '/user/login', uname = 'studjohn@wpi.edu', passwd = '123')
+    application = db.session.scalars(sqla.select(Application).where(Application.status == 'pending')).first()
+
+    # Create a test client using the Flask application configured for testing
+    response = test_client.post('/student/'+ str(application.id) + '/withdraw', 
+                          follow_redirects = True)
+    assert response.status_code == 200
+    assert b"succesfully withdrew" in response.data   
+    do_logout(test_client, path = '/user/logout')
+
+def test_student_display_profile(request, test_client,init_database):
+    """
+    GIVEN a Flask application configured for testing
+    WHEN the '/user/register' form is submitted (POST)
+    THEN check that the response is valid and the database is updated correctly
+    """
+    do_login(test_client, path = '/user/login', uname = 'studjohn@wpi.edu', passwd = '123')
+    student = db.session.scalars(sqla.select(Student).where(Student.username == 'studjohn@wpi.edu')).first()
+
+    # Create a test client using the Flask application configured for testing
+    response = test_client.get('/'+ str(student.id) + '/profile', 
+                          follow_redirects = True)
+    assert response.status_code == 200
+    assert b"Display Profile" in response.data   
+    do_logout(test_client, path = '/user/logout')
+
+def test_student_display_profile(request, test_client,init_database):
+    """
+    GIVEN a Flask application configured for testing
+    WHEN the '/user/register' form is submitted (POST)
+    THEN check that the response is valid and the database is updated correctly
+    """
+    do_login(test_client, path = '/user/login', uname = 'studjohn@wpi.edu', passwd = '123')
+    student = db.session.scalars(sqla.select(Student).where(Student.username == 'studjohn@wpi.edu')).first()
+
+    # Create a test client using the Flask application configured for testing
+    response = test_client.get('/'+ str(student.id) + '/profile', 
+                          follow_redirects = True)
+    assert response.status_code == 200
+    assert b"Display Profile" in response.data   
+    do_logout(test_client, path = '/user/logout')
+
+
+def test_student_display_experience(request, test_client,init_database):
+    """
+    GIVEN a Flask application configured for testing
+    WHEN the '/user/register' form is submitted (POST)
+    THEN check that the response is valid and the database is updated correctly
+    """
+    do_login(test_client, path = '/user/login', uname = 'studjohn@wpi.edu', passwd = '123')
+    student = db.session.scalars(sqla.select(Student).where(Student.username == 'studjohn@wpi.edu')).first()
+
+    # Create a test client using the Flask application configured for testing
+    response = test_client.get('/experience/view', 
+                          follow_redirects = True)
+    assert response.status_code == 200
+    assert b"My Previous Experience" in response.data   
+    do_logout(test_client, path = '/user/logout')
+
+
+def test_student_delete_experience(request, test_client,init_database):
+    """
+    GIVEN a Flask application configured for testing
+    WHEN the '/user/register' form is submitted (POST)
+    THEN check that the response is valid and the database is updated correctly
+    """
+    do_login(test_client, path = '/user/login', uname = 'studjohn@wpi.edu', passwd = '123')
+    student = db.session.scalars(sqla.select(Student).where(Student.username == 'studjohn@wpi.edu')).first()
+    experience = db.session.scalars(sqla.select(Enrollment).where(Enrollment.student_id == student.id)).first()
+
+    # Create a test client using the Flask application configured for testing
+    response = test_client.get('/student/' + str(experience.id) + '/delete', 
+                          follow_redirects = True)
+    assert response.status_code == 200
+    assert b"succesfully deleted that" in response.data   
     do_logout(test_client, path = '/user/logout')
