@@ -13,9 +13,10 @@ def view_positions():
     if not current_user.user_type == 'Instructor':
         flash('You do not have access to this page')
         return redirect(url_for('main.index'))
-    positions = SA_Position.query.filter_by(instructor_id=current_user.id).order_by(SA_Position.open_positions.desc())
-     
-    return render_template('instructor.html', positions = positions)
+
+    positions = SA_Position.query.filter_by(instructor_id=current_user.id).order_by(SA_Position.open_positions.desc()).all()
+
+    return render_template('instructor.html', positions=positions)
 
 @bp_instructor.route('/position/create', methods=['GET', 'POST'])
 @login_required
