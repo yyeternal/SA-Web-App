@@ -68,7 +68,6 @@ def logout():
 
 @bp_auth.route('/choose_user', methods=['GET'])
 def choose_user():
-    flash("Create an account in order to SSO Login")
     return render_template('choose_user.html')
 
 @bp_auth.route('/student/register', methods=['GET', 'POST'])
@@ -92,7 +91,7 @@ def student_register():
         db.session.add(user)
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
-        return redirect(url_for('auth.login')) 
+        return redirect(url_for('auth.login'))
     return render_template('student_register.html', form = sform)    
 
 @bp_auth.route('/instructor/register', methods=['GET', 'POST'])
