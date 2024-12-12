@@ -15,8 +15,8 @@
                 <p class="applicationinfo">Why they want to be an SA: {{application.reasoning}}</p>   
                 <br> 
                 {% if application.status == 'Pending' %}
-                    <p><a class = "apply-button" href = "{{url_for('instructor.approve_applications', position_id = application.position.id)}}">Approve</a></p>   
-                    <p><a class = "apply-button" href = "{{url_for('instructor.reject_applications', position_id = application.position.id)}}">REJECT</a></p>   
+                    <p><a class = "apply-button" href = "{{url_for('instructor.approve_applications', application_id = application.id)}}">Approve</a></p>   
+                    <p><a class = "apply-button" href = "{{url_for('instructor.reject_applications', application_id = application.id)}}">REJECT</a></p>   
                     <br> 
                 {% elif application.status == 'Approved' %}
                     <p class="applicationinfo"><b>Already Hired!</b></p>
