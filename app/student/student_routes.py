@@ -36,7 +36,7 @@ def view_recommended_positions():
         for p in positions:
             class_taken = db.session.scalars(sqla.select(Enrollment).where(Enrollment.student_id == current_user.id).where(Enrollment.course_id == p.course_id).where(Enrollment.wasSA == False)).first()
             class_sa = db.session.scalars(sqla.select(Enrollment).where(Enrollment.student_id == current_user.id).where(Enrollment.course_id == p.course_id).where(Enrollment.wasSA)).first()
-            if class_taken is not None and p.min_Grade < class_taken.grade: # remove if min grade required is "less than" (comes before in alphabet) grade received
+            if class_taken is not None and ord(p.min_Grade) < ord(class_taken.grade): # remove if min grade required is "less than" (comes before in alphabet) grade received
                 continue
             if p.min_GPA > current_user.GPA:
                 continue

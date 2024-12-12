@@ -274,6 +274,6 @@
   padding: 25px;
   width: 80%;
   outline: 1px solid black;
-  margin: 15px 0px 30px 30px;
-  
+  margin: 45px 0px 30px 30px;
+  transform: translateY(-30px);
 }
