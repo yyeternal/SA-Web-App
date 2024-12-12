@@ -13,10 +13,9 @@ def view_positions():
     if not current_user.user_type == 'Instructor':
         flash('You do not have access to this page')
         return redirect(url_for('main.index'))
-
     positions = SA_Position.query.filter_by(instructor_id=current_user.id).order_by(SA_Position.open_positions.desc()).all()
 
-    return render_template('instructor.html', positions=positions)
+    return render_template('instructor.html', positions = positions)
 
 @bp_instructor.route('/position/create', methods=['GET', 'POST'])
 @login_required
@@ -76,18 +75,19 @@ def view_applications(position_id):
     apps = pending_applications + approved_applications
     return render_template('view_applications.html', title="Applications", applications=apps)
 
-@bp_instructor.route('/instructor/approve_application/<position_id>', methods=['GET', 'POST'])
+@bp_instructor.route('/instructor/approve_application/<application_id>', methods=['GET', 'POST'])
 @login_required
-def approve_applications(position_id):
-    if not current_user.user_type == 'Instructor':
+def approve_applications(application_id):
+    application = db.session.scalars(sqla.select(Application).where(Application.id == application_id)).first()
+    if not current_user.user_type == 'Instructor' or not application.instructor_id == current_user.id:
         flash('You do not have access to this page')
         return redirect(url_for('main.index'))
-    position = SA_Position.query.get(position_id)
-    application = Application.query.filter_by(position_id=int(position_id), status='Pending').first()
+    # application = Application.query.filter_by(position_id=int(position_id), status='Pending').first()
+    position = application.position
     if (position.open_positions - 1) < 0:
         flash("Cannot approve, already accepted applicants for all available open positions")
         return redirect(url_for('main.index'))
-    student = db.session.scalars(sqla.select(Student).where(Student.id == application.student_id)).first()
+    student = application.appStudent
     if student.isSA:
         flash("Cannot approve, student has already been accepted for a position")
         return redirect(url_for('main.index'))
@@ -99,17 +99,26 @@ def approve_applications(position_id):
     flash("Accepted students application!")
     return redirect(url_for('main.index'))
 
-@bp_instructor.route('/instructor/reject_application/<position_id>', methods=['GET', 'POST'])
+@bp_instructor.route('/instructor/reject_application/<application_id>', methods=['GET', 'POST'])
 @login_required
-def reject_applications(position_id):
-    if not current_user.user_type == 'Instructor':
+def reject_applications(application_id):
+    application = db.session.scalars(sqla.select(Application).where(Application.id == application_id)).first()
+    if not current_user.user_type == 'Instructor' or not application.instructor_id == current_user.id:
         flash('You do not have access to this page')
         return redirect(url_for('main.index'))
-    position = SA_Position.query.get(position_id)
-    application = Application.query.filter_by(position_id=int(position_id), status='Pending').first()
+    # position = SA_Position.query.get(position_id)
+    # position = db.session.scalars(sqla.select(SA_Position).where(SA_Position.id == position_id)).first()
+    # application = Application.query.filter_by(position_id=int(position_id), status='Pending').first()
+    if application.status == 'REJECTED':
+        flash("Already rejected application")
+        return redirect(url_for('main.index'))
+    elif application.status == 'Approved':
+        flash('Cannot reject, already approved this application')
+        return redirect(url_for('main.index'))
+    position = application.position
     student = db.session.scalars(sqla.select(Student).where(Student.id == application.student_id)).first()
-    if student.isSA:
-        flash("Cannot reject, student has already been accepted for a position")
+    if student.isSA and student.position == position:
+        flash("Cannot reject, student has already been accepted for this position")
         return redirect(url_for('main.index'))
     application.status = 'REJECTED'
     db.session.commit()

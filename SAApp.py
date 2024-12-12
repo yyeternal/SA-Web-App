@@ -4,8 +4,8 @@ from app.main.models import Course, User, Student, Instructor, SA_Position, Enro
 import sqlalchemy as sqla
 import sqlalchemy.orm as sqlo
 import identity.web
-from flask_session import Session
-from flask import session
+#from flask_session import Session
+#from flask import session
 
 app = create_app(Config)
 

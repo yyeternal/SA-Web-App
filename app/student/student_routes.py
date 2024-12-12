@@ -32,29 +32,33 @@ def view_recommended_positions():
         positions = list(positions)
         dmat = []
         ranked_positions = []
+        grades = {"A": 3, "B": 2, "C": 1}
         # filter out positions that have qualifications that are too high, e.g. GPA or grade is not high enough
         for p in positions:
             class_taken = db.session.scalars(sqla.select(Enrollment).where(Enrollment.student_id == current_user.id).where(Enrollment.course_id == p.course_id).where(Enrollment.wasSA == False)).first()
             class_sa = db.session.scalars(sqla.select(Enrollment).where(Enrollment.student_id == current_user.id).where(Enrollment.course_id == p.course_id).where(Enrollment.wasSA)).first()
-            if class_taken is not None and p.min_Grade < class_taken.grade: # remove if min grade required is "less than" (comes before in alphabet) grade received
+            if class_taken is not None and grades[p.min_Grade] > grades[class_taken.grade]: # remove if min grade required is "less than" (comes before in alphabet) grade received
                 continue
             if p.min_GPA > current_user.GPA:
                 continue
             ranked_positions.append(p)
             row = [int(class_sa is not None), (current_user.GPA - p.min_GPA) / 4, (ord(class_taken.grade) - ord(p.min_Grade)) if class_taken is not None else 0]
             dmat.append(row)
-        # sort based on if student has SA'd for the class before, difference btwn GPA and min_GPA, difference btwn grade and min_Grade
-        data = np.array(dmat)
-        weights = np.array([0.4, 0.3, 0.3])
-        types = np.array([1, -1, 1])
+        if not len(ranked_positions) == 0 and not len(ranked_positions) == 1:
+            # sort based on if student has SA'd for the class before, difference btwn GPA and min_GPA, difference btwn grade and min_Grade
+            data = np.array(dmat)
+            weights = np.array([0.4, 0.3, 0.3])
+            types = np.array([1, -1, 1])
 
-        topsis = TOPSIS()
-        
-        pref = topsis(data, weights=weights, types=types)
-        ranking = rrankdata(pref)
-        ranked_positions = [val for (_, val) in sorted(zip(ranking, ranked_positions), key=lambda x: x[0])]
+            topsis = TOPSIS()
+            
+            pref = topsis(data, weights=weights, types=types)
+            ranking = rrankdata(pref)
+            ranked_positions = [val for (_, val) in sorted(zip(ranking, ranked_positions), key=lambda x: x[0])]
 
-        return render_template('student.html', positions=ranked_positions, rec=True)    
+            return render_template('student.html', positions=ranked_positions, rec=True)
+        else:
+            return render_template('student.html', positions=ranked_positions, rec=True)
     else:
         return render_template('student.html', positions=positions, rec=True)
 

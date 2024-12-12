@@ -53,15 +53,11 @@ def response():
     result = authent.complete_log_in(request.args)
     if "error" in result:
         return render_template("auth_error.html", result=result)
-    # print(result)
-    print("Preferred username from authent.complete_log_in: {}".format(result["preferred_username"]))
     user = db.session.scalars(sqla.select(User).where(User.username == result["preferred_username"])).first()
     if user is None:
-        flash("Create an account in order to SSO Login")
         return redirect(url_for('auth.choose_user'))
     login_user(user, remember=True)
     flash('The user {} has succesfully logged in! '.format(current_user.username))
-    print('The user {} has succesfully logged in! '.format(current_user.username))
     return redirect(url_for('main.index'))
 
 @bp_auth.route('/user/logout', methods=['GET'])
@@ -95,7 +91,7 @@ def student_register():
         db.session.add(user)
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
-        return redirect(url_for('auth.login')) 
+        return redirect(url_for('auth.login'))
     return render_template('student_register.html', form = sform)    
 
 @bp_auth.route('/instructor/register', methods=['GET', 'POST'])
