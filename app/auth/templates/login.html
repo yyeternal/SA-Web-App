@@ -23,6 +23,7 @@
         </p>
         <p>{{form.submit(class="button")}}</p>
     </form>
+    <p><a href="{{ url_for('auth.sso_login') }}">Sign In with WPI SSO</a></p>
     <p class="formlabel"><u>New Student? </u><a href = "{{url_for('auth.student_register')}}"> Click to Register!</a></p>
     <p class="formlabel"><u>New Instructor?</u> <a href = "{{url_for('auth.instructor_register')}}"> Click to Register!</a></p>
     

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<script>
+    const instructor = confirm("Register as instructor?")
+    if(instructor) {
+        window.location.href = "{{url_for('auth.instructor_register')}}";
+    } else {
+        window.location.href = "{{url_for('auth.student_register')}}";
+    }
+</script>
+{% endblock %}
