@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
     <h1>Register</h1>
-    <form action = "{{url_for('auth.student_register')}}" method = "POST" class="edit-box">
+    <form action = "{{url_for('auth.instructor_register')}}" method = "POST" class="edit-box">
         {{ form.hidden_tag()}}
         <p>
             {{form.username.label(class="formlabel")}} / Username  <br>

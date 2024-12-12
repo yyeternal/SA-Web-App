@@ -16,7 +16,8 @@ def view_positions():
     if not current_user.user_type == 'Student':
         flash('You do not have access to this page')
         return redirect(url_for('main.index'))
-    positions = db.session.scalars(sqla.select(SA_Position)).all()
+    positions = db.session.scalars(sqla.select(SA_Position).order_by(SA_Position.open_positions.desc())).all()
+    applications = current_user.applications 
     return render_template('student.html', positions=positions)
 
 @bp_student.route('/positions/view/recommended', methods=['GET'])

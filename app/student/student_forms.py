@@ -24,7 +24,7 @@ class EditStudentProfileForm(FlaskForm):
     major = SelectField('Major',
                          choices= ['CS', 'RBE', 'IMGD', 'DS'])
     gpa = DecimalField('GPA', validators=[DataRequired(), NumberRange(min=0,max=4.0)])
-    graduation_date = StringField('Graduation Date', validators=[DataRequired(), Length(min = 6, max = 6, message='Must format in the style of A 2024 for example')])    
+    graduation_date = StringField('Graduation Date', validators=[DataRequired(), Length(min = 8, max = 15, message='Must format in the style of May 2024 for example')])    
 
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
@@ -34,7 +34,7 @@ class EditStudentProfileForm(FlaskForm):
 class AddCourseForm(FlaskForm):
     course = QuerySelectField('Course',
                          query_factory= lambda : db.session.scalars(sqla.select(Course)),
-                         get_label= lambda c : 'CS{} - {}'.format(c.coursenum, c.title))
+                         get_label= lambda c : '{} - {}'.format(c.coursenum, c.title))
     wasSA = BooleanField('Were you an SA?')
     grade = StringField('Grade recieved', validators=[DataRequired(message="Please fill out this field"), AnyOf(values=['A', 'B', 'C'], message= "Must be A, B, or C")])
     term = StringField('What term and year did you take this course? Enter as term and year. e.g. "A 2023"', validators=[DataRequired(), Length(min = 6, max = 6, message='Must format in the style of A 2024 for example')])
