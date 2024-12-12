@@ -105,8 +105,8 @@ class SA_Position(db.Model):
         return "".format()
     
     def get_SAs(self):
-        return db.session.scalars(sqla.select(self.students.select())).all()
-
+        return db.session.scalars(sqla.select(Student).where(Student.position_id == self.id)).all()
+        
 class Student(User):
     __tablename__='student'
     id : sqlo.Mapped[str] = sqlo.mapped_column(sqla.String(9), sqla.ForeignKey(User.id), primary_key=True)
@@ -120,7 +120,6 @@ class Student(User):
     enrollments : sqlo.WriteOnlyMapped['Enrollment'] = sqlo.relationship(back_populates='student')
     position : sqlo.Mapped['SA_Position'] = sqlo.relationship(back_populates = 'students')
     applications : sqlo.WriteOnlyMapped['Application'] = sqlo.relationship(back_populates = 'appStudent')
-
     __mapper_args__ = {
         'polymorphic_identity': 'Student'
     }
