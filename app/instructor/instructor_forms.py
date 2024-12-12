@@ -13,7 +13,7 @@ import re
 def is_unique(field_name):
     if field_name == 'sectionnum':
         def _is_unique_sectionnum(form, field):
-            position = db.session.scalars(sqla.select(SA_Position).where(SA_Position.sectionnum == field.data)).first()
+            position = db.session.scalars(sqla.select(SA_Position).where(SA_Position.course_id == form.course.data.id).where(SA_Position.sectionnum == field.data)).first()
             if position is not None:
                 # return redirect('auth.login')
                 raise ValidationError(message="There is already a section with that username")
