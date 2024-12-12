@@ -3,7 +3,7 @@ warnings.filterwarnings("ignore")
 
 import unittest
 from app import create_app, db
-from app.main.models import User, Student, Instructor, SA_Position, Course
+from app.main.models import User, Student, Instructor, SA_Position, Course, Enrollment, Application
 from config import Config
 
 
@@ -35,40 +35,80 @@ class TestModels(unittest.TestCase):
         self.assertFalse(u.check_password('flu'))
         self.assertTrue(u.check_password('covid'))
 
-    def test_position_1(self):
-        u1 = Instructor(username='john.prof@wpi.edu', firstname = 'john', lastname = 'instructor', user_type = 'Instructor', phone_number = '1231231234', title = 'prof')
-        db.session.add(u1)
+    def test_position(self):
+        u = Instructor(username='john.prof@wpi.edu', firstname = 'john', lastname = 'instructor', user_type = 'Instructor', phone_number = '1231231234', title = 'prof')
+        u.set_password('covid')
+        db.session.add(u)
         db.session.commit()
-        self.assertEqual(len(u1.get_positions()), 0)
+        self.assertEqual(len(u.get_positions()), 0)
         c1 = Course(coursenum = 3733, title = 'Software Engineering')
         db.session.add(c1)
         db.session.commit()
-        p1 = SA_Position(sectionnum='4', open_positions=1, min_GPA=3.5, min_Grade='A', term='B', course_id=c1.id, instructor_id = u1.id)
-        db.session.add(p1)
+        s1 = SA_Position(sectionnum='4adf', term='B 2132', instructor_id = u.id, min_GPA = 1, min_Grade = 'C', course_id = c1.id)
+        db.session.add(s1)
         db.session.commit()
-        self.assertEqual(len(u1.get_positions()), 1)
-        self.assertEqual(u1.get_positions()[0].sectionnum, '4')
-        self.assertEqual(u1.get_positions()[0].term, 'B')
+        self.assertEqual(len(u.get_positions()), 1)
+        self.assertEqual(u.get_sections()[0].sectionnum, '4adf')
+        self.assertEqual(u.get_sections()[0].term, 'B 2132')
 
-    def test_samecourse_differentpositions(self):
+    def test_samecourse_differentsections(self):
         u1 = Instructor(username='john.prof@wpi.edu', firstname = 'john', lastname = 'instructor', user_type = 'Instructor', phone_number = '1231231234', title = 'prof')
+        u1.set_password('123')
         db.session.add(u1)
         db.session.commit()
-        self.assertEqual(len(u1.get_positions()), 0)
+        self.assertEqual(len(u1.get_sections()), 0)
         c1 = Course(coursenum = 3733, title = 'Software Engineering')
         db.session.add(c1)
-        p1 = SA_Position(sectionnum='4', open_positions=1, min_GPA=3.5, min_Grade='A', term='B', course_id=c1.id, instructor_id = u1.id)
-        db.session.add(p1)
-        p2 = SA_Position(sectionnum='5', open_positions=1, min_GPA=3.5, min_Grade='A', term='A', course_id=c1.id, instructor_id = u1.id)
-        db.session.add(p2)
+        s1 = SA_Position(sectionnum='4adf', term='B 2132', instructor_id = u1.id, min_GPA = 1, min_Grade = 'C', course_id = c1.id)
+        db.session.add(s1)
+        s2 = SA_Position(sectionnum='5454', term='C 2132', instructor_id = u1.id, min_GPA = 1, min_Grade = 'C', course_id = c1.id)
+        db.session.add(s2)
         db.session.commit()
-        # test the first position
-        self.assertEqual(len(u1.get_positions()), 2)
-        self.assertEqual(u1.get_positions()[0].sectionnum, '4')
-        self.assertEqual(u1.get_positions()[0].term, 'B')
-        # test the second position
-        self.assertEqual(u1.get_positions()[1].sectionnum, '5')
-        self.assertEqual(u1.get_positions()[1].term, 'A')
+        # test the first section
+        self.assertEqual(len(u1.get_sections()), 2)
+        self.assertEqual(u1.get_sections()[0].sectionnum, '4')
+        self.assertEqual(u1.get_sections()[0].term, 'B')
+        # test the second section
+        self.assertEqual(u1.get_sections()[1].sectionnum, '5')
+        self.assertEqual(u1.get_sections()[1].term, 'A')
+
+    def test_enrollment(self):
+        u1 = Instructor(username='john.prof@wpi.edu', firstname = 'john', lastname = 'instructor', user_type = 'Instructor', phone_number = '1231231234', title = 'prof')
+        u1.set_password('123')
+        db.session.add(u1)
+        u = Student(username='john.stud@wpi.edu', firstname = 'john', lastname = 'student', user_type = 'Student', phone_number = '1231231234', major = 'cs', GPA = 3.4, graduation_date = 'may 2027', isSA = False)
+        u.set_password('covid')
+        db.session.add(u)
+        db.session.commit()
+        self.assertEqual(len(u1.get_sections()), 0)
+        c1 = Course(coursenum = 3733, title = 'Software Engineering')
+        db.session.add(c1)
+        s1 = SA_Position(sectionnum='4adf', term='B 2132', instructor_id = u1.id, min_GPA = 1, min_Grade = 'C', course_id = c1.id)
+        db.session.add(s1)
+        db.session.commit()
+        e1 = Enrollment(student_id = u.id, course_id = c1.id, grade = 'A', wasSA = False, term = 'B 1994')
+        # test the first section
+        self.assertEqual(len(u.get_enrollments()), 1)
+        self.assertEqual(u1.get_enrollments()[0].term, 'B 1994')
+
+    def test_application(self):
+        u1 = Instructor(username='john.prof@wpi.edu', firstname = 'john', lastname = 'instructor', user_type = 'Instructor', phone_number = '1231231234', title = 'prof')
+        u1.set_password('123')
+        db.session.add(u1)
+        u = Student(username='john.stud@wpi.edu', firstname = 'john', lastname = 'student', user_type = 'Student', phone_number = '1231231234', major = 'cs', GPA = 3.4, graduation_date = 'may 2027', isSA = False)
+        u.set_password('covid')
+        db.session.add(u)
+        db.session.commit()
+        self.assertEqual(len(u1.get_sections()), 0)
+        c1 = Course(coursenum = 3733, title = 'Software Engineering')
+        db.session.add(c1)
+        s1 = SA_Position(sectionnum='4adf', term='B 2132', course_id=c1.id, instructor_id = u1.id, min_GPA = 1, min_Grade = 'C')
+        db.session.add(s1)
+        db.session.commit()
+        a1 = Application(student_id = u.id, position_id = s1.id, grade_recieved = 'A', when_course_taken = 'B 1111', when_SA = 'B 1994', reasoning = 'ljkadfjlkadfjlkajkld', status = 'Pending', instructor_id = u1.id)
+        # test the first section
+        self.assertEqual(len(u.get_enrollments()), 1)
+        self.assertEqual(u1.get_enrollments()[0].term, 'B 1994')
 
 
 
