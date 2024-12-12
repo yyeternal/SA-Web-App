@@ -30,7 +30,7 @@ def login():
         query = sqla.select(User).where(User.username == lform.email.data)
         user = db.session.scalars(query).first()
         if (user is None) or (user.check_password(lform.password.data) == False):
-            flash('Login wrong')
+            flash('Invalid username or password')
             return redirect(url_for('auth.login'))
         login_user(user, remember = lform.remember_me.data)
         flash('The user {} has succesfully logged in! '.format(current_user.username))
