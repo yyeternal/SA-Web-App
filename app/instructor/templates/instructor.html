@@ -22,7 +22,7 @@
                 <p id="card-minGPA">Minimum GPA: {{positions[0].min_GPA}}</p>
                 <p id="card-minGrade">Minimum Grade Required: {{positions[0].min_Grade}}</p>
                 <p id="card-numPos">Open Positions: {{positions[0].open_positions}}</p>
-                <p id="card-timestamp">Posted: {{positions[0].timestamp}}</p>
+                <p id="card-timestamp">Posted: {{moment(positions[0].timestamp).format('LLL')}}</p>
                 <form id="view-apps-form" action="{{ url_for('instructor.view_applications', position_id=positions[0].id) }}">
                     <button type="submit" class="view-button">View Applications</button>
                 </form>
@@ -54,7 +54,8 @@
                     cardGPA.textContent = "Minimum GPA: " + item.getAttribute("position-minGPA");
                     cardGrade.textContent = "Minimum Grade Required: " + item.getAttribute("position-minGrade");
                     cardNumPos.textContent = "Open Positions: " + item.getAttribute("position-numPos");
-                    cardTime.textContent = "Posted: " + item.getAttribute("position-timestamp");
+                    const time = moment(item.getAttribute("position-timestamp")).format('LLL')
+                    cardTime.textContent = "Posted: " + time;
                     view_applications.action = "{{ url_for('instructor.view_applications', position_id='id') }}".replace('id', item.getAttribute("position-id"));
                 });
             });

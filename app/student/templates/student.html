@@ -27,7 +27,6 @@
         </div>
         <div class="right-column">
             <div class="card" id="details-card">
-                {% if positions %}
                 <h2 id="card-title">{{ "{}-{} {}".format(positions[0].course.coursenum, positions[0].sectionnum, positions[0].course.title) }}</h2>
                 <p id="card-name">Instructor: {{positions[0].instructor.firstname}} {{positions[0].instructor.lastname}}</p>
                 <p id="card-username">{{positions[0].instructor.username}}</p>
@@ -35,15 +34,12 @@
                 <p id="card-minGPA">Minimum GPA: {{positions[0].min_GPA}}</p>
                 <p id="card-minGrade">Minimum Grade Required: {{positions[0].min_Grade}}</p>
                 <p id="card-numPos">Open Positions: {{positions[0].open_positions}}</p>
-                <p id="card-timestamp">Posted: {{positions[0].timestamp}}</p>
+                <p id="card-timestamp">Posted: {{moment(positions[0].timestamp).format('LLL')}}</p>
                     {%if current_user.applications %}
                     <form id="apply-form" action="{{ url_for('student.student_apply_position', position_id=positions[0].id) }}">
                         <button type="submit" class="apply-button">Apply</button>
                     </form>
                     {%endif%}
-                {% else %}
-                <h2 id="card-title">No Positions have been posted yet</h2>
-                {% endif %}
               </div>
         </div>
     </div>
@@ -71,7 +67,8 @@
                     cardGPA.textContent = "Minimum GPA: " + item.getAttribute("position-minGPA");
                     cardGrade.textContent = "Minimum Grade Required: " + item.getAttribute("position-minGrade");
                     cardNumPos.textContent = "Open Positions: " + item.getAttribute("position-numPos");
-                    cardTime.textContent = "Posted: " + item.getAttribute("position-timestamp");
+                    const time = moment(item.getAttribute("position-timestamp")).format('LLL');
+                    cardTime.textContent = "Posted: " + time;
                     applyForm.action = "{{ url_for('student.student_apply_position', position_id='id') }}".replace("id", item.getAttribute("position-id"));
                 });
             });
