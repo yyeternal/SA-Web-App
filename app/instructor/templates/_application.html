@@ -14,12 +14,12 @@
                 <br> 
                 <p class="applicationinfo">Why they want to be an SA: {{application.reasoning}}</p>   
                 <br> 
-                {% if application.status == 'Pending' %}
+                {% if application.status == 'Approved' or application.appStudent.isSA %}
+                    <p class="applicationinfo"><b>Already Hired!</b></p>
+                {% elif application.status == 'Pending' %}
                     <p><a class = "apply-button" href = "{{url_for('instructor.approve_applications', application_id = application.id)}}">Approve</a></p>   
                     <p><a class = "apply-button" href = "{{url_for('instructor.reject_applications', application_id = application.id)}}">REJECT</a></p>   
                     <br> 
-                {% elif application.status == 'Approved' %}
-                    <p class="applicationinfo"><b>Already Hired!</b></p>
                 {% endif %}
                 <p><a class="apply-button" href = "{{url_for('instructor.view_student', student_id=application.appStudent.id)}}">View Student</a></p>
             </td> 
