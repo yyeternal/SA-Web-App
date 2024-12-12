@@ -36,6 +36,7 @@
                 <p id="card-numPos">Open Positions: {{positions[0].open_positions}}</p>
                 <p id="card-timestamp">Posted: {{moment(positions[0].timestamp).format('LLL')}}</p>
                     {%if current_user.applications %}
+>>>>>>> b26122d7dcab37d70a44c8dd9c15b42d8ba77636
                     <form id="apply-form" action="{{ url_for('student.student_apply_position', position_id=positions[0].id) }}">
                         <button type="submit" class="apply-button">Apply</button>
                     </form>
