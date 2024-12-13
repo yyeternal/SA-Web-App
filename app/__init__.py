@@ -11,9 +11,10 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 
 db = SQLAlchemy()
 migrate = Migrate()
+moment = Moment()
 login = LoginManager()
 login.login_view = 'auth.login'
-moment = Moment()
+
 
 def create_app(config_class = Config):
     app = Flask(__name__)
