@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+<!-- For iteration2 -->
+{% block content %}
+
+<h1>Add Experience</h1>
+
+    {% if form %}
+        <form action="{{ url_for('student.student_add_course') }}" method="POST" class="edit-box">
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.course.label }}
+                {{ form.course() }}
+            </p>
+            <p>
+                {{ form.wasSA.label }}
+                {{ form.wasSA() }}
+            </p>
+            <p>
+                {{ form.grade.label }}
+                {{ form.grade() }}
+                {% for error in form.grade.errors %}
+                    <span style = "color: red;">[{{ error}}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.term.label }}
+                {{ form.term() }}
+                {% for error in form.term.errors %}
+                    <span style = "color: red;">[{{ error}}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.submit(class="button") }}
+            </p>
+        </form>
+    {% endif %}
+
+{% endblock %}

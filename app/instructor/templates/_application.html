@@ -1,0 +1,27 @@
+    <table class="applicationtable">
+        <tr> 
+            <td colspan="3"><div class="applicationtitle">{{application.appStudent.firstname}} {{application.appStudent.lastname}} </div></td>
+        </tr>
+        <tr>
+            <td width="100%" class="applicationmessage">
+                <p class="applicationinfo">Position id: {{application.position_id}}</p>   
+                <br> 
+                <p class="applicationinfo">Grade Received: {{application.grade_received}}</p>   
+                <br> 
+                <p class="applicationinfo">When they took the course: {{application.when_course_taken}}</p>   
+                <br> 
+                <p class="applicationinfo">When they want to SA the course: {{application.when_SA}}</p>   
+                <br> 
+                <p class="applicationinfo">Why they want to be an SA: {{application.reasoning}}</p>   
+                <br> 
+                {% if application.status == 'Approved' or application.appStudent.isSA %}
+                    <p class="applicationinfo"><b>Already Hired!</b></p>
+                {% elif application.status == 'Pending' %}
+                    <p><a class = "apply-button" href = "{{url_for('instructor.approve_applications', application_id = application.id)}}">Approve</a></p>   
+                    <p><a class = "apply-button" href = "{{url_for('instructor.reject_applications', application_id = application.id)}}">REJECT</a></p>   
+                    <br> 
+                {% endif %}
+                <p><a class="apply-button" href = "{{url_for('instructor.view_student', student_id=application.appStudent.id)}}">View Student</a></p>
+            </td> 
+        </tr>
+    </table>

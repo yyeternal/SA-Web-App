@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>My Applications</h1>
+    <div class="applicationlist">
+        {% for application in applications %}
+        {%if application.status != 'Withdrawn'%}
+        <div class="application-box">
+            {% include '_view_application.html' %} 
+        </div>
+        {%endif%}
+        {% endfor %}
+    </div>
+
+{% endblock %}

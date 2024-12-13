@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Edit Instructor Profile</h1>
+    <form action = "{{url_for('instructor.edit_instructor_profile')}}" method = "POST" class="edit-box">
+        {{ form.hidden_tag()}}
+        <p>
+            {{form.firstname.label}}<br>
+            {{form.firstname(class = 'forminput')}}<br>
+            {% for error in form.firstname.errors %}
+                <span style = "color: red;">[{{ error}}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{form.lastname.label}}<br>
+            {{form.lastname(class = 'forminput')}}<br>
+            {% for error in form.lastname.errors %}
+                <span style = "color: red;">[{{ error}}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{form.phonenumber.label}}<br>
+            {{form.phonenumber(class = 'forminput')}}<br>
+            {% for error in form.phonenumber.errors %}
+                <span style = "color: red;">[{{ error}}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{form.title.label}}<br>
+            {{form.title(class = 'forminput')}}<br>
+            {% for error in form.title.errors %}
+                <span style = "color: red;">[{{ error}}]</span>
+            {% endfor %}
+        </p>
+        
+        <p>
+            {{form.password.label}}<br>
+            {{form.password(class = 'forminput')}}<br>
+            {% for error in form.password.errors %}
+                <span style = "color: red;">[{{ error}}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{form.password2.label}}<br>
+            {{form.password2(class = 'forminput')}}<br>
+            {% for error in form.password2.errors %}
+                <span style = "color: red;">[{{ error}}]</span>
+            {% endfor %}
+        </p>
+        <p>{{form.submit(class="button")}}</p>
+    </form>
+{% endblock %}

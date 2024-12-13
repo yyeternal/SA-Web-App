@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="overlay">
+    <div id="dialog">
+        <p>Register as:</p>
+        <button class="dialog-button instructor" onclick="register('Instructor')">Instructor</button>
+        <button class="dialog-button student" onclick="register('Student')">Student</button>
+    </div>
+</div>
+<script>
+    document.getElementById('overlay').classList.add('visible');
+
+    function register(role) {
+        document.getElementById('overlay').classList.remove('visible');
+        if(role == 'Student') {
+            window.location.href = "{{ url_for('auth.student_register') }}";
+        } else if(role == 'Instructor') {
+            window.location.href = "{{ url_for('auth.instructor_register') }}";
+        }
+    }
+</script>
+{% endblock %}

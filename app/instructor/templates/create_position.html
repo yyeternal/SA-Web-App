@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>Create New Student Assistant Position</h1>
+
+    {% if form %}
+        <form action="" method="POST" class="edit-box">
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.course.label(class="formlabel") }}
+                {{ form.course(class="forminput") }}
+            </p>
+            <p>
+                {{ form.sectionnum.label(class="formlabel") }}:
+                {{ form.sectionnum(class="forminput") }}
+                {% for error in form.sectionnum.errors %}
+                    <span style = "color: red;">[{{ error}}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.term.label(class="formlabel") }}:
+                {{ form.term(class="forminput") }}
+                {% for error in form.term.errors %}
+                    <span style = "color: red;">[{{ error}}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.open_positions.label(class="formlabel") }}:
+                {{ form.open_positions(class="forminput") }}
+                {% for error in form.open_positions.errors %}
+                    <span style = "color: red;">[{{ error}}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.min_GPA.label(class="formlabel") }}:
+                {{ form.min_GPA(class="forminput") }}
+                {% for error in form.min_GPA.errors %}
+                    <span style = "color: red;">[{{ error}}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.min_grade.label(class="formlabel") }}:
+                {{ form.min_grade(class="forminput") }}
+                {% for error in form.min_grade.errors %}
+                    <span style = "color: red;">[{{ error}}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.submit(class="button") }}
+            </p>
+        </form>
+    {% endif %}
+
+{% endblock %}
