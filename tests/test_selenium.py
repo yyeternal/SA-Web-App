@@ -121,6 +121,7 @@ def test_inst_register_form(browser,inst1):
     browser.find_element(By.NAME, "submit").click()
     ##############
     #verification
+    sleep(2)
     content = browser.page_source
     # print(content)
     assert 'Congratulations, you are now a registered user!' in content
@@ -148,7 +149,7 @@ def test_inst_register_form_exist(browser,inst1):
     browser.find_element(By.NAME, "submit").click()
     ##############
     #verification
-    sleep(5)
+    sleep(2)
     content = browser.page_source
     # print(content)
     assert 'already' in content
@@ -181,6 +182,7 @@ def test_stud_register_form(browser,stud1):
     ##############
     #verification
     content = browser.page_source
+    sleep(2)
     # print(content)
     assert 'Congratulations, you are now a registered user!' in content
 
@@ -246,7 +248,7 @@ def test_instructor_edit(browser,inst1,editinst):
     browser.find_element(By.NAME, "password2").send_keys(editinst['password'])
     ##############
     browser.find_element(By.NAME, "submit").click()
-    sleep(10)
+    sleep(2)
     #verification
     content = browser.page_source
     assert "Updated profile" in content
