@@ -1,4 +1,3 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/Ir_lyZaZ)
 # CS 3733 Term Project
 ### Project Title: SA Recruitment Web App
 ### Team Name :  StackOverflowHeroes
@@ -8,5 +7,8 @@
 * Oliver Reera
 * Alan Wang
 
-### AWS Deployment Link
-https://3.145.93.139
+### Languages and Frameworks 
+This is a web app that our team created for Software Engineering (CS3733). It utilizes Flask, Bootstrap, Postgres, HTML, CSS, Python, and SQLAlchemy. 
+
+### Purpose
+This web app is a way for professors and students to search, post, and apply for Student Assistant positions at WPI. There is a built in auth page as well as an Azure sign in page. Students are able to view SA applications, apply, view recommended postions, and withdraw applications. They will be notified if they have been accepted or rejected for a position. Faculty are able to post SA positions with minimum requirements for certain courses as well as view students who applied for their positions. They are able to reject and accept students for their positions. 
